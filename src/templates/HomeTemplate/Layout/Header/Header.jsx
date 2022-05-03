@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 export default function Header(props) {
     return (
-        <header className="p-4 bg-coolGray-800 text-coolGray-100 bg-black bg-opacity-30 fixed w-full text-white z-10">
+        <header className="p-4 bg-coolGray-800 text-coolGray-100 bg-black bg-opacity-30 fixed w-full text-white z-50 ">
             <div className="container flex justify-between h-15 mx-auto">
                 <a rel="noopener noreferrer" href="#" aria-label="Back to homepage" className="flex items-center p-2">
                     <img src="https://cyberlearn.vn/wp-content/uploads/2020/03/cyberlearn-min-new-opt2.png" alt="cyber_learn_vn" />
