@@ -1,0 +1,42 @@
+.header {
+    position: relative;
+    max-width: 100%;
+    background: #fff;
+    box-shadow: 0 2px 8px #f0f1f2;
+
+}
+.header-container{
+    @apply container flex justify-between mx-auto;
+}
+
+.header__logo {
+    @apply flex justify-start items-center p-2;
+}
+.header__logo-img {
+    height: 40px;
+    overflow: hidden;
+    color: #000000d9;
+    font-weight: 700;
+    font-size: 18px;
+    font-family: PuHuiTi,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,apple color emoji,segoe ui emoji,Segoe UI Symbol,noto color emoji,sans-serif;
+    text-align: center;
+    letter-spacing: -.18px;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.header__navbar {
+    @apply items-stretch hidden space-x-3 lg:flex
+}
+
+.header__navbar-item {
+    @apply flex;
+}
+
+.header__navbar-item-link {
+    @apply flex items-center px-4 -mb-1 border-b-2 border-transparent;
+    color: #000000d9;
+}
+.header__navbar-item-link--active {
+    box-shadow: inset -25px 35px 6px -33px rgb(0 72 255 / 63%)
+}
