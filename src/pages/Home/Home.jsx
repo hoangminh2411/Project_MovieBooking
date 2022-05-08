@@ -6,19 +6,17 @@ import { useSelector, useDispatch } from 'react-redux'
 import Film from '../../components/Film/Film';
 import MultipleRows from '../../components/RSlick/MultipleRowSlick';
 import { layDanhSachPhimAction } from '../../redux/actions/QuanLyPhimAction';
+import { layDanhSachRapAction } from '../../redux/actions/QuanLyRapAction';
 
 
 
 export default function Home(props) {
     const { arrFilm } = useSelector(state => state.QuanLyPhimReducer);
+    const {heThongRapChieu} = useSelector(state => state.QuanLyRapReducer);
     const dispatch = useDispatch();
-    console.log(arrFilm);
+    console.log('phim',arrFilm);
+    console.log('Rap Chhieu', heThongRapChieu);
 
-    // const renderFilms = () => {
-    //     return arrFilm.map((item, index) => {
-    //         return <Film key={index}/>
-    //     })
-    // }
     useEffect(()=> {
 
         // 1 action = {type:'',data}
@@ -26,22 +24,20 @@ export default function Home(props) {
 
         const action = layDanhSachPhimAction();
         dispatch(action);
+
+        dispatch(layDanhSachRapAction());
     },[])
 
     return (
         <div>
             
-            <section className="text-gray-600 body-font mt-4 mb-5">
+            <section className="text-gray-600 mt-4 mb-5">
                 <div className="container mx-auto">
                     <MultipleRows arrFilm={arrFilm}/>
-                    {/* <div className="flex flex-wrap -m-4"  style={{justifyContent: 'center'}} >
-                            {renderFilms()}
-
-                    </div> */}
                 </div>
             </section>
-            <div className="mx-36 ">
-                <HomeMenu />
+            <div className="container mx-auto shadow">
+                <HomeMenu heThongRapChieu={heThongRapChieu} />
             </div>
 
         </div>
