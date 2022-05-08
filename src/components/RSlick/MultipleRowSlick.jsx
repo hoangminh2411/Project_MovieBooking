@@ -30,22 +30,22 @@ import styleSlick from './MultipleRowSlick.module.css'
 const MultipleRows = (props) => {
   
   const [filmStatus,setFilmStatus] = useState({
-    dangChieu:true,
+    dangChieu:false,
     sapChieu:false
   })
   const dispatch = useDispatch();
-
+  console.log('phim',props.arrFilm);
   const renderFilms = () => {
     return props.arrFilm.slice(0,18).map((item, index) => {
       //className={`${styleSlick['width-item']}`}
-      return <div key={index} className="group relative mb-5 mr-10">
+      return <div key={index} className="group relative mb-10 mr-10">
         <Film film={item} />
         
       </div>
     })
-  }
 
-  console.log('arrFilm', props.arrFilm)
+
+  }
   // const settings = {
   //   className: "slider variable-width",
   //   centerMode: true,
@@ -62,12 +62,9 @@ const MultipleRows = (props) => {
   
   let activeClassDC = filmStatus.dangChieu === true? 'active_Film': 'none_active_film'
   let activeClassSC = filmStatus.sapChieu === true? 'active_Film': 'none_active_film'
-  console.log('activeClassDC',activeClassDC);
-  console.log('activeClassSC',activeClassSC);
-  console.log('filmStatus',filmStatus);
   return (
     <div className="container  mx-auto">
-      <div className="flex justify-center items-center mb-5 ">
+      <div className="flex justify-center items-center my-5 ">
         <button activeClassName="text-white bg-gray-800" onClick={() => {
           setFilmStatus({
             dangChieu: true,  
@@ -89,7 +86,7 @@ const MultipleRows = (props) => {
       </div>
       {/* <Slider {...settings}> */}
       
-        <div className="pl-10 pt-5 grid xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 shadow">
+        <div className="pl-10 py-5 grid xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 shadow">
           {renderFilms()}
 
         </div>

@@ -4,7 +4,7 @@ import { useSelector} from 'react-redux'
 import './Film.css'
 
 export default function Film(props) {
-    let classButton = "";
+    
     const { film } = props
 
     return (
