@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import _, { slice } from 'lodash'
-
+import './HomeMenu.css'
 
 // Thư viện moment dùng để format ngày giờ
 import moment from 'moment';
@@ -16,22 +16,30 @@ const { TabPane } = Tabs;
 
 
 function HomeMenu(props) {
-
+    const [keyActiveBrand,setKeyAcctiveBrand] = useState(0)
+    const [keyactiverap,setKeyacctiverap] = useState(0)
     const { heThongRapChieu } = props
     const dispatch = useDispatch();
-    console.log('Hệ thống rạp chiếu 1234125521', heThongRapChieu)
+    
+    const handleAccessBrand = (key)=>{
+        setKeyAcctiveBrand(key);
+        setKeyacctiverap(0);
+        console.log(key);
+    }
 
-
-
+    const handleAccessRap = (key) => {
+        setKeyacctiverap(key)
+        console.log(key);
+    }
 
     const renderCumRap = () => {
         return heThongRapChieu?.map((heThongRap, index) => {
-            return <TabPane key={index} tab={<div className="border-b-2 pb-1"><img src={heThongRap.logo} className="rounded-full w-10 h-10" alt="" /> </div>}>
+            return <TabPane style={{maxHeight:600,overflowY: 'auto',minHeight:600}} key={index} tab={<div className="border-b-2 pb-1"><img src={heThongRap.logo} className={keyActiveBrand ==index ? 'rounded-full w-10 h-10 opacity-100':'rounded-full w-10 h-10 opacity-20'} alt="" /> </div>}>
                 
-                <Tabs tabPosition="left" >
+                <Tabs defaultActiveKey={0} onTabClick={handleAccessRap} tabPosition="left" >
                     {heThongRap.lstCumRap?.map((cumRap, index) => {
-                        return <TabPane key={index} tab={
-                            <div style={{display: 'flex' }}>
+                        return <TabPane style={{maxHeight:600,minHeight:600}} key={index} tab={
+                            <div className={keyactiverap==index? 'opacity-100':'opacity-20'} style={{display: 'flex' }}>
                                 <img src={cumRap.hinhAnh}  style={{width:60, height:60}} alt="" />
                                 <br />
                                 <div className="ml-2 text-left">
@@ -45,7 +53,7 @@ function HomeMenu(props) {
                             {/* Load Phim tương ứng */}
                             {cumRap.danhSachPhim.map((phim, index) => {
                                 return <Fragment  key={index}>
-                                    <div className="my-5" style={{ display: 'flex' }}>
+                                    <div className="my-5" style={{display: 'flex' }}>
 
                                         <img style={{width:100, height:150}} src={phim.hinhAnh} alt={phim.tenPhim} onError={(e)=>{e.target.onerror = null; e.target.src ="https://picsum.photos/75/75"}} />
 
@@ -88,29 +96,11 @@ function HomeMenu(props) {
         })
     }
 
-
-
-    // UI Hệ thống rạp chiếu
-    const [state, setState] = useState({ tabPosition: 'left' })
-
-    const changeTabPosition = e => {
-        setState({ tabPosition: e.target.value });
-    };
-    const { tabPosition } = state
     return (
         <>
 
-            <Tabs tabPosition={tabPosition}>
+            <Tabs defaultActiveKey={0} onTabClick={handleAccessBrand} tabPosition='left'>
                 {renderCumRap()}
-                {/* <TabPane tab={<img src="https://picsum.photos/200" className="rounded-full w-20 h-20" alt="" />} key="1">
-                    Content tab 1
-                </TabPane>
-                <TabPane tab={<img src="https://picsum.photos/300" className="rounded-full w-20 h-20" alt="" />} key="2">
-                    Content tab 2
-                </TabPane>
-                <TabPane tab={<img src="https://picsum.photos/300" className="rounded-full w-20 h-20" alt="" />} key="3">
-                    Content tab 3
-                </TabPane> */}
             </Tabs>
         </>
     )

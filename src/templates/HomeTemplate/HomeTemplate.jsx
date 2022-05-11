@@ -11,7 +11,7 @@ export const HomeTeplate = (props) => { //path, exac, Component (component truy�
         // Thuộc tính render của Route giúp ta thêm vào các thuộc tính bên cạnh Compent
         return <Fragment>
             <Header {...propsRoute}/>
-            <HomeCarousel {...propsRoute} />
+            
             <Component {...propsRoute} />
 
 

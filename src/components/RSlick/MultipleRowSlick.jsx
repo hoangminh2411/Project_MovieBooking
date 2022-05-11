@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, memo } from "react";
 import { useDispatch } from "react-redux";
 import Slider from "react-slick";
 import { SET_PHIM_DANG_CHIEU, SET_PHIM_SAP_CHIEU } from "../../redux/types/QuanLyPhimType";
@@ -99,4 +99,4 @@ const MultipleRows = (props) => {
   );
 }
 
-export default MultipleRows;
+export default memo(MultipleRows);

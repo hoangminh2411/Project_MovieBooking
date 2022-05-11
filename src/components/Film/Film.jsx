@@ -1,9 +1,11 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, memo } from 'react'
 import moment from 'moment';
 import { useSelector} from 'react-redux'
 import './Film.css'
+import { NavLink } from 'react-router-dom';
+import {history} from '../../App'
 
-export default function Film(props) {
+function Film(props) {
     
     const { film } = props
 
@@ -19,8 +21,10 @@ export default function Film(props) {
                 <img src={film.hinhAnh} alt="" className="opacity-0" />
             </div>
             <div className="mt-4 relative">
-                <a className={film.dangChieu === true ? "w-full rounded font-bold text-center py-2  inline-block invisible opacity-0 group-hover:visible  group-hover:opacity-100 bg-red-500 text-white transition-all" : "w-full rounded font-bold text-center inline-block py-2 opacity-0 invisible group-hover:visible  group-hover:opacity-100 bg-blue-500 text-white transition-all"}>{film.dangChieu === true? 'Đặt vé':'Thông tin phim'}</a>
-                <p className="absolute top-0 left-3 font-bold opacity-100 transition-all group-hover:opacity-0 "><span className="inline-block px-2 mr-2 rounded bg-red-500 text-white  ">C18</span>{film.tenPhim}</p>
+                <div onClick={()=>{
+                    history.push(`/detail/${film.maPhim}`)
+                }} className={film.dangChieu === true ? "w-full rounded font-bold text-center py-2  inline-block invisible opacity-0 group-hover:visible  group-hover:opacity-100 bg-red-500 text-white transition-all cursor-pointer" : "w-full rounded font-bold text-center inline-block py-2 opacity-0 invisible  group-hover:visible  group-hover:opacity-100 bg-blue-500 text-white transition-all cursor-pointer"}>{film.dangChieu === true? 'Đặt vé':'Thông tin phim'}</div>
+                <p className="absolute top-0 left-3 font-bold opacity-100 transition-all group-hover:opacity-0 group-hover:invisible "><span className="inline-block px-2 mr-2 rounded bg-red-500 text-white  ">C18</span>{film.tenPhim}</p>
             </div>
 
 
@@ -28,3 +32,4 @@ export default function Film(props) {
 
     )
 }
+export default (Film)

@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import './Header.css'
-export default function Header(props) {
+function Header(props) {
+    const [scrollHeader,setScrollHeader]=useState(false)
+    useEffect(()=>{
+
+        const handleScroll = ()=>{
+            setScrollHeader(window.scrollY>0)
+        }
+
+        window.addEventListener('scroll', handleScroll)
+
+        // clean up function
+        return  ()=> {
+            window.removeEventListener('scroll',handleScroll)
+        }
+        
+    },[])
+
+
     return (
-        <header className="header">
+        <header className={scrollHeader?'header': 'header opacity-80'}>
             <div className="header-container">
                 <a rel="noopener noreferrer" href="#" aria-label="Back to homepage" className="header__logo">
                     <img className="header__logo-img" src="https://cdn-icons-png.flaticon.com/512/230/230994.png" />
@@ -34,3 +51,5 @@ export default function Header(props) {
 
     )
 }
+
+export default memo(Header)

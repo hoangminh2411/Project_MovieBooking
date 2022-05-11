@@ -1,1 +1,2 @@
 export const  LAY_DANH_SAC_RAP = 'LAY_DANH_SACH_RAP'
+export const SET_CHI_TIET_PHIM = 'SET_CHI_TIET_PHIM'

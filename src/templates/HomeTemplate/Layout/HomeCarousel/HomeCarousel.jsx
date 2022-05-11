@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {memo, useEffect} from 'react'
 import { Carousel } from 'antd';
 import { useDispatch, useSelector} from 'react-redux';
 import './HomeCarousel.css'
@@ -12,15 +12,14 @@ const contentStyle = {
     lineHeight: '160px',
     textAlign: 'center',
     backgroundPosition: 'center',
-    backgroundSize:'cover',
+    backgroundSize:'contain',
     backgroundRepeat: 'no-repeat'
 };
 
-export default function HomeCarousel(props) {
-
+function HomeCarousel() {
     const {arrImg} = useSelector(state=>state.CarouselReducer)
     const dispatch = useDispatch()
-    console.log('arrImg',arrImg);
+    console.log('rerender carousel...',arrImg);
 
     useEffect(()=> {
 
@@ -39,8 +38,6 @@ export default function HomeCarousel(props) {
                 {/* <img src={item.hinhAnh} className="w-full opacity-0" alt={item.hinhAnh} /> */}
                 </div>
             </div>
-            
-        
         })
     }
 
@@ -53,3 +50,4 @@ export default function HomeCarousel(props) {
         </div>
     )
 }
+export default memo(HomeCarousel)
