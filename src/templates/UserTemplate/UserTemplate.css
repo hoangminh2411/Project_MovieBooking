@@ -1,0 +1,10 @@
+.backgroundUserTemplate {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    background-size: contain;
+    justify-content: center;
+    background-image: url('../../../public/bgAuth.jpg');
+    background-position: center;
+}

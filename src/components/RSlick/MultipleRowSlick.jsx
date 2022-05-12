@@ -38,7 +38,7 @@ const MultipleRows = (props) => {
   const renderFilms = () => {
     return props.arrFilm.slice(0,18).map((item, index) => {
       //className={`${styleSlick['width-item']}`}
-      return <div key={index} className="group relative mb-10 mr-10">
+      return <div key={index} className="group relative mb-10 mx-5">
         <Film film={item} />
         
       </div>
@@ -63,8 +63,8 @@ const MultipleRows = (props) => {
   let activeClassDC = filmStatus.dangChieu === true? 'active_Film': 'none_active_film'
   let activeClassSC = filmStatus.sapChieu === true? 'active_Film': 'none_active_film'
   return (
-    <div className="container  mx-auto">
-      <div className="flex justify-center items-center my-5 ">
+    <div className="container mx-auto pt-12">
+      <div className="flex justify-center items-center">
         <button activeClassName="text-white bg-gray-800" onClick={() => {
           setFilmStatus({
             dangChieu: true,  
@@ -86,7 +86,7 @@ const MultipleRows = (props) => {
       </div>
       {/* <Slider {...settings}> */}
       
-        <div className="pl-10 py-5 grid xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 shadow">
+        <div className="py-5 lg:mx-56 xl:mx-56 grid xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 shadow">
           {renderFilms()}
 
         </div>

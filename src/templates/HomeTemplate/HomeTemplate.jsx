@@ -3,7 +3,7 @@ import {Route} from "react-router";
 import Footer from "./Layout/Footer/Footer";
 import Header from "./Layout/Header/Header";
 import HomeCarousel from "./Layout/HomeCarousel/HomeCarousel";
-export const HomeTeplate = (props) => { //path, exac, Component (component truyền từ component sử dụng template)
+export const HomeTemplate = (props) => { //path, exac, Component (component truyền từ component sử dụng template)
     const {Component,...restProps} = props;
 
     return <Route {...restProps} render={(propsRoute)=>{

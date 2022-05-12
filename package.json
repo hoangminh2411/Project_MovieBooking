@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^4.20.2",
     "axios": "^0.27.2",
+    "formik": "^2.2.9",
     "history": "^4.10.0",
     "loader": "^2.1.1",
     "lodas": "^1.2.0",
@@ -24,7 +25,8 @@
     "redux-thunk": "^2.4.1",
     "sass": "^1.51.0",
     "slick-carousel": "^1.8.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",

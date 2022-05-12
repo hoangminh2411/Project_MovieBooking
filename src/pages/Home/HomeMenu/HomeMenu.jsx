@@ -63,7 +63,7 @@ function HomeMenu(props) {
                                             <div className="flex flex-wrap ">
                                                 
                                                 {phim.lstLichChieuTheoPhim?.slice(0,5).map((lichChieu, index) => {
-                                                    return <NavLink className=" text-black mr-2 my-2 text-center border px-2" to="/" key={index}>
+                                                    return <NavLink className=" text-gray-500 opacity-50 hover:text-gray-500 cursor-not-allowed mr-2 my-2 text-center border px-2" to="/" key={index}>
                                                         <div>
                                                             {lichChieu.tenRap}
                                                         </div>
@@ -72,7 +72,7 @@ function HomeMenu(props) {
                                                             {moment(lichChieu.ngayChieuGioChieu).format('h:mm A')}
                                                         </div>
                                                         <hr />
-                                                        <div className="text ">
+                                                        <div>
                                                         {moment(lichChieu.ngayChieuGioChieu).format('DD/MM/YYYY')}
                                                         </div>
 
@@ -99,7 +99,7 @@ function HomeMenu(props) {
     return (
         <>
 
-            <Tabs defaultActiveKey={0} onTabClick={handleAccessBrand} tabPosition='left'>
+            <Tabs className="shadow"  defaultActiveKey={0} onTabClick={handleAccessBrand} tabPosition='left'>
                 {renderCumRap()}
             </Tabs>
         </>

@@ -21,7 +21,7 @@ export class baseService {
     post = (url,model)=>{
         return axios({
             url: `${DOMAIN_CYBERBUG}/${url}`,
-            method:'PUT',
+            method:'POST',
             data:model,
             headers: {
                 'TokenCyberSoft':TOKEN_CYBERSOFT,

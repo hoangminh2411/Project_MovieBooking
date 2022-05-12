@@ -4,7 +4,7 @@ import { useSelector} from 'react-redux'
 import './Film.css'
 import { NavLink } from 'react-router-dom';
 import {history} from '../../App'
-
+import '../../assets/images/PlayVideo.png'
 function Film(props) {
     
     const { film } = props
@@ -14,7 +14,7 @@ function Film(props) {
             <div className="w-full overlay absolute top-0 left-0  group-hover:bg-black group-hover:opacity-50">
             </div>
             <div className="play__trailer">
-                <a href={film.trailer}> <img className="hidden group-hover:inline hover:opacity-50" src="https://movie-booking-project.vercel.app/img/carousel/play-video.png" alt="123" /></a>
+                <a href={film.trailer}> <img className="hidden group-hover:inline hover:opacity-50" src={require("../../assets/images/PlayVideo.png")} alt="123" /></a>
             </div>
             <div style={{ backgroundImage: `url(${film.hinhAnh})`, backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }} className="film rounded-t  overflow-hidden shadow-lg ">
 

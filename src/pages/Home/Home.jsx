@@ -13,29 +13,32 @@ import HomeCarousel from '../../templates/HomeTemplate/Layout/HomeCarousel/HomeC
 
 export default function Home(props) {
     const { arrFilm } = useSelector(state => state.QuanLyPhimReducer);
-    const {heThongRapChieu} = useSelector(state => state.QuanLyRapReducer);
+    const { heThongRapChieu } = useSelector(state => state.QuanLyRapReducer);
     const dispatch = useDispatch();
-    useEffect(()=> {
+    useEffect(() => {
 
         // 1 action = {type:'',data}
         // 2 (phải cài middleware): callBackFunction(dispatch)
-
+        window.scrollTo({ top: 0 });
         const action = layDanhSachPhimAction();
         dispatch(action);
-        
+
         dispatch(layDanhSachRapAction());
-    },[])
+    }, [])
 
     return (
         <div>
-            <HomeCarousel/>
-            <section className="text-gray-600 mt-4 mb-5">
-                <div className="container mx-auto">
-                    <MultipleRows arrFilm={arrFilm}/>
-                </div>
+            <HomeCarousel />
+            <section id="lichChieu" className="text-gray-600 pt-10">
+                
+                    <MultipleRows arrFilm={arrFilm} />
+                
             </section>
-            <div className="container mx-auto shadow">
-                <HomeMenu heThongRapChieu={heThongRapChieu} />
+            <div className="container mx-auto">
+                <div id="cumRap" className="opacity-0 lg:opacity-100 xl:opacity-100 lg:mx-56 xl:mx-56  pt-16">
+                    <HomeMenu heThongRapChieu={heThongRapChieu} />
+                </div>
+
             </div>
 
         </div>
