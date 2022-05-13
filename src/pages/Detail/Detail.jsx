@@ -44,7 +44,7 @@ export default function Detail(props) {
     <div>
       <div style={{ backgroundImage: `url(${filmDetail.hinhAnh})` }} className="detailBackground relative">
       </div>
-      <div className="detailContent w-full container mx-auto mt-10">
+      <div className="detailContent w-full container mx-auto mt-20">
         <div className=" flex justify-between items-center px-36 ">
           <div className="flex">
             <img style={{ height: '411px', width: '280px' }} src={filmDetail.hinhAnh} alt="" />
