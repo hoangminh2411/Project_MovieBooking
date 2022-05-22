@@ -6,6 +6,9 @@ export const soGheKhongVuotQua = 5;
 const stateDefault = {
     chiTietPhongVe: new ThongTinLichChieu,
     danhSachGheDangDat: [],
+    backUpDanhSachGheDangDat: [],
+    danhSachgheKhachDat:[],
+    //:[{maGhe:50921},{maGhe:50922}]
     soGheChoPhep: false,
     datVeThanhCong: false
     
@@ -48,11 +51,16 @@ export const QuanLyDatVeReducer = (state= stateDefault,action) => {
         }
 
         case DAT_VE_THANH_CONG : {
-            state.danhSachGheDangDat=[]
+            state.backUpDanhSachGheDangDat =  state.danhSachGheDangDat;
+            state.danhSachGheDangDat=[];
             state.datVeThanhCong = true;
             return {...state}
         }
 
+        case 'DAT_GHE_SOCKET':{
+            state.danhSachgheKhachDat = action.arrGheKhachDat;
+            return {...state}
+        }
         
 
         default: return {...state}

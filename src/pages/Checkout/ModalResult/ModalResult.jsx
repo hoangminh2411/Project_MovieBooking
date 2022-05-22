@@ -4,12 +4,14 @@ import { CloseCircleOutlined } from '@ant-design/icons'
 import './ModalResult.css'
 import  toLetters from '../../../util/NumbertoString'
 import moment from 'moment'
+import { useSelector } from 'react-redux'
 export default function ModalResult(props) {
-    const { thongTinPhim, danhSachGheDangDat, userLogin , setIsSuccess } = props
+    const {backUpDanhSachGheDangDat} = useSelector(state=>state.QuanLyDatVeReducer)
+    const { thongTinPhim, userLogin , setIsSuccess } = props
     const renderDanhSachGheDangDat = () => {
-        return danhSachGheDangDat.map((gheDD, index) => {
+        return backUpDanhSachGheDangDat.map((gheDD, index) => {
             return <span key={index}>{`${toLetters(Math.floor((gheDD.stt-1)/16)+1)}${(gheDD.stt) -16*Math.floor((gheDD.stt-1)/16)} `}
-                {danhSachGheDangDat.length <= 1 || index === danhSachGheDangDat.length - 1 ? '' : ','}
+                {backUpDanhSachGheDangDat.length <= 1 || index === backUpDanhSachGheDangDat.length - 1 ? '' : ','}
             </span>
         })
     }

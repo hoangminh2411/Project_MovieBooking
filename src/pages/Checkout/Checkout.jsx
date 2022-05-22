@@ -2,7 +2,7 @@
 import _, { round } from 'lodash'
 import React, { useEffect, Fragment, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { datVe, layChiTietPhongVe } from '../../redux/actions/QuanLyDatVeAction'
+import { datGheAction, datVe, layChiTietPhongVe } from '../../redux/actions/QuanLyDatVeAction'
 
 import style from './Checkout.module.css'
 import './Checkout.css'
@@ -17,6 +17,7 @@ import { soGheKhongVuotQua } from '../../redux/reducers/QuanLyDatVeReducer'
 import ModalResult from './ModalResult/ModalResult'
 
 import  toLetters from '../../util/NumbertoString'
+import { connection } from '../../index'
 const { Step } = Steps
 
 
@@ -29,18 +30,68 @@ const { Step } = Steps
 
 export default function Checkout(props) {
   const { userLogin } = useSelector(state => state.QuanLyNguoiDungReducer)
-  const { chiTietPhongVe, danhSachGheDangDat, soGheChoPhep, datVeThanhCong } = useSelector(state => state.QuanLyDatVeReducer)
+  const { chiTietPhongVe, danhSachGheDangDat, soGheChoPhep, datVeThanhCong, danhSachgheKhachDat } = useSelector(state => state.QuanLyDatVeReducer)
   const [isModalVisible, setIsModalVisible] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false)
   const dispatch = useDispatch();
+  console.log(`chiTietPhongVe`,chiTietPhongVe);
   useEffect(() => {
     // Gọi hàm tạo ra 1 async function
     const action = layChiTietPhongVe(props.match.params.id);
      
     // disptach fucntion này đi
     dispatch(action);
+
+
+    // Có 1 client thực hiện đặt vé thành công thì mình sẽ load lại danh sách phòng  vé của lịch chiếu đó 
+    connection.on("datVeThanhCong",()=>{
+      console.log('dat ve thanh cong')
+      connection.invoke("loadDanhSachGhe",props.match.params.id)
+    })
+
+    // Vừa vào trang load tất cả ghế của các người khác đang đặt
+    connection.invoke("loadDanhSachGhe",props.match.params.id)
+    
+
+    // Load danh sách ghế đang đặt từ sever về
+    connection.on("loadDanhSachGheDaDat",(dsGheKhachDat)=>{
+
+      console.log('DanhSachGheKhachDat',dsGheKhachDat);
+      // Bước 1: loại mình ra khỏi danh sách
+      dsGheKhachDat = dsGheKhachDat.filter(item=>item.taiKhoan !== userLogin.taiKhoan)
+
+      // Bước 2: gộp danh sách ghế khách đặt ở tất cả user thành 1 mảng chung
+      let arrGheKhachDat = dsGheKhachDat.reduce((result,item,index)=>{
+        let arrGhe = JSON.parse(item.danhSachGhe);
+        return [...result,...arrGhe]
+      },[]);
+
+      arrGheKhachDat = _.uniqBy(arrGheKhachDat,'maGhe')
+
+      console.log(arrGheKhachDat);
+
+      // Đưa dữ liệu về redux
+      dispatch({
+        type:'DAT_GHE_SOCKET',
+        arrGheKhachDat
+
+      })
+    })
+    
+    // Cài đặt sự kiện khi reload trang
+    window.addEventListener("beforeunload",clearGhe);
+
+    return ()=> {
+      clearGhe();
+      window.removeEventListener('beforeunload',clearGhe)
+    }
+
   }, [])
 
+  const clearGhe = function(event) {
+
+    connection.invoke('huyDat',userLogin.taiKhoan, props.match.params.id);
+  }
 
   const handleOk = () => {
     setIsModalVisible(true);
@@ -75,6 +126,13 @@ export default function Checkout(props) {
         classGheDangDat = 'gheDangDat'
       }
 
+      // Kiểm tra từng ghế xem có phải khách đặt hay k
+      let classGheKhachDat = '';
+      let indexGheKD = danhSachgheKhachDat.findIndex(gheKD=>gheKD.maGhe === ghe.maGhe);
+      if(indexGheKD !== -1 ) {
+        classGheKhachDat = 'gheKhachDat';
+      }
+
       let classGheDaDuocDat = '';
       if (userLogin.taiKhoan === ghe.taiKhoanNguoiDat) {
         classGheDaDuocDat = 'gheDaDuocDat'
@@ -84,12 +142,8 @@ export default function Checkout(props) {
         <button onClick={() => {
           const gheAlpha = `${toLetters(Math.floor(index/16)+1)}${ghe.stt -16*Math.floor(index/16)} ` 
           console.log('gheAlpha',gheAlpha);
-          dispatch({
-            type: DAT_GHE,
-            gheDuocChon: ghe
-
-          })
-        }} disabled={ghe.daDat} className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat} ${classGheDaDuocDat} text-center`}>
+          dispatch(datGheAction(ghe,props.match.params.id))
+        }} disabled={ghe.daDat || classGheKhachDat !== '' } className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat} ${classGheDaDuocDat} ${classGheKhachDat} text-center`}>
           {ghe.daDat ? classGheDaDuocDat !== '' ? <UserOutlined /> : <CloseOutlined className="font-bold" /> :ghe.stt -16*Math.floor((ghe.stt-1)/16)}
         </button>
         {(index % 16) === 0 ? <span className="alphaBooking font-bold text-xl" >{toLetters((index /16)+1)}</span> : ''}
@@ -192,6 +246,7 @@ export default function Checkout(props) {
                   <th>Ghế đã được đặt</th>
                   <th>Ghế vip</th>
                   <th>Ghế mình đặt</th>
+                  <th>Ghế khách đang đặt</th>
                 </tr>
               </thead>
               <tbody align="center" className="bg-white divide-y divide-gray-200">
@@ -201,6 +256,7 @@ export default function Checkout(props) {
                   <td><button style={{ width: '35px', height: '35px' }} className="ghe gheDaDat text-center"><CloseOutlined className="mb-3 font-bold" /></button></td>
                   <td><button style={{ width: '35px', height: '35px' }} className="ghe gheVip text-center">00</button></td>
                   <td><button style={{ width: '35px', height: '35px' }} className="ghe gheDaDuocDat text-center"><UserOutlined className="mb-3" /></button></td>
+                  <td><button style={{ width: '35px', height: '35px' }} className="ghe gheKhachDat text-center">00</button></td>
                 </tr>
               </tbody>
             </table>
