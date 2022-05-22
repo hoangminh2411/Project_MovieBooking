@@ -1,6 +1,14 @@
 import { history } from '../../../../App'
 import React, { memo, useEffect, useState } from 'react'
+
 import { NavLink } from 'react-router-dom'
+
+//  HashLink giống Navlink nhưng bổ sung thêm giúp scroll đển 1 component khác tương tự như dùng thẻ a và truyền href là id
+import { HashLink } from 'react-router-hash-link';
+
+
+
+
 import './Header.css'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -16,15 +24,15 @@ function Header(props) {
     const [scrollHeader, setScrollHeader] = useState(false)
     const { userLogin } = useSelector(state => state.QuanLyNguoiDungReducer);
     const dispatch = useDispatch()
-    console.log('reRenderHeader')
+    console.log(userLogin)
     const menu = (
         <Menu
             items={[
                 {
                     label: (
-                        <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-                            Cài đặt
-                        </a>
+                        <NavLink  to="/profile">
+                            Tài khoản của bạn
+                        </NavLink>
                     ),
                     key: '0',
                 },
@@ -55,7 +63,7 @@ function Header(props) {
     const renderLogin = () => {
         if (userLogin !== null) {
             return <div className="flex items-center">
-                <img className="rounded-full w-10 h-10 mr-2" src="https://i.pravatar.cc/100" alt="123" />
+                <img className="rounded-full w-10 h-10 mr-2" src={`https://i.pravatar.cc/150?u=${userLogin.hoTen}`} alt="123" />
                 <Dropdown overlay={menu}>
                     <NavLink className="text-black" to="/profile" onClick={e => e.preventDefault()}>
                         <Space>
@@ -68,8 +76,8 @@ function Header(props) {
         }
         else {
             return <>
-                <NavLink exact to="/login" activeClassName="active" className="text-black text-base hover:text-red-500 hover:font-medium self-center py-1 px-2">Đăng nhập</NavLink>
-                <NavLink exact to="/register" activeClassName="active" className="text-black text-base hover:text-red-500 hover:font-medium self-center py-1 px-2">Đăng ký</NavLink>
+                <NavLink exact to="/login" activeClassName="active" className="text-black text-base hover:text-red-500 hover:font-medium border-r-2 self-center py-1 px-2">Đăng nhập</NavLink>
+                <NavLink exact to="/register" activeClassName="active" className="text-black text-base hover:text-red-500 hover:font-medium   self-center py-1 px-2">Đăng ký</NavLink>
             </>
         }
     }
@@ -93,18 +101,18 @@ function Header(props) {
     return (
         <header className={scrollHeader ? 'header opacity-95  ' : 'header'}>
             <div className="header-container">
-                <NavLink rel="noopener noreferrer" to="/home" aria-label="Back to homepage" className="header__logo">
+                <NavLink rel="noopener noreferrer" to="/" aria-label="Back to homepage" className="header__logo">
                     <img className="header__logo-img" src="https://cdn-icons-png.flaticon.com/512/230/230994.png" />
                 </NavLink>
                 <ul className="header__navbar ">
                     <li className="header__navbar-item">
-                        <a href="#lichChieu" className=" header__navbar-item-link hover:text-red-500 hover:font-medium" activeClassName="header__navbar-item-link--active">Lịch chiếu</a>
+                        <HashLink to="/#lichChieu" className=" header__navbar-item-link hover:text-red-500 hover:font-medium" activeClassName="header__navbar-item-link--active">Lịch chiếu</HashLink>
                     </li>
                     <li className="header__navbar-item">
-                        <a href="#cumRap" className="header__navbar-item-link hover:text-red-500 hover:font-medium " activeClassName="header__navbar-item-link--active">Cụm rạp</a>
+                        <HashLink to="/#cumRap" className="header__navbar-item-link hover:text-red-500 hover:font-medium " activeClassName="header__navbar-item-link--active">Cụm rạp</HashLink>
                     </li>
                     <li className="header__navbar-item">
-                        <a to="/news" className="header__navbar-item-link hover:text-red-500 hover:font-medium" activeClassName="header__navbar-item-link--active">Tin tức</a>
+                        <HashLink to="/news" className="header__navbar-item-link hover:text-red-500 hover:font-medium" activeClassName="header__navbar-item-link--active">Tin tức</HashLink>
                     </li>
 
                 </ul>

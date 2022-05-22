@@ -43,7 +43,7 @@ function HomeCarousel() {
 
 
     return (
-        <div className="relative shadow-lg shadow-slate-50   ">
+        <div className="relative shadow-lg shadow-slate-300     ">
             <Carousel autoplay>
                     {renderCarousel()}  
             </Carousel>

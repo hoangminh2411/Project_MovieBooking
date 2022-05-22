@@ -12,7 +12,7 @@ export class baseService {
             data:model,
             headers: {
                 'TokenCyberSoft':TOKEN_CYBERSOFT,
-                'Authorization': 'Bearer' + localStorage.getItem(ACCESS_TOKEN) //JWT
+                'Authorization': "Bearer" +' '+ JSON.parse(localStorage.getItem(ACCESS_TOKEN)), //JWT
             }
         })
     }
@@ -25,7 +25,7 @@ export class baseService {
             data:model,
             headers: {
                 'TokenCyberSoft':TOKEN_CYBERSOFT,
-                'Authorization': 'Bearer' + localStorage.getItem(ACCESS_TOKEN) //JWT
+                'Authorization': "Bearer" +' '+ JSON.parse(localStorage.getItem(ACCESS_TOKEN)), //JWT
             }
         })
     }
@@ -36,7 +36,7 @@ export class baseService {
             method:'GET',
             headers: {
                 'TokenCyberSoft':TOKEN_CYBERSOFT,
-                'Authorization': 'Bearer' + localStorage.getItem(ACCESS_TOKEN) //TOKEN yêu cầu từ backend chứng minh tài khoản đã đăng nhập và có quyền truy cập
+                'Authorization': "Bearer" +' '+ JSON.parse(localStorage.getItem(ACCESS_TOKEN)), //TOKEN yêu cầu từ backend chứng minh tài khoản đã đăng nhập và có quyền truy cập
             }
         })
     }
@@ -47,7 +47,7 @@ export class baseService {
             method:'DELETE',
             headers: {
                 'TokenCyberSoft':TOKEN_CYBERSOFT,
-                'Authorization': 'Bearer' + localStorage.getItem(ACCESS_TOKEN)
+                'Authorization': "Bearer" +' '+ JSON.parse(localStorage.getItem(ACCESS_TOKEN)),
             }
         })
     }

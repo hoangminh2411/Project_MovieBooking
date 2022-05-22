@@ -7,9 +7,12 @@ import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { GROUP_ID } from '../../util/setting';
 import * as Yup from 'yup';
+import { dangKyAction } from '../../redux/actions/QuanLyNguoiDungAction';
 
 
 export default function Register() {
+
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -30,7 +33,8 @@ export default function Register() {
   }),
 
     onSubmit: values => {
-      
+      const action = dangKyAction(values);
+      dispatch(action);
       
     },
   });
@@ -103,7 +107,7 @@ export default function Register() {
             </div>
           </div>
           <div className="mt-5 mb-5 text-sm font-display font-semibold text-gray-700 text-center">
-            Don't have an account ? <NavLink to="/register" className="cursor-pointer text-indigo-600 hover:text-indigo-800">Register</NavLink>
+            You have an account ? <NavLink to="/login" className="cursor-pointer text-indigo-600 hover:text-indigo-800">Log in</NavLink>
           </div>
         </div>
         <div className="cursor-pointer " onClick={(e) => {

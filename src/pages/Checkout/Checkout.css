@@ -1,0 +1,152 @@
+
+.ghe {
+    width: 40px;
+    height: calc(15/20 * 40px);
+    border-radius: 5px;
+    cursor: pointer;
+   margin-right: 5px;
+    margin-bottom: 10px;
+    /* margin: 15px; */
+    background-color:rgb(211,215,220);
+    color:#fff;
+    position: relative;
+    padding-bottom: 5px;
+    
+}
+.ghe::after {
+    content:'';
+    width: 90%;
+    height:15%;
+    position: absolute;
+    bottom:-6px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color:rgb(211,215,220);
+    /* background-color: rgb(233,76,76); */
+    border-radius: 5px;
+    
+    
+}
+
+.ghe:hover {
+    width:45px;
+}
+
+/* .ghe::before {
+    content:'';
+    width: 90%;
+    height:85%;
+    position: absolute;
+    top:8%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color:rgb(197, 65, 65);
+    border-radius: 5px;
+    opacity:70%;
+    
+    clip-path: polygon(0% 0%, 0% 100%, 99% 100%, 100% 0%, 95% 0, 94% 95%, 83% 86%, 73% 81%, 53% 77%, 30% 80%, 20% 85%, 6% 95%, 6% 0);
+} */
+
+.gheDaDat {
+    
+    background-color: rgb(233,76,76);
+    cursor: no-drop;
+}
+
+.gheDaDat::after {
+    content:'';
+    width: 90%;
+    height:15%;
+    position: absolute;
+    bottom:-6px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(233,76,76);
+    /* background-color: rgb(233,76,76); */
+    border-radius: 5px;
+    
+   
+}
+
+
+.gheVip {
+    background-color: rgb(228,74,8);
+}
+
+.gheVip::after {
+    content:'';
+    width: 90%;
+    height:15%;
+    position: absolute;
+    bottom:-6px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(228,74,8);
+    /* background-color: rgb(233,76,76); */
+    border-radius: 5px;
+    
+    
+}
+
+
+/*Ghế được chính mình đặt  */
+.gheDaDuocDat {
+    background-color: rgb(246,246,246);
+    box-shadow: -1px 2px 18px -6px orange;
+    color: orange !important;
+    border: 1px solid orange;
+}
+
+.gheDaDuocDat::after {
+    content:'';
+    width: 90%;
+    height:15%;
+    position: absolute;
+    bottom:-6px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(246,246,246);
+    border: 1px solid orange;
+    /* background-color: rgb(233,76,76); */
+    border-radius: 5px;
+    
+    
+}
+
+tbody:before {
+    content:"@";
+    display:block;
+    line-height:10px;
+    text-indent:-99999px;
+}
+
+.gheDangDat {
+    background-color: rgb(18,176,18) !important;
+    box-shadow: -1px 2px 18px -6px rgb(18,176,18);
+}
+
+.gheDangDat::after {
+    content:'';
+    width: 90%;
+    height:15%;
+    position: absolute;
+    bottom:-6px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(18,176,18);
+    /* background-color: rgb(233,76,76); */
+    border-radius: 5px;
+
+}
+
+.screenMovie {
+    background: #c2c2c2;
+    height: 70px;
+    margin: 15px 0;
+    transform: rotateX(-45deg);
+    box-shadow: 0 3px 10px rgba(255,255,255,0.7);
+}
+.alphaBooking {
+    position: absolute;
+    left:-140%;
+}

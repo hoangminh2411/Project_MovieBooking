@@ -1,0 +1,21 @@
+.ticketResult {
+    
+        background:
+          radial-gradient(20px at right 52%, #0000 97%,#890002) right,
+          radial-gradient(20px at left  52%, #0000 97%,#890002) left;
+        background-size: 51% 100%;
+        background-repeat: no-repeat;
+        filter: drop-shadow(0 0.5rem 0.2rem rgb(0 0 0 / 50%));
+}
+.ticketResult h1{
+    color: white;
+}
+
+.ticketResult p {
+    color: gray;
+    font-style: italic;
+}
+
+.modalPath {
+    
+}

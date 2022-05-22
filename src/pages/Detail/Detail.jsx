@@ -101,8 +101,8 @@ export default function Detail(props) {
                           <div className="flex flex-wrap">
                             {cumRap.lichChieuPhim?.slice(0, 5).map((film, index) => {
 
-                              return <NavLink className="text-black mr-2 my-2 text-center border px-2" to="/" key={index}>
-                                <div>
+                              return <NavLink className="group hover:bg-gray-800 hover:text-white text-black mr-2 my-2 text-center border px-2" to={`/checkout/${film.maLichChieu}` } key={index}>
+                                <div className="group-hover:font-bold font-normal ">
                                   {film.tenRap}
                                 </div>
                                 <hr />

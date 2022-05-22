@@ -86,7 +86,7 @@ const MultipleRows = (props) => {
       </div>
       {/* <Slider {...settings}> */}
       
-        <div className="py-5 lg:mx-56 xl:mx-56 grid xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 shadow">
+        <div className="py-5 lg:mx-56 xl:mx-56 grid xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 shadow-lg">
           {renderFilms()}
 
         </div>

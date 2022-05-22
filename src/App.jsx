@@ -12,6 +12,9 @@ import Detail from './pages/Detail/Detail';
 import  CheckoutTemplate  from './templates/CheckoutTemplate/CheckoutTemplate';
 import Checkout from './pages/Checkout/Checkout';
 import { UserTemplate } from './templates/UserTemplate/UserTemplate';
+import ModalResult from './pages/Checkout/ModalResult/ModalResult';
+import Profile from './pages/Profile/Profile';
+import Loading from './components/Loading/Loading';
 // import {Suspense, lazy} from 'react'
 
 // const CheckoutTemplateLazy = lazy(()=> import('./templates/CheckoutTemplate/CheckoutTemplate'))
@@ -23,6 +26,7 @@ export const history = createBrowserHistory();
 function App() {
   return (
     <div className="app">
+      <Loading/>
       <Router history={history}>
         <Switch>
 
@@ -38,6 +42,7 @@ function App() {
           {/* <Suspense fallback={<h1>LOADING...</h1>}>
             <CheckoutTemplateLazy path="/checkout/:id" exact component={Checkout} />
           </Suspense> */}
+          <HomeTemplate path="/profile" exact Component ={Profile} />
         </Switch>
       </Router>
 

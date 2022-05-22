@@ -37,7 +37,7 @@ export default function Login(props) {
           <div>
             <div>
               <div className="text-sm font-bold text-white tracking-wide mb-1">Tài khoản</div>
-              <input name="taiKhoan" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:shadow-outline focus:border-indigo-500" />
+              <input name="taiKhoan" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border-b border-gray-300 focus:shadow-outline focus:caret-pink-500 " />
             </div>
             <div className="mt-8">
               <div className="flex justify-between items-center">
@@ -51,7 +51,7 @@ export default function Login(props) {
                   </a>
                 </div>
               </div>
-              <input name="matKhau" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500" type />
+              <input name="matKhau" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border-b border-gray-300 focus:caret-pink-500 "/>
             </div>
             <div className="mt-10">
               <button type="submit" className="bg-indigo-500 text-gray-100 p-4 w-full rounded-full tracking-wide

@@ -63,8 +63,8 @@ function HomeMenu(props) {
                                             <div className="flex flex-wrap ">
                                                 
                                                 {phim.lstLichChieuTheoPhim?.slice(0,5).map((lichChieu, index) => {
-                                                    return <NavLink className=" text-gray-500 opacity-50 hover:text-gray-500 cursor-not-allowed mr-2 my-2 text-center border px-2" to="/" key={index}>
-                                                        <div>
+                                                    return <NavLink className="group hover:bg-black hover:text-white text-black mr-2 my-2 text-center border px-2" to="/" key={index}>
+                                                        <div className="group-hover:font-bold">
                                                             {lichChieu.tenRap}
                                                         </div>
                                                         <hr />
