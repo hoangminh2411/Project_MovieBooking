@@ -1,10 +1,44 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {Route} from "react-router";
 import Footer from "./Layout/Footer/Footer";
 import Header from "./Layout/Header/Header";
 import HomeCarousel from "./Layout/HomeCarousel/HomeCarousel";
 export const HomeTemplate = (props) => { //path, exac, Component (component truyền từ component sử dụng template)
     const {Component,...restProps} = props;
+    const [state,setState] = useState ({
+        width: window.innerWidth,
+        height: window.innerHeight
+    })
+
+    useEffect(()=>{
+        // Chạy khi window load lần đầu
+        window.onload = () => {
+            setState({
+                width: window.innerWidth,
+                height: window.innerHeight
+            })
+        }
+
+        //chạy mỗi khi thay đổi kích thước
+        window.onresize = () => {
+            console.log(state)
+            setState({
+                width: window.innerWidth,
+                height: window.innerHeight
+            })
+        }
+    },[])
+
+    const renderComponent = (propsRoute) => {
+        if(state.width <=768) {
+            if(props.mobileComponent) {
+                return <props.mobileComponent {...propsRoute} />
+            }
+            return <Component {...propsRoute} />
+        }
+        return <Component {...propsRoute} />
+    }
+
 
     return <Route {...restProps} render={(propsRoute)=>{
         // props.location, props.history, props.match
@@ -12,11 +46,11 @@ export const HomeTemplate = (props) => { //path, exac, Component (component truy
         return <Fragment>
             <Header {...propsRoute}/>
             
-            <Component {...propsRoute} />
+            {renderComponent(propsRoute)}
+            {/* <Component {...propsRoute} /> */}
 
-
-            <hr className="mt-5"/>
-            <Footer {...propsRoute} />
+          
+            {/* <Footer {...propsRoute} /> */}
         </Fragment>
     }}/>
 }

@@ -34,7 +34,7 @@ function HomeMenu(props) {
 
     const renderCumRap = () => {
         return heThongRapChieu?.map((heThongRap, index) => {
-            return <TabPane style={{maxHeight:600,overflowY: 'auto',minHeight:600}} key={index} tab={<div className="border-b-2 pb-1"><img src={heThongRap.logo} className={keyActiveBrand ==index ? 'rounded-full w-10 h-10 opacity-100':'rounded-full w-10 h-10 opacity-20'} alt="" /> </div>}>
+            return <TabPane style={{maxHeight:600,minHeight:600,overflow: 'auto'}} key={index} tab={<div className="border-b-2 pb-1"><img src={heThongRap.logo} className={keyActiveBrand ==index ? 'rounded-full w-10 h-10 opacity-100':'rounded-full w-10 h-10 opacity-20'} alt="" /> </div>}>
                 
                 <Tabs defaultActiveKey={0} onTabClick={handleAccessRap} tabPosition="left" >
                     {heThongRap.lstCumRap?.map((cumRap, index) => {
@@ -63,7 +63,7 @@ function HomeMenu(props) {
                                             <div className="flex flex-wrap ">
                                                 
                                                 {phim.lstLichChieuTheoPhim?.slice(0,5).map((lichChieu, index) => {
-                                                    return <NavLink className="group hover:bg-black hover:text-white text-black mr-2 my-2 text-center border px-2" to="/" key={index}>
+                                                    return <NavLink className="group hover:bg-black hover:text-white text-black mr-2 my-2 text-center border px-2" to={`/checkout/${lichChieu.maLichChieu}` } key={index}>
                                                         <div className="group-hover:font-bold">
                                                             {lichChieu.tenRap}
                                                         </div>
@@ -99,7 +99,7 @@ function HomeMenu(props) {
     return (
         <>
 
-            <Tabs className="shadow"  defaultActiveKey={0} onTabClick={handleAccessBrand} tabPosition='left'>
+            <Tabs className="shadow-xl "  defaultActiveKey={0} onTabClick={handleAccessBrand} tabPosition='left'>
                 {renderCumRap()}
             </Tabs>
         </>

@@ -30,7 +30,7 @@
 }
 
 .header__navbar {
-    @apply items-stretch hidden space-x-3 lg:flex
+    @apply items-stretch  space-x-3 
 }
 
 .header__navbar-item {
@@ -43,4 +43,20 @@
 }
 .header__navbar-item-link--active {
     box-shadow: inset -25px 35px 6px -33px rgb(0 72 255 / 63%)
+}
+
+.line {
+    width: 0px;
+    height:68px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgb(226 232 240);
+    opacity:1;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    z-index: -1;
+}
+.parentLine:hover .line {
+    width: 237px;
 }

@@ -5,7 +5,7 @@
 
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     filter: blur(20px);
-    min-height: 110vh;
+    min-height: 90vh;
     width: 100%;
 
 }
@@ -19,6 +19,60 @@
 
 .booketMovieTable {
     @apply mt-16  mx-36  px-5 py-5 shadow;
-    background: rgba(255, 255, 255, 1);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-right: 1px solid rgba(255,255,255,0.2);
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    z-index: 10;
+    padding: 20px;
 
 }
+
+.lichChieuList {
+
+    animation: appearLefttoRight .5s linear
+}
+
+@keyframes appearLefttoRight {
+    from {
+        opactiy:0;
+        transform:translateX(-30px)
+
+    }
+    to {
+        opactiy:100;
+        transform:translateX(0)
+    }
+  }
+
+.lichChieuCard {
+    background-color:rgba(0,0,0,0.1);
+    color: #fff;
+}
+
+.lichChieuCard:hover {
+    background: #fff;
+    box-shadow: -15px 30px 50px rgba(0,0,0,0.5);
+    transform: scale(0.9) translateY(-8px);
+}
+
+/* Detail Mobile */
+.detailContentMobile {
+    animation: appearBottomtoTop .5s linear
+}
+
+
+
+@keyframes appearBottomtoTop {
+    from {
+        opactiy:0;
+        transform:translateY(40px)
+
+    }
+    to {
+        opactiy:100;
+        transform:translateX(0)
+    }
+  }

@@ -29,7 +29,9 @@
 }
 
 .ghe:hover {
-    width:45px;
+   transform: scaleX(1.1);
+   transition: all 0.2s ease-in-out;
+  
 }
 .gheDaDat:hover, .gheKhachDat:hover {
     width:40px;

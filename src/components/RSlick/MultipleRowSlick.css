@@ -1,0 +1,14 @@
+.ImageAnimate {
+    animation: toTopAppear .5s linear 
+}
+
+@keyframes toTopAppear {
+    from {
+        
+        transform: translateY(-50px);
+    }
+    to {
+        
+        transform: translateY(0)
+    }
+  }

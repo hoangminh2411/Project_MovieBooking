@@ -212,7 +212,7 @@ export default function Checkout(props) {
               </Steps>
             </div>
             <div className="xl:h-full xl:flex xl:flex-col xl:justify-center xl:items-center xl:basis-1/5 ">
-              <img className="inline-block rounded-full xl:w-14 xl:h-14 w-24" src={`https://i.pravatar.cc/150?u=${userLogin.taiKhoan}`} alt="" />
+              <img className="inline-block rounded-full xl:w-14 xl:h-14 w-24" src={`https://i.pravatar.cc/150?u=${userLogin.hoTen}`} alt="" />
               <p className="hidden xl:block xl:mb-0 xl:text-center xl:font-medium xl:text-xl xl:text-gray-300">{userLogin.hoTen}</p>
             </div>
 

@@ -1,19 +1,20 @@
 
 import { history } from "../../App"
 import { quanLyNguoiDungService } from "../../services/QuanLyNguoiDung"
-import { DANG_KY_ACTION, DANG_NHAP_ACTION, LAY_THONG_TIN_NGUOI_DUNG } from "../types/QuanLyNguoiDungType"
+import { DANG_KY_ACTION, DANG_NHAP_ACTION, LAY_THONG_TIN_NGUOI_DUNG, SUA_THONG_TIN_NGUOI_DUNG } from "../types/QuanLyNguoiDungType"
 
 
 import { message, Button } from 'antd';
 import { displayLoadingAction, hideLoadingAction } from "./LoadingAction";
+import { USER_LOGIN } from "../../util/setting";
 
-
+const handleLogin = (type,data) => {
+    message[type](data,1);
+}
 
 export const dangNhapAction = (thongtinDangNhap) => {
 
-    const handleLogin = (type,data) => {
-        message[type](data,1);
-    }
+   
 
     
     return async (dispatch) => {
@@ -56,6 +57,29 @@ export const dangKyAction = (thongtinDangKy) => {
         }
         catch(errors) {
             console.log('erros Dang Ky Action:',errors)
+        }
+    }
+}
+
+export const suaThongTinNguoiDung = (thongTinNguoiDung)=>{
+    return async (dispatch) => {
+        try {
+            const result = await quanLyNguoiDungService.chinhSua(thongTinNguoiDung)
+
+            if(result.status === 200) {
+              await  dispatch({
+                    type: SUA_THONG_TIN_NGUOI_DUNG,
+                    thongTinThayDoi: result.data.content
+                })
+            
+                handleLogin('success',`Thay đổi thành công`)  
+            }
+         
+            console.log('result',result);
+        }
+        catch(errors) {
+            console.log(errors)
+            handleLogin('error',`Thay đổi thất bại`)
         }
     }
 }
