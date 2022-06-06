@@ -29,6 +29,7 @@ export default function Detail(props) {
   useEffect(() => {
     // Lấy thông tin param từ url
     window.scrollTo({ top: 0 });
+ 
     let { id } = props.match.params;
     dispatch(layThongTinChiTietPhim(id))
   }, [])

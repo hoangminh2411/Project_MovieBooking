@@ -4,6 +4,7 @@ import { useDispatch, useSelector} from 'react-redux';
 import './HomeCarousel.css'
 
 import { getCarouselAction } from '../../../../redux/actions/CarouselAction';
+import TicketSearch from '../../../../components/TicketSearch/TicketSearch';
 
 
 const contentStyle = {
@@ -47,6 +48,7 @@ function HomeCarousel() {
             <Carousel autoplay>
                     {renderCarousel()}  
             </Carousel>
+            <TicketSearch/>
         </div>
     )
 }

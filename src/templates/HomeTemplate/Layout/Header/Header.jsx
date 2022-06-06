@@ -34,7 +34,7 @@ function Header(props) {
     const onClose = () => {
         setVisible(false);
     };
-    console.log(userLogin)
+    console.log('userLogin',userLogin)
     const menu = (
         <Menu
             items={[
@@ -63,9 +63,13 @@ function Header(props) {
                     type: 'divider',
                 },
                 {
-                    label: 'Admin Dashboard（disabled）',
+                    label:  (
+                        <NavLink to="/admin/films">
+                            Admin dashboard
+                        </NavLink>
+                    ),
                     key: '3',
-                    disabled: true,
+                    disabled: userLogin.maLoaiNguoiDung ==="KhachHang",
                 },
             ]}
         />
@@ -96,12 +100,11 @@ function Header(props) {
         }
     }
 
-
+   
     useEffect(() => {
         const handleScroll = () => {
             setScrollHeader(window.scrollY > 0)
         }
-
         window.addEventListener('scroll', handleScroll)
 
         // clean up function

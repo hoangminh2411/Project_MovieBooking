@@ -9,7 +9,8 @@ const onChange = (key) => {
 
 export default function News() {
     return (
-        <div className="">
+        <div className="container mx-auto">
+        <div  id="news" className="lg:mx-56 xl:mx-56  pt-16">
             <Tabs style={{color:'#FA5238',fontSize:'14px'}}  centered={true} defaultActiveKey="1" onChange={onChange}>
                 <TabPane  tab={<div className="text-black hover:text-red-600 hover:scale-110 hover:-translate-y-1 flex justify-center items-center">ĐIỆN ẢNH 24H</div>} key="1">
                     <div className="grid grid-cols-12">
@@ -267,6 +268,8 @@ export default function News() {
                     </div>
                 </TabPane>
             </Tabs>
+        </div>
+
         </div>
     )
 }

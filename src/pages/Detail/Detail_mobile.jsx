@@ -63,7 +63,7 @@ export default function Detail_mobile(props) {
       
         <div className="absolute" style={{ top: '13%', right: '5%' }}><div className="text-white shadow flex justify-center items-center rounded-3xl px-3 py-1 bg-gray-500" style={{ zIndex: '999' }}><ClockCircleOutlined /> <p className="ml-1 mb-0">{moment(filmDetail.ngayKhoiChieu).format('DD/MM/YYYY')}</p></div></div>
         {/* <div className="rounded-3xl w-full h-full absolute top-0 left-0 bg-black opacity-30"></div> */}
-        <div className="text-white " style={{ backgroundColor: 'rgb(10, 32, 41)', paddingTop: '10%',height: '600px'}}>
+        <div className="text-white " style={{ backgroundColor: 'rgb(10, 32, 41)', paddingTop: '10%',height: '700px'}}>
           <div className="flex justify-center text-white">
             <h2 id="dateSelect" className="font-bold text-white text-2xl">Select Date and Times</h2>
           </div>
@@ -121,7 +121,7 @@ export default function Detail_mobile(props) {
             })}
           </Tabs>
           <div className="flex justify-center items-end">
-          <img  className="w-full h-full" src={require('../../assets/images/Lovepik_com-401229893-at-home-watching-movies.png')} alt="" />
+          <img  className="w-full h-full" src={require('../../assets/images/13067-removebg-preview (1).png')} alt="" />
           </div>
           
 

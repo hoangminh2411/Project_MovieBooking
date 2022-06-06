@@ -18,15 +18,8 @@ import ModalResult from './ModalResult/ModalResult'
 
 import  toLetters from '../../util/NumbertoString'
 import { connection } from '../../index'
+import { NavLink } from 'react-router-dom'
 const { Step } = Steps
-
-
-
-
-
-
-
-
 
 export default function Checkout(props) {
   const { userLogin } = useSelector(state => state.QuanLyNguoiDungReducer)
@@ -211,10 +204,10 @@ export default function Checkout(props) {
                 <Step status="wait" title="Done" icon={<SmileOutlined />} />
               </Steps>
             </div>
-            <div className="xl:h-full xl:flex xl:flex-col xl:justify-center xl:items-center xl:basis-1/5 ">
+            <NavLink to="/profile" className="xl:h-full xl:flex xl:flex-col xl:justify-center xl:items-center xl:basis-1/5 ">
               <img className="inline-block rounded-full xl:w-14 xl:h-14 w-24" src={`https://i.pravatar.cc/150?u=${userLogin.hoTen}`} alt="" />
               <p className="hidden xl:block xl:mb-0 xl:text-center xl:font-medium xl:text-xl xl:text-gray-300">{userLogin.hoTen}</p>
-            </div>
+            </NavLink>
 
 
           </div>

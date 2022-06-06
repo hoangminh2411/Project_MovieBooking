@@ -50,7 +50,7 @@ export const HomeTemplate = (props) => { //path, exac, Component (component truy
             {/* <Component {...propsRoute} /> */}
 
           
-            {/* <Footer {...propsRoute} /> */}
+            <Footer {...propsRoute} />
         </Fragment>
     }}/>
 }

@@ -1,126 +1,96 @@
-import React, {useState, memo, useEffect } from "react";
+import React, { useState, memo, useEffect } from "react";
 import { useDispatch } from "react-redux";
-
+import { Modal, Button } from 'antd';
 import { SET_PHIM_DANG_CHIEU, SET_PHIM_SAP_CHIEU } from "../../redux/types/QuanLyPhimType";
 import Film from "../Film/Film";
 import styleSlick from './MultipleRowSlick.module.css'
 import './MultipleRowSlick.css'
-// import { motion, AnimatePresence, useAnimation } from "framer-motion"
-// import { useInView } from 'react-intersection-observer'
+import ModalTrailer from "../ModalTrailer/ModalTrailer";
 
-// function SampleNextArrow(props) {
-//   const { className, style, onClick } = props;
-//   return (
-//     <div
-//       className={`${className} ${styleSlick['slick-next']}`}
-//       style={{ ...style, display: "block", color: 'black' }}
-//       onClick={onClick}
-//     />
-//   );
-// }
 
-// function SamplePrevArrow(props) {
-//   const { className, style, onClick } = props;
-//   return (
-//     <div
-//       className={`${className} ${styleSlick['slick-prev']}`}
-//       style={{ ...style, display: "block", color: 'black' }}
-//       onClick={onClick}
-//     />
-//   );
-// }
+
+
 const MultipleRows = (props) => {
-  // const { ref, inView } = useInView({
-  //   threshold: 0.2
-  // });
-  // const animation = useAnimation()
+
   const [filmStatus, setFilmStatus] = useState({
     dangChieu: false,
     sapChieu: false
   })
 
-  // useEffect(() => {
-  //   if (inView) {
-  //     animation.start({
-
-  //       y: 0,
-  //       opacity:'100%',
-  //       transition: {
-  //         type: 'spring', duration: 2, bounce: 0.3
-  //       }
-  //     });
-  //   }
-  //   if (!inView) {
-  //     animation.start({ y: '50px',opacity:'50%'})
-  //   }
-  //   console.log("use effect hook, inview=", inView)
-  // }, [inView])
+  const [showTrailer, setShowTrailer] = useState(false)
+  const [trailer,setTrailer] = useState('')
+  
   const dispatch = useDispatch();
   console.log('phim', props.arrFilm);
+  const handleShowTrailer = ()=>{
+    setShowTrailer(true);
+  }
+
+  const handleCloseTrailer = () => {
+    setShowTrailer(false)
+  }
+
+  const renderTrailer=  (trailer) => {
+    setTrailer(trailer)
+  }
   const renderFilms = () => {
-    return props.arrFilm.slice(0, 18).map((item, index) => {
+    return props.arrFilm.map((item, index) => {
       //className={`${styleSlick['width-item']}`}
-      return <div  key={index} className="ImageAnimate transition group relative mb-10 mx-5" >
-        <Film film={item} />
+      return <div key={index} className="ImageAnimate transition group relative mb-10 mx-5" >
+        <Film renderTrailer={renderTrailer} handleShowTrailer={handleShowTrailer} film={item} />
 
       </div>
     })
 
 
   }
-  // const settings = {
-  //   className: "slider variable-width",
-  //   centerMode: true,
-  //   infinite: true,
-  //   centerPadding: "60px",
-  //   slidesToShow: 2,
-  //   speed: 500,
-  //   rows: 2,
-  //   slidesPerRow: 1,
-  //   variableWidth: true,
-  //   nextArrow: <SampleNextArrow />,
-  //   prevArrow: <SamplePrevArrow />
-  // };
 
   let activeClassDC = filmStatus.dangChieu === true ? 'active_Film' : 'none_active_film'
   let activeClassSC = filmStatus.sapChieu === true ? 'active_Film' : 'none_active_film'
   return (
-    <div className="container mx-auto pt-12">
-      <div className="flex justify-center items-center">
-        <button activeClassName="text-white bg-gray-800" onClick={() => {
-          setFilmStatus({
-            dangChieu: true,
-            sapChieu: false,
-          })
-          const action = { type: SET_PHIM_DANG_CHIEU }
-          dispatch(action);
-        }} className={`${styleSlick[activeClassDC]} px-8 py-3 font-semibold rounded-lg mr-2`}>PHIM ĐANG CHIẾU</button>
-        
-        <button activeClassName="text-white bg-gray-800" onClick={() => {
-          setFilmStatus({
-            sapChieu: true,
-            dangChieu: false,
-          })
-          const action = { type: SET_PHIM_SAP_CHIEU }
-          dispatch(action);
-        }} className={`${styleSlick[activeClassSC]} px-8 py-3 font-semibold rounded-lg mr-2`}>PHIM SẮP CHIẾU</button>
+    <>
+      <ModalTrailer trailer={trailer}  handleCloseTrailer={handleCloseTrailer} showTrailer={showTrailer} />
+      <section id="lichChieu" className="text-gray-600 pt-10">
+        <div className="container mx-auto pt-12">
+          <div className="flex justify-center items-center">
+            <button activeClassName="text-white bg-gray-800" onClick={() => {
+              setFilmStatus({
+                dangChieu: true,
+                sapChieu: false,
+              })
+              const action = { type: SET_PHIM_DANG_CHIEU }
+              dispatch(action);
+            }} className={`${styleSlick[activeClassDC]} px-8 py-3 font-semibold rounded-lg mr-2`}>PHIM ĐANG CHIẾU</button>
 
-      </div>
-      {/* <Slider {...settings}> */}
+            <button activeClassName="text-white bg-gray-800" onClick={() => {
+              setFilmStatus({
+                sapChieu: true,
+                dangChieu: false,
+              })
+              const action = { type: SET_PHIM_SAP_CHIEU }
+              dispatch(action);
+            }} className={`${styleSlick[activeClassSC]} px-8 py-3 font-semibold rounded-lg mr-2`}>PHIM SẮP CHIẾU</button>
 
-      <div  className="py-5 lg:mx-56 xl:mx-56 grid xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 shadow-lg">
+          </div>
+          {/* <Slider {...settings}> */}
 
-
-        {renderFilms()}
-
-
-      </div>
+          <div className="py-5 lg:mx-56 xl:mx-56 grid xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 shadow-lg">
 
 
+            {renderFilms()}
 
 
-      {/* </Slider> */}
-    </div>
+          </div>
+
+
+
+
+          {/* </Slider> */}
+        </div>
+       
+      </section>
+
+    </>
   );
 }
 

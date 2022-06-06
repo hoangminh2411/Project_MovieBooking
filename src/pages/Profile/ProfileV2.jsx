@@ -33,11 +33,11 @@ export default function ProfileV2() {
     
     const formik = useFormik({
         initialValues: {
-            taiKhoan: userLogin.taiKhoan,
+            taiKhoan: '',
             matKhau: '',
-            email: userLogin.email,
+            email: '',
             soDt: '',
-            maLoaiNguoiDung:'KhachHang',
+            maLoaiNguoiDung:'QuanTri',
             maNhom: GROUP_ID,
             hoTen: '',
         },
@@ -56,6 +56,8 @@ export default function ProfileV2() {
             dispatch(action);
 
         },
+
+        
     });
     
     const showDrawer = () => {
@@ -103,17 +105,17 @@ export default function ProfileV2() {
                 })
             }
             return <MotionConfig transition={{ duration: .5 }}>
-                <motion.tr className="bg-white relative hover:bg-slate-200 hover:cursor-pointer pb-20 overflow "
-                    initial={{ y: '0', opacity: '0' }}
-                    animate={{ y: '-10px', opacity: '1' }}
-                    exit={{ y: '0', opacity: '0' }}
+                <motion.tr  className="bg-white relative hover:bg-slate-200 hover:cursor-pointer pb-20 overflow "
+                    // initial={{ y: '0', opacity: '0' }}
+                    // animate={{ y: '-10px', opacity: '1' }}
+                    // exit={{ y: '0', opacity: '0' }}
                 >
                     <td className="px-6 py-4 rounded-l-xl">
                         {item.maVe}
                     </td>
-                    <th scope="row" className="px-6 py-4 font-medium text-gray-900  whitespace-nowrap">
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900  whitespace-nowrap">
                         {item.tenPhim}
-                    </th>
+                    </td>
                     <td className="px-6 py-4">
                         {item.danhSachGhe[0].tenHeThongRap} - {item.danhSachGhe[0].tenCumRap}
                     </td>
@@ -155,9 +157,9 @@ export default function ProfileV2() {
     }
 
     return (
-        <div className="mt-20 w-screen h-screen">
+        <>
             <Modal title="Edit User" visible={isModalVisible} onCancel={handleCancel} footer={[
-                <button type="submit" className="px-6 py-2 rounded-lg text-white font-medium hover:bg-cyan-900  bg-cyan-600">Save all</button>
+                <button onClick={handleOk} type="submit" className="px-6 py-2 rounded-lg text-white font-medium hover:bg-cyan-900  bg-cyan-600">Save all</button>
             ]}>
                 <form onSubmit={formik.handleSubmit}>
                     <div>
@@ -208,8 +210,8 @@ export default function ProfileV2() {
                     </div>
                 </form>
             </Modal>
-            <div className="grid grid-cols-12 w-full h-full p-5" style={{ backgroundColor: 'rgb(255,249,249)' }}>
-                <div className="col-span-2 bg-green-500 rounded-3xl mr-5 ">
+            <div className="grid grid-cols-12 w-full h-full pt-16 pr-5" style={{ backgroundColor: 'rgb(255,249,249)' }}>
+                <div className="hidden lg:block col-span-2 bg-green-500 rounded-3xl mr-5 ">
                     <div className="flex flex-col h-full rounded-3xl" style={{ backgroundColor: 'rgb(15,21,45)' }}>
                         <div className="flex flex-col items-center justify-center" style={{ height: '30%' }}>
                             <img className="rounded-full w-20 h-20" src={`https://i.pravatar.cc/150?u=${userLogin.hoTen}`} alt="123" />
@@ -230,9 +232,9 @@ export default function ProfileV2() {
                         </div>
                     </div>
                 </div>
-                <div className="col-span-10 h-screen">
-                    <h1 className="font-bold text-3xl">Booking History</h1>
-                    <div className="flex justify-between items-center my-14">
+                <div className="col-span-12 lg:col-span-10 h-screen">
+                    <h1 className="font-bold text-3xl lg:text-left text-center">Booking History</h1>
+                    <div className="flex lg:flex-row flex-col justify-between items-center my-14">
                         <ul>
                             <li className="inline-block mr-2 font-bold">
                                 <a href="#" className="text-red-500 text-lg">History</a>
@@ -245,7 +247,7 @@ export default function ProfileV2() {
                             <p className="font-semibold"><span className="inline-flex items-center mr-2 pl-3 pr-4 py-3 border border-gray-300 rounded-xl shadow text-gray-500 "><CalendarOutlined /> 11-01-2021</span> To  <span className="inline-flex items-center ml-2 pl-3 pr-4 py-3 border border-gray-300 rounded-xl shadow text-gray-500"><CalendarOutlined /> 11-01-2021</span></p>
                         </div>
                     </div>
-                    <div className="relative  overflow-auto " style={{ height: '750px' }}>
+                    <div className="relative  overflow-auto " style={{ height: '650px' }}>
                         <table className="w-full text-sm text-left " style={{ borderCollapse: 'separate', borderSpacing: '0 10px' }}>
                             <thead className="text-xs  uppercase" style={{ backgroundColor: 'rgba(231,227,233,0.4)' }}>
                                 <tr className="">
@@ -269,7 +271,7 @@ export default function ProfileV2() {
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <motion.tbody layout >
                                 {renderTicketItem()}
                                 {/* <tr className="bg-white  hover:bg-slate-200 hover:cursor-pointer">
                                     <td className="px-6 py-4 rounded-l-xl">
@@ -292,13 +294,13 @@ export default function ProfileV2() {
                                     </td>
                                 </tr> */}
 
-                            </tbody>
+                            </motion.tbody>
                         </table>
                     </div>
 
                 </div>
 
             </div>
-        </div>
+        </>
     )
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Carousel } from 'antd';
+import bg from '../../../assets/images/backapp.jpg'
 const contentStyle = {
     height: '370px',
     width:'100%',
@@ -10,6 +11,9 @@ const contentStyle = {
 };
 export default function AppSection() {
     return (
+        <div id="apps" className="mt-5" style={{backgroundImage: `url(${bg})`,color:'white',height:'fit-content',backgroundSize:'cover',backgroundPosition:'center'}}>
+       
+             <div className="py-16 m-auto " style={{height:'fit-content',maxWidth:'940px',}}>
         <div className="grid grid-cols-12">
             <div className="col-span-6">
                 <div className="flex justify-center items-center xl:text-left text-center">
@@ -57,6 +61,8 @@ export default function AppSection() {
                 </div>
 
             </div>
+        </div>
+             </div>
         </div>
     )
 }

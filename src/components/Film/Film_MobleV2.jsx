@@ -71,6 +71,8 @@ export default function Film_Moble() {
     let activeClassDC = filmStatus.dangChieu === true ? 'active_FilmMoble' : 'none_active_filmMoble'
     let activeClassSC = filmStatus.sapChieu === true ? 'active_FilmMoble' : 'none_active_filmMoble'
     return (
+        <section id="lichChieu" className="text-gray-600 pt-10">
+
         <div className="relative w-screen h-screen overflow-hidden">
             <div className="flex justify-center items-center absolute w-full top-2 left-1/2 -translate-x-1/2" style={{zIndex:'99'}}>
                 <div className="rounded-2xl flex justify-center items-center py-1" style={{backgroundColor:'rgba(0,0,0,0.5'}}>
@@ -117,5 +119,6 @@ export default function Film_Moble() {
             </div>
 
         </div>
+        </section>
     )
 }

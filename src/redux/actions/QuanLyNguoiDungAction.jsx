@@ -1,7 +1,7 @@
 
 import { history } from "../../App"
 import { quanLyNguoiDungService } from "../../services/QuanLyNguoiDung"
-import { DANG_KY_ACTION, DANG_NHAP_ACTION, LAY_THONG_TIN_NGUOI_DUNG, SUA_THONG_TIN_NGUOI_DUNG } from "../types/QuanLyNguoiDungType"
+import { DANG_KY_ACTION, DANG_NHAP_ACTION, LAY_DANH_SACH_NGUOI_DUNG, LAY_THONG_TIN_NGUOI_DUNG, SUA_THONG_TIN_NGUOI_DUNG } from "../types/QuanLyNguoiDungType"
 
 
 import { message, Button } from 'antd';
@@ -50,13 +50,13 @@ export const dangKyAction = (thongtinDangKy) => {
 
             if(result.status === 200) {
                 alert('Đăng ký thành công!');
-                history.push('/login' )       
+                // history.push('/login' )       
             }
 
             console.log('result',result);
         }
         catch(errors) {
-            console.log('erros Dang Ky Action:',errors)
+            console.log('erros Dang Ky Action:',errors.response.data)
         }
     }
 }
@@ -104,6 +104,59 @@ export const layThongTinNguoiDung = () => {
         catch(errors) {
 
             console.log('erros Lay Thong Tin User Action:',errors)
+        }
+    }
+}
+
+export const layDanhSachNguoiDung = () => {
+
+    return async (dispatch) => {
+        try {
+            dispatch(displayLoadingAction)
+            const result = await quanLyNguoiDungService.layDanhSachNguoiDung()
+
+            if(result.status === 200) {
+                // successLogin(result.data.content.hoTen);
+               await dispatch({
+                    type:LAY_DANH_SACH_NGUOI_DUNG, 
+                    danhSachNguoiDung: result.data.content
+                });   
+            }
+            await dispatch(hideLoadingAction)
+            console.log('result Danh Sach Nguoi Dung',result);
+        }
+        catch(errors) {
+
+            console.log('erros Lay Danh Sach User Action:',errors)
+        }
+    }
+}
+
+export const xoaNguoiDungAction = (taiKhoan) => {
+    return async (dispatch) => {
+        try {
+            const result = await quanLyNguoiDungService.xoaNguoiDung(taiKhoan)
+            alert('xóa người dùng thành công')
+            dispatch(layDanhSachNguoiDung())
+            
+
+        }
+        catch(errors) {
+            console.log('errors xóa người dùng',errors)
+        }
+    }
+}
+
+
+export const capNhatThongTinNguoiDungAction  = (thongTinNguoiDung) => {
+    return async (dispatch) => {
+        try{
+            const result = await quanLyNguoiDungService.capNhatThongTinNguoiDung(thongTinNguoiDung);
+            alert('cập nhật người dùng thành công')
+            dispatch(layDanhSachNguoiDung())
+        }
+        catch(errors) {
+            console.log('errors',errors)
         }
     }
 }

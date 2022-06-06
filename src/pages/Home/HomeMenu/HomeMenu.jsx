@@ -97,12 +97,14 @@ function HomeMenu(props) {
     }
 
     return (
-        <>
+        <div className="container mx-auto">
+             <div id="cumRap" className="hidden lg:block xl:block lg:mx-56 xl:mx-56  pt-16">
 
             <Tabs className="shadow-xl "  defaultActiveKey={0} onTabClick={handleAccessBrand} tabPosition='left'>
                 {renderCumRap()}
             </Tabs>
-        </>
+             </div>
+        </div>
     )
 }
 

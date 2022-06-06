@@ -1,0 +1,19 @@
+.SearchTicket{
+    left: 50%;
+    width: 100%;
+    bottom: 0;
+    height: 83px;
+    margin: auto;
+    position: absolute;
+    max-width: 940px;
+    transform: translate(-50%,50%);
+    box-shadow: 0 0 10px rgb(0 0 0 / 30%);
+    align-items: center;
+    border-radius: 5px;
+    background-color: #fff;
+    z-index:20;
+}
+
+.datVeButton {
+    background-color: #4a4a4a
+}

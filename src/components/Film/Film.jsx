@@ -5,16 +5,20 @@ import './Film.css'
 import { NavLink } from 'react-router-dom';
 import {history} from '../../App'
 import '../../assets/images/PlayVideo.png'
+
 function Film(props) {
     
-    const { film } = props
+    const {handleShowTrailer,renderTrailer, film } = props
 
     return (
         <Fragment>
             <div className="w-full overlay absolute top-0 left-0 rounded-lg  group-hover:bg-black group-hover:opacity-50">
             </div>
-            <div className="play__trailer">
-                <a href={film.trailer}> <img className="hidden group-hover:inline hover:opacity-50" src={require("../../assets/images/PlayVideo.png")} alt="123" /></a>
+            <div onClick={()=>{
+                renderTrailer(film.trailer)
+                handleShowTrailer()
+            }} className="play__trailer">
+                 <img className="hidden group-hover:inline hover:opacity-50" src={require("../../assets/images/PlayVideo.png")} alt="123" />
             </div>
             <div style={{ backgroundImage: `url(${film.hinhAnh})`}} className="film rounded-lg   overflow-hidden shadow-lg ">
 
