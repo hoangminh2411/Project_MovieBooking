@@ -1,12 +1,10 @@
-import logo from './logo.svg';
+
 import './App.css';
 import { createBrowserHistory } from 'history'
 import { Router, Switch, Route } from 'react-router-dom'
 import { HomeTemplate } from './templates/HomeTemplate/HomeTemplate';
 import Home from './pages/Home/Home';
 
-import Contact from './pages/Contact/Contact';
-import News from './pages/News/News';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import Detail from './pages/Detail/Detail';
@@ -26,6 +24,7 @@ import ShowTimes from './pages/Admin/Films/ShowTimes/ShowTimes';
 import Users from './pages/Admin/Users/Users';
 import AddFilm from './pages/Admin/Films/AddFilm/AddFilm';
 import Edit from './pages/Admin/Films/Edit/Edit';
+import Nomatch from './components/Nomatch/Nomatch';
 
 // import {Suspense, lazy} from 'react'
 
@@ -44,16 +43,14 @@ function App() {
 
 
           <HomeTemplate path="/home" exact Component={Home} />
-          <HomeTemplate path="/contact" exact Component={Contact} />
-          <HomeTemplate path="/news" exact Component={News} />
-          <HomeTemplate path="/detail/:id" exact Component={Detail} mobileComponent={Detail_mobile} />
           <HomeTemplate path="/" exact Component={Home} />
+          <HomeTemplate path="/detail/:id" exact Component={Detail} mobileComponent={Detail_mobile} />
+          <CheckoutTemplate path="/checkout/:id" exact component={Checkout} />
           {/* <Suspense fallback={<h1>LOADING...</h1>}>
             <CheckoutTemplateLazy path="/checkout/:id" exact component={Checkout} />
           </Suspense> */}
           <HomeTemplate path="/profile" exact Component ={ProfileV2} />
 
-          <CheckoutTemplate path="/checkout/:id" exact component={Checkout} />
 
           <UserTemplate path="/login" exact Component={Login} />
           <UserTemplate path="/register" exact Component={Register} />
@@ -64,6 +61,9 @@ function App() {
           <AdminTemplate path="/admin/films/edit/:id" exact Component={Edit} />
           <AdminTemplate path="/admin/films/showtimes/:id" exact Component={ShowTimes} />
           <AdminTemplate path="/admin/users" exact Component={Users} />
+
+
+          <Route exact component={Nomatch}/>
         </Switch>
       </Router>
 

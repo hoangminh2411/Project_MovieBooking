@@ -25,7 +25,6 @@ export const themPhimUploadHinhAction = (formData) => {
         try {
             let result = await quanLyPhimService.themPhimUploadHinhAnh(formData);
             alert('Thêm thành công')
-            console.log('result',result.data.content);
 
         }
         catch(errors) {
@@ -40,7 +39,6 @@ export const capNhapPhimUploadHinhAnhAction = (formData) => {
         try {
             let result = await quanLyPhimService.capNhapPhimUploadHinhAnh(formData);
             alert('cập nhập thành công')
-            console.log('result',result.data.content);
             dispatch(layDanhSachPhimAction());
             history.push('/admin/films');
 
@@ -57,7 +55,6 @@ export const layThongTinPhimAction =  (maPhim) => {
     return async (dispatch) => {
         try {
             let result = await quanLyPhimService.layThongTinPhim(maPhim); 
-            console.log('result',result.data.content);
             await dispatch({
                 type: LAY_THONG_TIN_PHIM,
                 thongTinPhim: result.data.content

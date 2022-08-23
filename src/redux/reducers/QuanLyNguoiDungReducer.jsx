@@ -1,6 +1,7 @@
 import { ACCESS_TOKEN, USER_LOGIN } from "../../util/setting";
 import { DANG_NHAP_ACTION, LAY_DANH_SACH_NGUOI_DUNG, LAY_THONG_TIN_NGUOI_DUNG, SUA_THONG_TIN_NGUOI_DUNG, THOAT_ACTION } from "../types/QuanLyNguoiDungType"
 import { Redirect } from 'react-router-dom';
+import { thongTinNguoiDung, userLogin } from "../../_core/models/ThongTinNguoiDung";
 let user = null;
 if(localStorage.getItem(USER_LOGIN)){
     user = JSON.parse(localStorage.getItem(USER_LOGIN));
@@ -9,8 +10,9 @@ if(localStorage.getItem(USER_LOGIN)){
 
 const stateDefault = {
     userLogin: user,
-    thongTinNguoiDung: {},
+    thongTinNguoiDung: new thongTinNguoiDung,
     danhSachNguoiDung: []
+    // [{thongTinNguoiDung},{thongTinNguoiDung}]
 }
 
 export const QuanLyNguoiDungReducer = (state = stateDefault,action) =>{

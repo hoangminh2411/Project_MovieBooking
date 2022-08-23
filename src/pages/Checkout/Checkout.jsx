@@ -1,22 +1,22 @@
 // import thư viện lodash
-import _, { round } from 'lodash'
-import React, { useEffect, Fragment, useState } from 'react'
+import _ from 'lodash'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { datGheAction, datVe, layChiTietPhongVe } from '../../redux/actions/QuanLyDatVeAction'
 
-import style from './Checkout.module.css'
+
 import './Checkout.css'
 
 // import thu vien antd
 import { Steps, Modal, Button } from 'antd';
 import { UserOutlined, SolutionOutlined, LoadingOutlined, SmileOutlined, CloseOutlined } from '@ant-design/icons';
-import { DAT_GHE } from '../../redux/types/QuanLyDatVeType'
+
 import { ThongTinDatVe } from '../../_core/models/ThongTinDatVe'
-import { ACCESS_TOKEN } from '../../util/setting'
+
 import { soGheKhongVuotQua } from '../../redux/reducers/QuanLyDatVeReducer'
 import ModalResult from './ModalResult/ModalResult'
 
-import  toLetters from '../../util/NumbertoString'
+import toLetters from '../../util/NumbertoString'
 import { connection } from '../../index'
 import { NavLink } from 'react-router-dom'
 const { Step } = Steps
@@ -27,63 +27,55 @@ export default function Checkout(props) {
   const [isModalVisible, setIsModalVisible] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false)
   const dispatch = useDispatch();
-  console.log(`chiTietPhongVe`,chiTietPhongVe);
   useEffect(() => {
     // Gọi hàm tạo ra 1 async function
     const action = layChiTietPhongVe(props.match.params.id);
-     
+
     // disptach fucntion này đi
     dispatch(action);
 
 
     // Có 1 client thực hiện đặt vé thành công thì mình sẽ load lại danh sách phòng  vé của lịch chiếu đó 
-    connection.on("datVeThanhCong",()=>{
-      console.log('dat ve thanh cong')
-      connection.invoke("loadDanhSachGhe",props.match.params.id)
+    connection.on("datVeThanhCong", () => {
+      connection.invoke("loadDanhSachGhe", props.match.params.id)
     })
 
     // Vừa vào trang load tất cả ghế của các người khác đang đặt
-    connection.invoke("loadDanhSachGhe",props.match.params.id)
-    
+    connection.invoke("loadDanhSachGhe", props.match.params.id)
+
 
     // Load danh sách ghế đang đặt từ sever về
-    connection.on("loadDanhSachGheDaDat",(dsGheKhachDat)=>{
-
-      console.log('DanhSachGheKhachDat',dsGheKhachDat);
+    connection.on("loadDanhSachGheDaDat", (dsGheKhachDat) => {
       // Bước 1: loại mình ra khỏi danh sách
-      dsGheKhachDat = dsGheKhachDat.filter(item=>item.taiKhoan !== userLogin.taiKhoan)
+      dsGheKhachDat = dsGheKhachDat.filter(item => item.taiKhoan !== userLogin.taiKhoan)
 
       // Bước 2: gộp danh sách ghế khách đặt ở tất cả user thành 1 mảng chung
-      let arrGheKhachDat = dsGheKhachDat.reduce((result,item,index)=>{
+      let arrGheKhachDat = dsGheKhachDat.reduce((result, item, index) => {
         let arrGhe = JSON.parse(item.danhSachGhe);
-        return [...result,...arrGhe]
-      },[]);
-
-      arrGheKhachDat = _.uniqBy(arrGheKhachDat,'maGhe')
-
-      console.log(arrGheKhachDat);
-
+        return [...result, ...arrGhe]
+      }, []);
+      arrGheKhachDat = _.uniqBy(arrGheKhachDat, 'maGhe')
       // Đưa dữ liệu về redux
       dispatch({
-        type:'DAT_GHE_SOCKET',
+        type: 'DAT_GHE_SOCKET',
         arrGheKhachDat
 
       })
     })
-    
-    // Cài đặt sự kiện khi reload trang
-    window.addEventListener("beforeunload",clearGhe);
 
-    return ()=> {
+    // Cài đặt sự kiện khi reload trang
+    window.addEventListener("beforeunload", clearGhe);
+
+    return () => {
       clearGhe();
-      window.removeEventListener('beforeunload',clearGhe)
+      window.removeEventListener('beforeunload', clearGhe)
     }
 
   }, [])
 
-  const clearGhe = function(event) {
+  const clearGhe = function (event) {
 
-    connection.invoke('huyDat',userLogin.taiKhoan, props.match.params.id);
+    connection.invoke('huyDat', userLogin.taiKhoan, props.match.params.id);
   }
 
   const handleOk = () => {
@@ -95,7 +87,7 @@ export default function Checkout(props) {
 
 
   const { thongTinPhim, danhSachGhe } = chiTietPhongVe;
-  
+
 
 
   const handleDatVe = () => {
@@ -121,8 +113,8 @@ export default function Checkout(props) {
 
       // Kiểm tra từng ghế xem có phải khách đặt hay k
       let classGheKhachDat = '';
-      let indexGheKD = danhSachgheKhachDat.findIndex(gheKD=>gheKD.maGhe === ghe.maGhe);
-      if(indexGheKD !== -1 ) {
+      let indexGheKD = danhSachgheKhachDat.findIndex(gheKD => gheKD.maGhe === ghe.maGhe);
+      if (indexGheKD !== -1) {
         classGheKhachDat = 'gheKhachDat';
       }
 
@@ -133,23 +125,22 @@ export default function Checkout(props) {
 
       return <div className="relative inline-flex justify-center" style={{ width: 'calc(100%/16)' }} key={index}>
         <button onClick={() => {
-          const gheAlpha = `${toLetters(Math.floor(index/16)+1)}${ghe.stt -16*Math.floor(index/16)} ` 
-          console.log('gheAlpha',gheAlpha);
-          dispatch(datGheAction(ghe,props.match.params.id))
-        }} disabled={ghe.daDat || classGheKhachDat !== '' } className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat} ${classGheDaDuocDat} ${classGheKhachDat} text-center`}>
-          {ghe.daDat ? classGheDaDuocDat !== '' ? <UserOutlined /> : <CloseOutlined className="font-bold" /> :ghe.stt -16*Math.floor((ghe.stt-1)/16)}
+          // const gheAlpha = `${toLetters(Math.floor(index / 16) + 1)}${ghe.stt - 16 * Math.floor(index / 16)} `
+          dispatch(datGheAction(ghe, props.match.params.id))
+        }} disabled={ghe.daDat || classGheKhachDat !== ''} className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat} ${classGheDaDuocDat} ${classGheKhachDat} text-center`}>
+          {ghe.daDat ? classGheDaDuocDat !== '' ? <UserOutlined /> : <CloseOutlined className="font-bold" /> : ghe.stt - 16 * Math.floor((ghe.stt - 1) / 16)}
         </button>
-        {(index % 16) === 0 ? <span className="alphaBooking font-bold text-xl" >{toLetters((index /16)+1)}</span> : ''}
+        {(index % 16) === 0 ? <span className="alphaBooking font-bold text-xl" >{toLetters((index / 16) + 1)}</span> : ''}
 
       </div>
     })
   }
 
-// Render theo alpha B
+  // Render theo alpha B
   const renderGheDangChon = () => {
 
     return danhSachGheDangDat.map((gheDD, index) => {
-      return <span key={index} className="text-xl text-green-800 ml-1">{`${toLetters(Math.floor((gheDD.stt-1)/16)+1)}${(gheDD.stt) -16*Math.floor((gheDD.stt-1)/16)} `}{danhSachGheDangDat.length <= 1 || index === danhSachGheDangDat.length - 1 ? '' : ','}</span>
+      return <span key={index} className="text-xl text-green-800 ml-1">{`${toLetters(Math.floor((gheDD.stt - 1) / 16) + 1)}${(gheDD.stt) - 16 * Math.floor((gheDD.stt - 1) / 16)} `}{danhSachGheDangDat.length <= 1 || index === danhSachGheDangDat.length - 1 ? '' : ','}</span>
     })
   }
 
@@ -167,17 +158,17 @@ export default function Checkout(props) {
   return (
     <>
       {isSuccess && datVeThanhCong && <ModalResult setIsSuccess={setIsSuccess} danhSachGheDangDat={danhSachGheDangDat} userLogin={userLogin} thongTinPhim={thongTinPhim} />}
-      <Modal visible={isModalVisible && soGheChoPhep} closable={false} centered={true} footer={<Button key="back" onClick={handleOk} style={{borderRadius:'20px'}}>
+      <Modal visible={isModalVisible && soGheChoPhep} closable={false} centered={true} footer={<Button key="back" onClick={handleOk} style={{ borderRadius: '20px' }}>
         OK
       </Button>}>
         <div className="flex flex-col items-center">
-          <div className="flex">
-            
-          <img className="h-24 " src='https://img.freepik.com/free-vector/ticket-mascot-character-saying-i-know-cute-style-design-t-shirt-sticker-logo-element_152558-21574.jpg?size=338&ext=jpg&ga=GA1.2.1050152923.1653044197' alt="" />
-          <img className="h-24 " src='https://img.freepik.com/free-vector/ticket-mascot-character-saying-i-know-cute-style-design-t-shirt-sticker-logo-element_152558-21574.jpg?size=338&ext=jpg&ga=GA1.2.1050152923.1653044197' alt="" />
-          <img className="h-24 " src='https://img.freepik.com/free-vector/ticket-mascot-character-saying-i-know-cute-style-design-t-shirt-sticker-logo-element_152558-21574.jpg?size=338&ext=jpg&ga=GA1.2.1050152923.1653044197' alt="" />
-          <img className="h-24 " src='https://img.freepik.com/free-vector/ticket-mascot-character-saying-i-know-cute-style-design-t-shirt-sticker-logo-element_152558-21574.jpg?size=338&ext=jpg&ga=GA1.2.1050152923.1653044197' alt="" />
-          <img className="h-24 " src='https://img.freepik.com/free-vector/ticket-mascot-character-saying-i-know-cute-style-design-t-shirt-sticker-logo-element_152558-21574.jpg?size=338&ext=jpg&ga=GA1.2.1050152923.1653044197' alt="" />
+          <div className="flex justify-center">
+
+            <img className="h-24 " src='https://img.freepik.com/free-vector/ticket-mascot-character-saying-i-know-cute-style-design-t-shirt-sticker-logo-element_152558-21574.jpg?size=338&ext=jpg&ga=GA1.2.1050152923.1653044197' alt="" />
+            <img className="h-24 " src='https://img.freepik.com/free-vector/ticket-mascot-character-saying-i-know-cute-style-design-t-shirt-sticker-logo-element_152558-21574.jpg?size=338&ext=jpg&ga=GA1.2.1050152923.1653044197' alt="" />
+            <img className="h-24 " src='https://img.freepik.com/free-vector/ticket-mascot-character-saying-i-know-cute-style-design-t-shirt-sticker-logo-element_152558-21574.jpg?size=338&ext=jpg&ga=GA1.2.1050152923.1653044197' alt="" />
+
+
 
           </div>
           <p className="text-center font-bold text-2xl  text-gray-500">{`Bạn không được mua quá ${soGheKhongVuotQua} vé!`}</p>
@@ -230,7 +221,7 @@ export default function Checkout(props) {
               {renderSeats()}
             </div>
           </div>
-          <div className="mt-5 flex justify-center w-full">
+          <div className="mb-14 lg:mt-5 flex justify-center w-full">
             <table className="divide-y divide-gray-200 w-full xl:w-2/3   ">
               <thead className="bg-gray-50 p-5 mb-5">
                 <tr>

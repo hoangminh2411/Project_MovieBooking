@@ -39,7 +39,6 @@
 
 .header__navbar-item-link {
     @apply flex items-center px-4 -mb-3 border-b-2 border-transparent text-base;
-    color: #000000d9;
 }
 .header__navbar-item-link--active {
     box-shadow: inset -25px 35px 6px -33px rgb(0 72 255 / 63%)

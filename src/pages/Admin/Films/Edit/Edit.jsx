@@ -45,7 +45,6 @@ export default function Edit(props) {
             hinhAnh: null
         },
         onSubmit: (values) => {
-            console.log(values);
             // Đây là đối tượng browser đưa dữ liệu về backend => bảo mật
             let frmData = new FormData();
             // frmData.append('tenPhim',values.tenPhim)
@@ -65,10 +64,9 @@ export default function Edit(props) {
 
         }
     })
-    console.log(moment(formik.values.ngayKhoiChieu).format('DD/MM/YYYY'))
+
     const handleChangeDatePicker = (date, dateString) => {
         const dateLocal = moment(date);
-        console.log('datelocal', dateLocal);
         //Đưa dữ liệu vào formik
 
         formik.setFieldValue('ngayKhoiChieu', dateLocal);
@@ -83,74 +81,80 @@ export default function Edit(props) {
     const handleChangeFile = async (event) => {
         // Lấy dữ liễu từ file người dùng chọn vào
         let file = event.target.files[0];
-
-        console.log('file', file);
         await formik.setFieldValue('hinhAnh', file);
         let reader = new FileReader();
         // Đọc file
         reader.readAsDataURL(file);
         // Sau khi đọc file chạy hàm onload để thay đổi hình
         reader.onload = async (e) => {
-            console.log(e.target.result);
-        setImgSrc(e.target.result); //hình base64
+            setImgSrc(e.target.result); //hình base64
         }
 
         // Sau đó set dữ liệu vào useFormik
-        
+
     }
     return (
         <Fragment>
-            <h3>Edit Phim</h3>
-            <Form
-                onSubmitCapture={formik.handleSubmit} //Sự kiện subit của form do ant định nghĩa tương tự onSubmit trong thẻ form ở html 
-                labelCol={{
-                    span: 4,
-                }}
-                wrapperCol={{
-                    span: 14,
-                }}
-                layout="horizontal"
-                initialValues={{
-                    size: componentSize,
-                }}
-                size={componentSize}
-            >
-                <Form.Item label="Tên Phim">
-                    <Input value={formik.values.tenPhim} name="tenPhim" onChange={formik.handleChange} />
-                </Form.Item>
-                <Form.Item label="Mô Tả">
-                    <Input value={formik.values.moTa} name="moTa" onChange={formik.handleChange} />
-                </Form.Item>
-                <Form.Item label="Trailer">
-                    <Input value={formik.values.trailer} name="trailer" onChange={formik.handleChange} />
-                </Form.Item>
-                <Form.Item label="Ngày khởi chiếu">
-                    <DatePicker value={moment(formik.values.ngayKhoiChieu, 'YYYY-MM-DD')} name="ngayKhoiChieu" format="DD/MM/YYYY" onChange={handleChangeDatePicker} />
-
-                </Form.Item>
-                <Form.Item label="Đang chiếu" valuePropName="checked">
-                    <Switch checked={formik.values.dangChieu} name="dangChieu" onChange={(checked) => { formik.setFieldValue('sapChieu', checked) }} />
-                </Form.Item>
-
-                <Form.Item label="Sắp chiếu" valuePropName="checked">
-                    <Switch checked={formik.values.sapChieu} name="sapChieu" onChange={(checked) => { handleChangeSwitch('sapChieu', checked) }} />
-                </Form.Item>
-
-                <Form.Item label="Hot" valuePropName="checked">
-                    <Switch checked={formik.values.hot} name="hot" onChange={(checked) => { handleChangeSwitch('hot', checked) }} />
-                </Form.Item>
-                <Form.Item label="Đánh giá">
-                    <InputNumber value={formik.values.danhGia} name="danhGia" onChange={(value) => { formik.setFieldValue('danhGia', value) }} />
-                </Form.Item>
-                <Form.Item label="Đánh giá">
-                    <input type="file" name="danhGia" onChange={handleChangeFile} accept="image/png, image/jpg, image.jpeg, image.gif" />
+            <div className="flex">
+                <div style={{width: '200px'}}>
                     <img className="mt-2" src={imgSrc === '' ? thongTinPhim.hinhAnh : imgSrc} alt="..." />
-                </Form.Item>
+                </div>
+                <div>
+                    <h3 className="text-center">Edit Phim</h3>
+                    <Form
+                        onSubmitCapture={formik.handleSubmit} //Sự kiện subit của form do ant định nghĩa tương tự onSubmit trong thẻ form ở html 
+                        labelCol={{
+                            span: 10,
+                        }}
+                        wrapperCol={{
+                            span: 40,
+                        }}
+                        layout="horizontal"
+                        initialValues={{
+                            size: componentSize,
+                        }}
+                        size={componentSize}
+                    >
+                        <Form.Item label="Tên Phim">
+                            <Input value={formik.values.tenPhim} name="tenPhim" onChange={formik.handleChange} />
+                        </Form.Item>
+                        <Form.Item label="Mô Tả">
+                            <Input value={formik.values.moTa} name="moTa" onChange={formik.handleChange} />
+                        </Form.Item>
+                        <Form.Item label="Trailer">
+                            <Input value={formik.values.trailer} name="trailer" onChange={formik.handleChange} />
+                        </Form.Item>
+                        <Form.Item label="Ngày khởi chiếu">
+                            <DatePicker value={moment(formik.values.ngayKhoiChieu, 'YYYY-MM-DD')} name="ngayKhoiChieu" format="DD/MM/YYYY" onChange={handleChangeDatePicker} />
 
-                <Form.Item label="button">
-                    <button className="px-2 py-1 transition hover:bg-blue-500 hover:text-white hover:border-0 border border-blue-500 rounded-lg shadow" type="submit">Save</button>
-                </Form.Item>
-            </Form>
+                        </Form.Item>
+                        <Form.Item label="Đang chiếu" valuePropName="checked">
+                            <Switch checked={formik.values.dangChieu} name="dangChieu" onChange={(checked) => { formik.setFieldValue('sapChieu', checked) }} />
+                        </Form.Item>
+
+                        <Form.Item label="Sắp chiếu" valuePropName="checked">
+                            <Switch checked={formik.values.sapChieu} name="sapChieu" onChange={(checked) => { handleChangeSwitch('sapChieu', checked) }} />
+                        </Form.Item>
+
+                        <Form.Item label="Hot" valuePropName="checked">
+                            <Switch checked={formik.values.hot} name="hot" onChange={(checked) => { handleChangeSwitch('hot', checked) }} />
+                        </Form.Item>
+                        <Form.Item label="Đánh giá">
+                            <InputNumber value={formik.values.danhGia} name="danhGia" onChange={(value) => { formik.setFieldValue('danhGia', value) }} />
+                        </Form.Item>
+                        <Form.Item label="Hình ảnh">
+                            <input type="file" name="danhGia" onChange={handleChangeFile} accept="image/png, image/jpg, image.jpeg, image.gif" />
+                            
+                        </Form.Item>
+
+                        <Form.Item label="button">
+                            <button className="px-2 py-1 transition hover:bg-blue-500 hover:text-white hover:border-0 border border-blue-500 rounded-lg shadow" type="submit">Save</button>
+                        </Form.Item>
+                    </Form>
+
+                </div>
+
+            </div>
         </Fragment>
     )
 }

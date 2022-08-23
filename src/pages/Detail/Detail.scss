@@ -17,6 +17,21 @@
     transform: translate(-50%,-50%);
 }
 
+.tabNormal {
+    color: #fff;
+    font-size:18px;
+}
+
+.tabNormal:hover {
+    transform: scale(1.1);
+    transition: all 0.2s ease-in-out;
+}
+
+.tabActive {
+    color:#fb4226;
+    
+}
+
 .booketMovieTable {
     @apply mt-16  mx-36  px-5 py-5 shadow;
     background: rgba(255, 255, 255, 0.1);

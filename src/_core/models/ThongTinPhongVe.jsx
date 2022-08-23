@@ -18,12 +18,12 @@ export class ThongTinPhim {
 }
 
 export class Ghe {
-    maGhe='';
-    tenGhe='';
-    maRap= '';
-    loaiGhe='';
-    stt='';
-    giaVe='';
-    daDat='';
-    taiKhoangNguoiDat ='';
+    // maGhe='';
+    // tenGhe='';
+    // maRap= '';
+    // loaiGhe='';
+    // stt='';
+    // giaVe='';
+    // daDat='';
+    // taiKhoangNguoiDat ='';
 }

@@ -14,9 +14,6 @@ const handleLogin = (type,data) => {
 
 export const dangNhapAction = (thongtinDangNhap) => {
 
-   
-
-    
     return async (dispatch) => {
         try {
             const result = await quanLyNguoiDungService.dangNhap(thongtinDangNhap)
@@ -31,11 +28,9 @@ export const dangNhapAction = (thongtinDangNhap) => {
                 history.goBack();
                 
             }
-
-            console.log('result',result);
         }
         catch(errors) {
-            handleLogin('error',`Tên đăng nhập hoặc mật khẩu sai`)
+            handleLogin('error',`${errors.response.data.content}`)
             console.log('erros Dang Nhap Action:',errors)
         }
     }
@@ -75,7 +70,6 @@ export const suaThongTinNguoiDung = (thongTinNguoiDung)=>{
                 handleLogin('success',`Thay đổi thành công`)  
             }
          
-            console.log('result',result);
         }
         catch(errors) {
             console.log(errors)
@@ -99,7 +93,6 @@ export const layThongTinNguoiDung = () => {
                 });   
             }
             await dispatch(hideLoadingAction)
-            console.log('result',result);
         }
         catch(errors) {
 
@@ -123,7 +116,6 @@ export const layDanhSachNguoiDung = () => {
                 });   
             }
             await dispatch(hideLoadingAction)
-            console.log('result Danh Sach Nguoi Dung',result);
         }
         catch(errors) {
 
@@ -135,6 +127,7 @@ export const layDanhSachNguoiDung = () => {
 export const xoaNguoiDungAction = (taiKhoan) => {
     return async (dispatch) => {
         try {
+            console.log(taiKhoan);
             const result = await quanLyNguoiDungService.xoaNguoiDung(taiKhoan)
             alert('xóa người dùng thành công')
             dispatch(layDanhSachNguoiDung())

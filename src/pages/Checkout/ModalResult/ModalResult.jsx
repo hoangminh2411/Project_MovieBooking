@@ -34,12 +34,12 @@ export default function ModalResult(props) {
                 </div>
                 <div className="mt-3 border-b  border-dashed border-gray-400" style={{ marginLeft: '31px', marginRight: '31px' }}   >
                     <h1>{thongTinPhim.tenPhim}</h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et expedita dolor explicabo ratione </p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, aliquid.</p>
                 </div>
                 <div className="mt-3 flex flex-row justify-around">
                     <div className="flex flex-col">
                         <div>
-                            <h1>{userLogin.hoTen}</h1>
+                            <h1>{userLogin?.hoTen}</h1>
                             <p>Tên người đặt</p>
                         </div>
                         <div>

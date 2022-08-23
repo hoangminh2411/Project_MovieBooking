@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { Rate } from 'antd';
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { history } from '../../App'
 import './Film.css'
 import { SET_PHIM_DANG_CHIEU, SET_PHIM_SAP_CHIEU } from "../../redux/types/QuanLyPhimType";
@@ -17,7 +16,7 @@ const settings = {
     dots: true,
 
 };
-export default function Film_Moble() {
+export default function Film_Moble({arrFilm}) {
     const [filmStatus, setFilmStatus] = useState({
         dangChieu: false,
         sapChieu: false
@@ -26,11 +25,10 @@ export default function Film_Moble() {
     const [nav2, setNav2] = useState();
 
     const dispatch = useDispatch();
-    const { arrFilm } = useSelector(state => state.QuanLyPhimReducer);
-    console.log(arrFilm);
+
     const renderFilmsSubNav = () => {
         return arrFilm.slice(0, 18).map((item, index) => {
-            return <div className="mx-4 mt-20" >
+            return <div key={index} className="mx-4 mt-20" >
                 <div className="flex flex-col items-center">
                     <img style={{ width: '140px', height: '180px' }} className="rounded-xl transition" src={item.hinhAnh} alt="" />
                     <p className="hidden text-xl font-bold text-white -translate-y-6 ">{item.tenPhim}</p>
@@ -40,7 +38,7 @@ export default function Film_Moble() {
     }
     const renderFilmsMainNav = () => {
         return arrFilm.slice(0, 18).map((item, index) => {
-            return <div className="" >
+            return <div key={index}>
                 <div className="flex flex-col items-center relative">
                     <img style={{filter:'blur(2px)'}} className="rounded-xl transition h-screen w-screen"  src={item.hinhAnh} alt=""/>
                     <div style={{background:'linear-gradient(to top, #0d0d0c 20%, transparent 100%)'}} className="absolute bottom-0 left-0 h-screen w-screen -z-0 "></div>
@@ -77,7 +75,7 @@ export default function Film_Moble() {
             <div className="flex justify-center items-center absolute w-full top-2 left-1/2 -translate-x-1/2" style={{zIndex:'99'}}>
                 <div className="rounded-2xl flex justify-center items-center py-1" style={{backgroundColor:'rgba(0,0,0,0.5'}}>
 
-                    <button activeClassName="text-white bg-gray-800" onClick={() => {
+                    <button onClick={() => {
                         setFilmStatus({
                             dangChieu: true,
                             sapChieu: false,
@@ -86,7 +84,7 @@ export default function Film_Moble() {
                         dispatch(action);
                     }} className={`${activeClassDC} px-8 py-1 font-semibold rounded-2xl mr-2 ml-2 transition`}>PHIM ĐANG CHIẾU</button>
 
-                    <button activeClassName="text-white bg-gray-800 " onClick={() => {
+                    <button  onClick={() => {
                         setFilmStatus({
                             sapChieu: true,
                             dangChieu: false,

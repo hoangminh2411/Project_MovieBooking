@@ -1,13 +1,16 @@
-import React, { useEffect, useState, useLayoutEffect} from 'react'
-import { Calendar, Table } from 'antd';
-import { CalendarOutlined, DeleteOutlined,SearchOutlined, EditOutlined } from '@ant-design/icons';
+import React, { useEffect, useState} from 'react'
+import {Table } from 'antd';
+import { CalendarOutlined, DeleteOutlined,SearchOutlined, EditOutlined,RightOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { layDanhSachPhimAction, xoaPhimAction } from '../../../redux/actions/QuanLyPhimAction';
 import moment from 'moment';
 import './Films.css'
 import  { PlusOutlined } from '@ant-design/icons';
-import { motion, MotionConfig } from "framer-motion"
+import { motion } from "framer-motion"
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
+
+
+
 export default function Films() {
   const { arrFilmDefault } = useSelector(state => state.QuanLyPhimReducer);
   const [film,setFilm] = useState(arrFilmDefault)
@@ -33,17 +36,14 @@ export default function Films() {
       return tenPhim.includes(searchText);
     });
    
-    if(filteredEvents.length == 0){
+    if(filteredEvents.length === 0){
      
       filteredEvents = arrFilmDefault.filter(({maPhim}) => {
         return maPhim.toString().includes(searchText.toString()) ;
       });
     }
    
-    setFilm(filteredEvents)
-    // console.log(searchText)
-    // const action = layDanhSachPhimAction(searchText);
-    // dispatch(action);
+    setFilm(filteredEvents);
   }
  
   const columns = [
@@ -60,8 +60,8 @@ export default function Films() {
     {
       title: 'Phim',
       dataIndex: 'tenPhim',
-      render: (text, film) => {
-        return <motion.div layout className="flex">
+      render: (text, film,index) => {
+        return <motion.div key={index} layout className="flex">
           <img className="w-14 h-16   rounded-lg" src={film.hinhAnh} alt="" />
           <div className="ml-2">
             <h3>{film.tenPhim}</h3>
@@ -83,16 +83,16 @@ export default function Films() {
     {
       title: 'Ngày chiếu',
       dataIndex: 'ngayKhoiChieu',
-      render: (text, film) => {
-        return <>{moment(film.ngayKhoiChieu).format('DD/MM/YYYY')}</>
+      render: (text, film, index) => {
+        return <p key={index}>{moment(film.ngayKhoiChieu).format('DD/MM/YYYY')}</p>
       }
 
     },
     {
       title: '',
       dataIndex: 'hanhDong',
-      render: (text, film) => {
-        return <div className="flex ">
+      render: (text, film, index) => {
+        return <div key={index} className="flex ">
         <div  className="flex justify-start items-center px-3 py-2 text-white bg-blue-500 rounded-xl shadow-blue-700 hover:bg-blue-700 cursor-pointer font-medium mr-2">
               <EditOutlined />
               <NavLink to={`/admin/films/edit/${film.maPhim}`} className="mb-0 ml-3 text-white hover:text-white">Edit item</NavLink>
@@ -119,24 +119,24 @@ export default function Films() {
   ];
 
   const data = film ||  arrFilmDefault
-  const onChange = (pagination, filters, sorter, extra) => {
-    console.log('params', pagination, filters, sorter, extra);
-  };
+ 
 
 
   return (
     <div className="overflow-auto">
-      <h1 className="font-bold text-3xl text-center lg:text-left ">Film management</h1>
+      
+        <h1 className="font-bold text-3xl text-center lg:text-left relative">Film management</h1>
+        <div className="block lg:hidden absolute   right-0 text-2xl">
+          <NavLink to="/admin/users"><RightOutlined /></NavLink>
+        </div>
+      
       <div className="flex flex-col lg:flex-row justify-between items-center my-7">
         <ul>
           <li className="inline-block mr-2 font-bold">
-            <a href="#" className="text-red-500 text-lg">All Film</a>
+            <p className="text-red-500 text-lg">All Film</p>
           </li>
 
         </ul>
-        <div>
-          <p className="font-semibold"><span className="inline-flex items-center mr-2 pl-3 pr-4 py-3 border border-gray-300 rounded-xl shadow text-gray-500 "><CalendarOutlined /> 11-01-2021</span> To  <span className="inline-flex items-center ml-2 pl-3 pr-4 py-3 border border-gray-300 rounded-xl shadow text-gray-500"><CalendarOutlined /> 11-01-2021</span></p>
-        </div>
       </div>
         <div className="flex justify-between items-center">
         <div className="pl-5 lg:pl-0 w-1/2 lg:w-1/4 mb-5 flex items-center">
@@ -159,7 +159,7 @@ export default function Films() {
         </div>
 
         </div>
-      <Table scroll={{ x: 1200}} pagination={{ pageSize: 6 }} showSizeChanger={false} indentSize="7" columns={columns} dataSource={data} onChange={onChange} />
+      <Table rowKey={record => record.maPhim}  scroll={{ x: 1200}} pagination={{ pageSize: 6 }} showSizeChanger={false} indentSize="7" columns={columns} dataSource={data}/>
     </div>
   )
 }

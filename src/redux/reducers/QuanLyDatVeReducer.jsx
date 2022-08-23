@@ -10,8 +10,7 @@ const stateDefault = {
     danhSachgheKhachDat:[],
     //:[{maGhe:50921},{maGhe:50922}]
     soGheChoPhep: false,
-    datVeThanhCong: false
-    
+    datVeThanhCong: false   
 }
 
 

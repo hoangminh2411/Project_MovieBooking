@@ -1,45 +1,45 @@
-import React, { useState, memo, useEffect } from "react";
+import React, { useState, memo, useCallback} from "react";
 import { useDispatch } from "react-redux";
-import { Modal, Button } from 'antd';
 import { SET_PHIM_DANG_CHIEU, SET_PHIM_SAP_CHIEU } from "../../redux/types/QuanLyPhimType";
 import Film from "../Film/Film";
-import styleSlick from './MultipleRowSlick.module.css'
-import './MultipleRowSlick.css'
+import styles from './MultipleRowSlick.module.scss'
+
 import ModalTrailer from "../ModalTrailer/ModalTrailer";
 
 
 
 
-const MultipleRows = (props) => {
-
+const MultipleRows = ({arrFilm}) => {
   const [filmStatus, setFilmStatus] = useState({
     dangChieu: false,
     sapChieu: false
   })
-
   const [showTrailer, setShowTrailer] = useState(false)
-  const [trailer,setTrailer] = useState('')
   
+  const [trailer,setTrailer] = useState('')
+  const [num,setNum]  = useState(8)
   const dispatch = useDispatch();
-  console.log('phim', props.arrFilm);
-  const handleShowTrailer = ()=>{
+
+
+
+  const handleShowTrailer = useCallback(()=>{
     setShowTrailer(true);
-  }
+  },[]) 
 
   const handleCloseTrailer = () => {
     setShowTrailer(false)
   }
 
-  const renderTrailer=  (trailer) => {
+  const renderTrailer= useCallback((trailer) => {
     setTrailer(trailer)
-  }
-  const renderFilms = () => {
-    return props.arrFilm.map((item, index) => {
-      //className={`${styleSlick['width-item']}`}
-      return <div key={index} className="ImageAnimate transition group relative mb-10 mx-5" >
-        <Film renderTrailer={renderTrailer} handleShowTrailer={handleShowTrailer} film={item} />
+  },[]) 
 
-      </div>
+
+  const renderFilms = () => {
+    return arrFilm.slice(0,num).map((item, index) => {
+      //className={`${styleSlick['width-item']}`}
+      return <Film key={index} renderTrailer={renderTrailer} onShowTrailer={handleShowTrailer} film={item} />
+  
     })
 
 
@@ -49,45 +49,44 @@ const MultipleRows = (props) => {
   let activeClassSC = filmStatus.sapChieu === true ? 'active_Film' : 'none_active_film'
   return (
     <>
-      <ModalTrailer trailer={trailer}  handleCloseTrailer={handleCloseTrailer} showTrailer={showTrailer} />
-      <section id="lichChieu" className="text-gray-600 pt-10">
-        <div className="container mx-auto pt-12">
-          <div className="flex justify-center items-center">
-            <button activeClassName="text-white bg-gray-800" onClick={() => {
+      <ModalTrailer trailer={trailer}  onCloseTrailer={handleCloseTrailer} onTrailer={showTrailer} />
+      <section id="lichChieu" className={`${styles['wrapper']}`}>
+        
+          <div className={`${styles['action']}`}>
+            <button  onClick={() => {
               setFilmStatus({
                 dangChieu: true,
                 sapChieu: false,
               })
               const action = { type: SET_PHIM_DANG_CHIEU }
               dispatch(action);
-            }} className={`${styleSlick[activeClassDC]} px-8 py-3 font-semibold rounded-lg mr-2`}>PHIM ĐANG CHIẾU</button>
+            }} className={`${styles[activeClassDC]}`}>PHIM ĐANG CHIẾU</button>
 
-            <button activeClassName="text-white bg-gray-800" onClick={() => {
+            <button onClick={() => {
               setFilmStatus({
                 sapChieu: true,
                 dangChieu: false,
               })
               const action = { type: SET_PHIM_SAP_CHIEU }
               dispatch(action);
-            }} className={`${styleSlick[activeClassSC]} px-8 py-3 font-semibold rounded-lg mr-2`}>PHIM SẮP CHIẾU</button>
+            }} className={`${styles[activeClassSC]}`}>PHIM SẮP CHIẾU</button>
 
           </div>
-          {/* <Slider {...settings}> */}
-
-          <div className="py-5 lg:mx-56 xl:mx-56 grid xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 shadow-lg">
+          <div className={`${styles['movies']}`}>
 
 
             {renderFilms()}
 
 
           </div>
+          {num > arrFilm.length? '':<div className='flex justify-center'>
 
-
-
-
-          {/* </Slider> */}
-        </div>
-       
+          <button style={{ padding:'7px 25px'}} className='uppercase text-gray-500 border border-gray-500 hover:text-white hover:border-red-700 hover:bg-red-700 transition-colors' onClick={()=>{
+            setNum(num+8)
+          }}>
+             Xem thêm          
+          </button>
+          </div>}
       </section>
 
     </>

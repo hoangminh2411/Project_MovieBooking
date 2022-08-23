@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding:0;
+    scroll-behavior: smooth;
+}
+
+:root {
+    --primary: red;
+}
+
+html {
+    font-size: 100%;
+}
+
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-rendering: optimizespeed;
+}
+
+
+
+/* width */
+// ::-webkit-scrollbar {
+//     width: 5px;
+//     // max-height: 1px;
+//     // background: #1890ff;
+// }
+
+/* Track */
+// ::-webkit-scrollbar-track {
+//     background: white;
+// }
+
+/* Handle */
+// ::-webkit-scrollbar-thumb {
+//     background: #1890ff;
+// }
+
+/* Handle on hover */
+// ::-webkit-scrollbar-thumb:hover {
+//     background: transparent;
+// }
+
+
+// config ant tabs css
+.ant-tabs-top > .ant-tabs-nav::before {
+    border-bottom: 1px solid transparent !important;
+}

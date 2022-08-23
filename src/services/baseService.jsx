@@ -53,3 +53,41 @@ export class baseService {
     }
 
 }
+
+
+export class commentService {
+    put = (url,model) =>{
+        return axios({
+            url: `https://6092b87185ff5100172137f4.mockapi.io/${url}`,
+            method:'PUT',
+            data:model,
+           
+        })
+    }
+
+
+    post = (url,model)=>{
+        return axios({
+            url: `https://6092b87185ff5100172137f4.mockapi.io/${url}`,
+            method:'POST',
+            data:model,
+            
+        })
+    }
+
+    get = (url) => {
+        return axios({
+            url: `https://6092b87185ff5100172137f4.mockapi.io/${url}`,
+            method:'GET',
+            
+        })
+    }
+
+    delete =(url) => {
+        return axios({
+            url: `https://6092b87185ff5100172137f4.mockapi.io/${url}`,
+            method:'DELETE',
+            
+        })
+    } 
+}

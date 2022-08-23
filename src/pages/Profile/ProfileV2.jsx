@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import './Profile.css'
-import { CalendarOutlined, UserOutlined } from '@ant-design/icons';
-import { Drawer, Button, Modal } from 'antd';
+import { Drawer, Modal, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { layThongTinNguoiDung, suaThongTinNguoiDung } from '../../redux/actions/QuanLyNguoiDungAction';
 import moment from 'moment'
 import { GROUP_ID, USER_LOGIN } from '../../util/setting';
-import { Redirect } from 'react-router-dom';
 import { motion, MotionConfig } from "framer-motion"
 import { useFormik } from 'formik';
 import {history} from '../../App'
@@ -27,21 +25,17 @@ export default function ProfileV2() {
         const action = layThongTinNguoiDung()
         dispatch(action);
     }, [])
-   
-    
-    
-    
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
-            taiKhoan: '',
+            taiKhoan: userLogin.taiKhoan,
             matKhau: '',
-            email: '',
+            email: userLogin.email,
             soDt: '',
             maLoaiNguoiDung:'QuanTri',
             maNhom: GROUP_ID,
             hoTen: '',
         },
-
         validationSchema: Yup.object({
             
             matKhau: Yup.string().required('Mật khẩu không được bỏ trống').min(6, 'Mật khẩu từ 6-32 ký tự').max(32, 'Mật khẩu từ 6-32 ký tự'),
@@ -51,15 +45,12 @@ export default function ProfileV2() {
         }),
 
         onSubmit: values => {
-            console.log(values)
+           
             const action = suaThongTinNguoiDung(values);
             dispatch(action);
 
-        },
-
-        
-    });
-    
+        },       
+    }); 
     const showDrawer = () => {
         setVisible(true);
     };
@@ -87,7 +78,6 @@ export default function ProfileV2() {
         setChecked(prev => {
             const isChecked = checked.includes(id);
             if (isChecked) {
-                console.log('check', id)
                 return checked.filter(item => item !== id)
             }
             else {
@@ -101,10 +91,10 @@ export default function ProfileV2() {
         return thongTinNguoiDung?.thongTinDatVe?.map((item, index) => {
             const renderDanhSachghe = (data) => {
                 return item.danhSachGhe.map((ghe, index) => {
-                    return <span className="text-gray-500" key={index}>{ghe[data]},</span>
+                    return <span key={index} className="text-gray-500">{ghe[data]},</span>
                 })
             }
-            return <MotionConfig transition={{ duration: .5 }}>
+            return <MotionConfig key={index} transition={{ duration: .5 }}>
                 <motion.tr  className="bg-white relative hover:bg-slate-200 hover:cursor-pointer pb-20 overflow "
                     // initial={{ y: '0', opacity: '0' }}
                     // animate={{ y: '-10px', opacity: '1' }}
@@ -159,12 +149,12 @@ export default function ProfileV2() {
     return (
         <>
             <Modal title="Edit User" visible={isModalVisible} onCancel={handleCancel} footer={[
-                <button onClick={handleOk} type="submit" className="px-6 py-2 rounded-lg text-white font-medium hover:bg-cyan-900  bg-cyan-600">Save all</button>
+                <button key="submit"  onClick={handleOk} className="px-6 py-2 rounded-lg text-white font-medium hover:bg-cyan-900  bg-cyan-600">Save all</button>
             ]}>
                 <form onSubmit={formik.handleSubmit}>
                     <div>
                         <div className="text-sm font-bold  tracking-wide mb-1">Tài khoản</div>
-                        <input disabled placeholder={userLogin.taiKhoan} name="taiKhoan" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:shadow-outline focus:border-indigo-500" />
+                        <input  disabled placeholder={userLogin.taiKhoan} name="taiKhoan" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:shadow-outline focus:border-indigo-500" />
                        
                     </div>
                     <div className="mt-8">
@@ -173,7 +163,7 @@ export default function ProfileV2() {
                                 Họ tên
                             </div>
                         </div>
-                        <input placeholder={userLogin.hoTen} name="hoTen" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500" type />
+                        <input placeholder={userLogin.hoTen} name="hoTen" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500"  />
                         {formik.touched.hoTen && formik.errors.hoTen ? (
                             <div className="text-red-500 italic">{formik.errors.hoTen}!</div>
                         ) : null}
@@ -184,7 +174,7 @@ export default function ProfileV2() {
                                 Mật khẩu
                             </div>
                         </div>
-                        <input name="matKhau" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500" type />
+                        <input name="matKhau" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500"/>
                         {formik.touched.matKhau && formik.errors.matKhau ? (
                             <div className="text-red-500 italic">{formik.errors.matKhau}</div>
                         ) : null}
@@ -196,7 +186,7 @@ export default function ProfileV2() {
                                 Email
                             </div>
                         </div>
-                        <input disabled placeholder={userLogin.email} name="email" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500" type />
+                        <input disabled placeholder={userLogin.email} name="email" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500"  />
                        
                     </div>
 
@@ -206,7 +196,7 @@ export default function ProfileV2() {
                                 Số điện thoại
                             </div>
                         </div>
-                        <input placeholder={userLogin.soDt} name="soDt" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500" type />
+                        <input placeholder={userLogin.soDt} name="soDt" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500"  />
                     </div>
                 </form>
             </Modal>
@@ -233,6 +223,9 @@ export default function ProfileV2() {
                     </div>
                 </div>
                 <div className="col-span-12 lg:col-span-10 h-screen">
+                    <div className="lg:hidden flex justify-center items-center">
+                        <img onClick={showModal} className="rounded-full cursor-pointer w-20 h-20" src={`https://i.pravatar.cc/150?u=${userLogin.hoTen}`} alt="123" />
+                    </div>
                     <h1 className="font-bold text-3xl lg:text-left text-center">Booking History</h1>
                     <div className="flex lg:flex-row flex-col justify-between items-center my-14">
                         <ul>
@@ -243,9 +236,9 @@ export default function ProfileV2() {
                                 <a href="#" style={{ color: 'rgb(225,220,223)' }} className="text-lg">Sumary</a>
                             </li>
                         </ul>
-                        <div>
+                        {/* <div>
                             <p className="font-semibold"><span className="inline-flex items-center mr-2 pl-3 pr-4 py-3 border border-gray-300 rounded-xl shadow text-gray-500 "><CalendarOutlined /> 11-01-2021</span> To  <span className="inline-flex items-center ml-2 pl-3 pr-4 py-3 border border-gray-300 rounded-xl shadow text-gray-500"><CalendarOutlined /> 11-01-2021</span></p>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="relative  overflow-auto " style={{ height: '650px' }}>
                         <table className="w-full text-sm text-left " style={{ borderCollapse: 'separate', borderSpacing: '0 10px' }}>
@@ -267,7 +260,7 @@ export default function ProfileV2() {
                                         Thanh toán
                                     </th>
                                     <th scope="col" className="px-6 py-3 rounded-r-xl">
-                                        <span className="sr-only">Edit</span>
+                                        <span className="sr-only">More</span>
                                     </th>
                                 </tr>
                             </thead>

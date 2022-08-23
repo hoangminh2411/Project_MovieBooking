@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Icon from '@ant-design/icons';
-import { CloseCircleOutlined } from '@ant-design/icons'
+import { CloseCircleOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons'
 import { history } from '../../App';
 import { NavLink } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -13,7 +13,7 @@ export default function Login(props) {
   
   const {userLogin} = useSelector(state => state.QuanLyNguoiDungReducer);
 
-  console.log('userLogin',userLogin);
+  const [inputType, setInputType] =  useState('text')
 
   const formik = useFormik({
     initialValues: {
@@ -28,6 +28,15 @@ export default function Login(props) {
   });
 
 
+  const handleTypeInput = ()=> {
+    if(inputType=='text') {
+      setInputType('password');
+    }
+    else {
+      setInputType('text');
+    }
+  }
+
   return (
     <form onSubmit={formik.handleSubmit} className="relative lg:w-1/2 xl:max-w-screen-sm rounded  " style={{ backgroundColor: 'rgba(15,39,76,0.9)' }}>
 
@@ -39,7 +48,7 @@ export default function Login(props) {
               <div className="text-sm font-bold text-white tracking-wide mb-1">Tài khoản</div>
               <input name="taiKhoan" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border-b border-gray-300 focus:shadow-outline focus:caret-pink-500 " />
             </div>
-            <div className="mt-8">
+            <div className="mt-8 relative">
               <div className="flex justify-between items-center">
                 <div className="text-sm font-bold text-white tracking-wide mb-1">
                   Mật khẩu
@@ -51,7 +60,10 @@ export default function Login(props) {
                   </a>
                 </div>
               </div>
-              <input name="matKhau" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border-b border-gray-300 focus:caret-pink-500 "/>
+              <input type={inputType} name="matKhau" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border-b border-gray-300 focus:caret-pink-500 "/>
+              <div onClick={handleTypeInput} className="absolute top-6 right-2 font-bold text-xl cursor-pointer">
+                {inputType=='text'?<EyeOutlined />:<EyeInvisibleOutlined />}
+              </div>
             </div>
             <div className="mt-10">
               <button type="submit" className="bg-indigo-500 text-gray-100 p-4 w-full rounded-full tracking-wide

@@ -1,0 +1,135 @@
+.wrapper {
+    margin-bottom: 40px;
+    margin-left: 10px;
+    margin-right:10px;
+    position: relative;
+    transition: all 0.5s ease-in-out;
+    animation: toTopAppear .5s linear;
+
+    .overlay {
+        height: 318px;
+        width:100%;
+        top: 0;
+        left: 0;
+        position: absolute;
+        opacity: 0;
+        border-radius:4px;
+        background: linear-gradient(to top, #0d0d0c 20%, transparent 100%);
+       
+    }
+
+    .trailer-icon {
+        top: 50%;
+        left: 50%;
+        z-index: 10;
+        position: absolute;
+        cursor: pointer;
+        transform: translate(-50%, -50%);
+    }
+
+    .movie-img {
+        width: 100%;
+        height: 318px;
+        overflow: hidden;  
+        box-shadow: 0 70px 63px -60px #000000;
+        border-radius:4px;
+        background: url('https://i.pinimg.com/originals/ee/85/08/ee850842e68cfcf6e3943c048f45c6d1.jpg') center center no-repeat;
+        background-size: 100% 318px;
+        transition: all .6s ease-out;
+        
+        &:hover {
+            background-repeat: no-repeat;
+            background-size: 150% 416px;
+        }
+    }
+
+    .movie-name {
+        top: 0;
+        left: 12px;
+        position: absolute;
+        font-weight: 700;
+        opacity: 1;
+        transition: all .1s ease-out;
+    }
+
+    .movie-rating {
+        margin-right: 8px;
+        padding: 0 8px;
+        display: inline-block;
+        color: #fff;
+        background-color: rgb(239 68 68);
+        border-radius: 4px;
+    }
+
+    .action {
+        margin-top: 16px;
+        position: relative;
+
+        .film-dangChieu {
+            width: 100%;
+            padding: 8px 0;
+            border-radius:4px;
+            display: inline-block;
+            visibility: hidden;
+            opacity: 0;
+            font-weight: 700;
+            text-align: center;
+            color: #fff;
+            background-color: rgb(239 68 68);
+            cursor: pointer;
+            transition: all 0.1s ease-in-out;
+            &:hover {
+                background-color: rgb(248 113 113);
+            }
+            
+        }
+
+        .film-sapChieu {
+            width: 100%;
+            padding: 8px 0;
+            border-radius:4px;
+            display: inline-block;
+            visibility: hidden;
+            opacity: 0;
+            font-weight: 700;
+            text-align: center;
+            color: #fff;
+            background-color: rgb(59 130 246);
+            cursor: pointer;
+            transition: all 0.1s ease-in-out;
+            &:hover {
+                background-color: rgb(96 165 250);
+            }
+        }
+    }
+    &:hover .overlay {
+        opacity:1;
+    }
+    &:hover .movie-name {
+        opacity: 0;
+        visibility: hidden;
+    }
+    &:hover .film-dangChieu {
+        visibility: visible;
+        opacity: 1;
+             
+    }
+    &:hover .film-sapChieu {
+        visibility: visible;
+        opacity: 1;
+             
+    }
+}
+
+
+
+@keyframes toTopAppear {
+    from {
+        
+        transform: translateY(-50px);
+    }
+    to {
+        
+        transform: translateY(0)
+    }
+  }

@@ -10,7 +10,6 @@ export const layChiTietPhongVe = (maLichChieu) => {
         try{
             dispatch(displayLoadingAction)
             const result = await quanLyDatVeService.layChiTietPhongVe(maLichChieu);
-            // console.log('Resule CTPV', result);
             if(result.status === 200) {
                 await dispatch({
                     type:SET_CHI_TIET_PHONG_VE,
@@ -18,7 +17,6 @@ export const layChiTietPhongVe = (maLichChieu) => {
                 })
             }
             dispatch(hideLoadingAction)
-
         }
         catch(errors){
             dispatch(hideLoadingAction)
@@ -34,7 +32,6 @@ export const datVe = (thongTinDatVe = new ThongTinDatVe()) => {
         try {
             dispatch(displayLoadingAction)
             const result = await quanLyDatVeService.datVe(thongTinDatVe)
-            console.log('Thong tin dat ve',result);
             // Đạt vé thành công gọi api load lại phòng vé 
             await dispatch(layChiTietPhongVe(thongTinDatVe.maLichChieu))
             await dispatch({

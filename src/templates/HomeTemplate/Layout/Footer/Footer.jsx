@@ -1,11 +1,16 @@
-import React from 'react'
-import { useSelector } from 'react-redux';
+import React,{memo, useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { layDanhSachRapAction } from '../../../../redux/actions/QuanLyRapAction';
 import './Footer.css'
 
-export default function Footer(props) {
-
+function Footer() {
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    
+    dispatch(layDanhSachRapAction());
+  },[])
   const { heThongRapChieu } = useSelector(state => state.QuanLyRapReducer);
-  console.log('footer', heThongRapChieu);
+  console.log('render footer');
   const renderLogoParner = () => {
     return heThongRapChieu?.map((Rap, index) => {
       return <li className="mr-10 mb-2" key={index}><img className="w-7 h-7  rounded-full" src={Rap.logo} alt={Rap.tenHeThongRap} /></li>
@@ -23,13 +28,13 @@ export default function Footer(props) {
               <span className="self-center text-2xl font-semibold">Theater</span>
             </a>
           </div>
-          <div className="col-span-6 text-center md:text-left md:col-span-3">
+          <div className="col-span-6 text-center lg:block hidden lg:text-left lg:col-span-3">
             <p className="pb-1 text-lg font-medium">Đối tác</p>
-            <ul className="lg:flex justify-between w-2/3 flex-wrap md:hidden sm:hidden ">
+            <ul className="lg:flex justify-between w-2/3 flex-wrap  ">
               {renderLogoParner()}
             </ul>
           </div>
-          <div className="col-span-6 text-center md:text-left md:col-span-3">
+          <div className="col-span-12 text-center lg:text-left lg:col-span-3">
             <p className="pb-1 text-lg font-medium">Category</p>
             <ul>
               <li><a className="text-gray-500" href="#">FAQ</a></li>
@@ -72,3 +77,4 @@ export default function Footer(props) {
 
   )
 }
+export default memo(Footer)

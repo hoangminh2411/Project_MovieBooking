@@ -1,13 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import ReactDOM from 'react-dom';
+import GlobalStyles from './components/GlobalStyle';
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './redux/configStore';
 // Cài thư viện antd design
 import 'antd/dist/antd.css';
-import './index.css';
+
 
 // Reacts slick 
 import "slick-carousel/slick/slick.css";
@@ -24,13 +25,18 @@ export const connection = new singalR.HubConnectionBuilder().withUrl(`${DOMAIN_C
 
 connection.start().then(() => {
   console.log('SignalR Connected');
-  const root = ReactDOM.createRoot(document.getElementById('root'));
-  root.render(
-    <Provider store={store}>
-      <App />
-    </Provider>
+ 
+  ReactDOM.render(
+    
+
+      <Provider store={store}>
+        <GlobalStyles>
+          <App />
+        </GlobalStyles>
+      </Provider>,
+    document.getElementById('root')
   );
-}).catch(errors=>{
+}).catch(errors => {
   console.log(errors)
 })
 

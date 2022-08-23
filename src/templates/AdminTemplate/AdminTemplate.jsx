@@ -22,9 +22,9 @@ import Header from "../HomeTemplate/Layout/Header/Header";
         // Thuộc tính render của Route giúp ta thêm vào các thuộc tính bên cạnh Compent
         return <Fragment>
                 <Header {...propsRoute}/>
-            <div className="w-screen h-screen">
+            <div className="w-screen h-screen" style={{ backgroundColor: 'rgb(255,249,249)' }}>
     
-            <div className="grid grid-cols-12 w-full h-full pr-5" style={{ backgroundColor: 'rgb(255,249,249)' }}>
+            <div className="grid grid-cols-12 w-full h-full pr-5" >
                 <div className="hidden lg:block col-span-2 bg-green-500 rounded-3xl mr-5 ">
                     <div className="flex flex-col h-full rounded-3xl" style={{ backgroundColor: 'rgb(15,21,45)' }}>
                         <div className="flex flex-col items-center justify-center" style={{ height: '30%' }}>
@@ -43,7 +43,6 @@ import Header from "../HomeTemplate/Layout/Header/Header";
                                            <NavLink className="block text-slate-400"  to="/admin/films/add" >Add film</NavLink> 
                                         </ul>
                                     </li>
-                                    <NavLink to="/admin/showtimes" className="block mb-5 text-slate-400 font-medium ">ShowTimes</NavLink>
                                     <NavLink to="/admin/users" className="block mb-5 text-slate-400 font-medium ">Users</NavLink>
                                 </ul>
                                 <div className="rounded-xl shadow-xl w-full pl-4 py-4" style={{ background: 'rgba(0,0,0,0.4)' }}>

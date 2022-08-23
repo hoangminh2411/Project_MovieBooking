@@ -1,0 +1,104 @@
+.wrapper {
+    margin: 0 auto;
+    max-width: 940px;
+    padding-top: 64px;
+
+
+    .title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #000;      
+    }
+
+    .main-news {
+        display:grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+
+        .main-items {
+           @apply col-span-12 xl:col-span-6;
+           
+           img {
+            width: 100%;
+            height: auto;
+            border-radius:6px;
+           }
+
+           .main-content-wrapper {
+                padding: 12px 0;
+                h4{
+                  font-weight: 700;
+                  font-size:17px;  
+                }
+
+                p{
+                    color: #6c757d;
+                }
+           }
+        }
+    }
+    .sub-news {
+        display:grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+
+        .subitems {
+            @apply col-span-12 xl:col-span-4;
+
+            img {
+                width: 100%;
+                height: auto;
+                border-radius:6px;
+            }
+
+            .subcontent-wrapper {
+                padding: 12px 0;
+                h4 {
+                  font-weight: 700;
+                  font-size:17px;  
+                }
+
+                p {
+                    color: #6c757d;
+                }
+            }
+        }
+
+        .sublist-right-side {
+            @apply col-span-12 xl:col-span-4;
+
+            &-wrapper {
+                display: flex;
+                flex-direction:column;
+                justify-content: space-between; 
+                align-items: center;
+
+                .sublist-items {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+
+                    &-img {
+                        width: 25%;
+                        margin-right: 4px;
+
+                        img {
+                            width: 100%;
+                            height: auto;
+                            border-radius:6px;
+                        }
+                    }
+
+                    &-content{
+                        width: 75%;
+
+                        p{
+                            font-size: 1rem;
+                            margin:0;
+                            color: #6c757d
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

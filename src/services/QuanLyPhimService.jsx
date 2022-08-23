@@ -11,7 +11,6 @@ export class QuanLyPhimService extends baseService {
     }
 
     layDanhSachPhim = (tenPhim = '') => {
-        console.log('check3',tenPhim);
         if(tenPhim !== '') {
             return this.get(`api/QuanLyPhim/LayDanhSachPhim?maNhom=${GROUP_ID}&tenPhim=${tenPhim}`)
         }

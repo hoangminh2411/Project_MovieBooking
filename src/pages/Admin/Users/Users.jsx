@@ -1,16 +1,16 @@
-import React, { useEffect, useState, useLayoutEffect } from 'react'
+import React, { useEffect, useState} from 'react'
 import { Table, Modal } from 'antd';
-import { CalendarOutlined, DeleteOutlined, SearchOutlined, EditOutlined } from '@ant-design/icons';
+import {DeleteOutlined, SearchOutlined, EditOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { layDanhSachPhimAction } from '../../../redux/actions/QuanLyPhimAction';
-import moment from 'moment';
-import { PlusOutlined } from '@ant-design/icons'
+
+import { PlusOutlined, LeftOutlined } from '@ant-design/icons'
 import { layDanhSachNguoiDung, xoaNguoiDungAction, capNhatThongTinNguoiDungAction, dangKyAction } from '../../../redux/actions/QuanLyNguoiDungAction';
-import { motion, MotionConfig } from "framer-motion"
+import { motion} from "framer-motion"
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { GROUP_ID, USER_LOGIN } from '../../../util/setting';
+import { GROUP_ID} from '../../../util/setting';
 import _ from 'lodash';
+import { NavLink } from 'react-router-dom';
 export default function Users() {
   const { danhSachNguoiDung } = useSelector(state => state.QuanLyNguoiDungReducer);
   const [users, setUsers] = useState(danhSachNguoiDung)
@@ -50,18 +50,14 @@ export default function Users() {
     }),
 
     onSubmit: values => {
-      console.log('submit', values)
-      console.log('checkuser',user)
-      if(_.isEmpty(user)){
-        
+      if(_.isEmpty(user)){ 
         const action = dangKyAction(values);
         dispatch(action);
-        console.log('register')
       }
       else {
         const action = capNhatThongTinNguoiDungAction(values);
         dispatch(action);
-        console.log('save')
+       
       }
      
 
@@ -148,6 +144,7 @@ export default function Users() {
 
           </div>
           <div onClick={() => {
+            console.log(user.taiKhoan)
             if (window.confirm('Bạn có chắc muốn xóa tài khoản ' + user.taiKhoan)) {
               // Gọi action
               const action = xoaNguoiDungAction(user.taiKhoan);
@@ -164,21 +161,17 @@ export default function Users() {
   ];
 
   const data = users;
-  const onChange = (pagination, filters, sorter, extra) => {
-
-  };
-  console.log(user)
 
   return (
     <>
       <Modal title={_.isEmpty(user) ? 'Register':'Edit user'} visible={isModalVisible} onCancel={handleCancel} footer={[
-        <button onClick={handleOk} type="submit" className="px-6 py-2 rounded-lg text-white font-medium hover:bg-cyan-900  bg-cyan-600">{_.isEmpty(user) ? 'Register':'Save all'}</button>,
+        <button  key="submit" onClick={handleOk} type="submit" className="px-6 py-2 rounded-lg text-white font-medium hover:bg-cyan-900  bg-cyan-600">{_.isEmpty(user) ? 'Register':'Save all'}</button>,
 
       ]}>
         <form onSubmit={formik.handleSubmit}>
           <div>
             <div className="text-sm font-bold  tracking-wide mb-1">Tài khoản</div>
-            <input disabled value={formik.values.taiKhoan == undefined ? '':formik.values.taiKhoan}  placeholder={user.taiKhoan} name="taiKhoan" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:shadow-outline focus:border-indigo-500" />
+            <input  disabled={formik.values.taiKhoan === undefined ? '':'disabled'} value={formik.values.taiKhoan === undefined ? '':formik.values.taiKhoan}  placeholder={user.taiKhoan} name="taiKhoan" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:shadow-outline focus:border-indigo-500" />
 
           </div>
           <div className="mt-8">
@@ -187,7 +180,7 @@ export default function Users() {
                 Họ tên
               </div>
             </div>
-            <input value={formik.values.hoTen == undefined ? '':formik.values.hoTen} placeholder={user.hoTen} name="hoTen" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500" type />
+            <input value={formik.values.hoTen === undefined ? '':formik.values.hoTen} placeholder={user.hoTen} name="hoTen" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500"  />
             {formik.touched.hoTen && formik.errors.hoTen ? (
               <div className="text-red-500 italic">{formik.errors.hoTen}!</div>
             ) : null}
@@ -198,7 +191,7 @@ export default function Users() {
                 Mật khẩu
               </div>
             </div>
-            <input value={formik.values.matKhau == undefined ? '':formik.values.matKhau} name="matKhau" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500" type />
+            <input value={formik.values.matKhau === undefined ? '':formik.values.matKhau} name="matKhau" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500"  />
             {formik.touched.matKhau && formik.errors.matKhau ? (
               <div className="text-red-500 italic">{formik.errors.matKhau}</div>
             ) : null}
@@ -210,7 +203,7 @@ export default function Users() {
                 Email
               </div>
             </div>
-            <input value={formik.values.email == undefined ? '':formik.values.email}  placeholder={user.email} name="email" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500" type />
+            <input value={formik.values.email === undefined ? '':formik.values.email}  placeholder={user.email} name="email" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500"  />
 
           </div>
 
@@ -220,11 +213,14 @@ export default function Users() {
                 Số điện thoại
               </div>
             </div>
-            <input value={formik.values.soDt == undefined ? '':formik.values.soDt} placeholder={user.soDt} name="soDt" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500" type />
+            <input value={formik.values.soDt === undefined ? '':formik.values.soDt} placeholder={user.soDt} name="soDt" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500"  />
           </div>
         </form>
       </Modal>
       <h1 className="font-bold text-3xl lg:text-left text-center ">User management</h1>
+      <div className="block lg:hidden absolute   left-0 text-2xl">
+          <NavLink to="/admin/films"><LeftOutlined /></NavLink>
+        </div>
       <div className="flex flex-col lg:flex-row justify-between items-center my-7">
         <ul>
           <li className="inline-block mr-2 font-bold">
@@ -232,9 +228,9 @@ export default function Users() {
           </li>
 
         </ul>
-        <div>
+        {/* <div>
           <p className="font-semibold"><span className="inline-flex items-center mr-2 pl-3 pr-4 py-3 border border-gray-300 rounded-xl shadow text-gray-500 "><CalendarOutlined /> 11-01-2021</span> To  <span className="inline-flex items-center ml-2 pl-3 pr-4 py-3 border border-gray-300 rounded-xl shadow text-gray-500"><CalendarOutlined /> 11-01-2021</span></p>
-        </div>
+        </div> */}
       </div>
       <div className="flex justify-between items-center">
         <div className="pl-5 lg:pl-0 w-2/3 lg:w-1/4 mb-5 flex items-center">
@@ -254,13 +250,12 @@ export default function Users() {
           }} className="flex justify-between items-center px-5 py-2 text-white bg-blue-500 rounded-xl shadow-blue-700 hover:bg-blue-700 cursor-pointer font-medium">
             <PlusOutlined />
             <p className="mb-0 ml-3">Add User</p>
-
           </div>
         </div>
 
       </div>
 
-      <Table pagination={{ pageSize: 6 }} showSizeChanger={false} indentSize="7" columns={columns} dataSource={data} onChange={onChange} scroll={{ x: 1200 }} />
+      <Table rowKey={record => record.hoTen} pagination={{ pageSize: 6 }} showSizeChanger={false} indentSize="7" columns={columns} dataSource={data} scroll={{ x: 1200 }} />
 
 
     </>

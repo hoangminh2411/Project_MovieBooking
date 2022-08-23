@@ -10,7 +10,6 @@ export const  layDanhSachRapAction = () => {
         try {
             dispatch(displayLoadingAction)
             const result = await quanLyRapService.layDanhSachRap();
-            console.log(result);
             if(result.status === 200){
                 
                 await dispatch({
@@ -38,7 +37,6 @@ export const layThongTinChiTietPhim = (id) => {
                 filmDetail: result.data.content
             })
             dispatch(hideLoadingAction)
-            console.log('result:',result);
         }
         catch(errors) {
             dispatch(hideLoadingAction)

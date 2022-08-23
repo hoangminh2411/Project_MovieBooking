@@ -4,7 +4,7 @@ import  Axios  from "axios";
 
 export const TOKEN_CYBERSOFT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAyNiIsIkhldEhhblN0cmluZyI6IjEzLzEwLzIwMjIiLCJIZXRIYW5UaW1lIjoiMTY2NTYxOTIwMDAwMCIsIm5iZiI6MTYzMzE5NDAwMCwiZXhwIjoxNjY1NzY2ODAwfQ.TMg-RWGpT6_kH-eG3Pbw5j_8yWUP84LrkWZAFj-Drfk"
 
-export const GROUP_ID='GP07'
+export const GROUP_ID='GP13'
 export const USER_LOGIN ='userLogin';
 export const ACCESS_TOKEN ='accessToken';
 export const DOMAIN_CYBERBUG = 'https://movienew.cybersoft.edu.vn'

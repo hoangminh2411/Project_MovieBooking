@@ -1,0 +1,49 @@
+.wrapper {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    /* opacity: 90%; */
+    min-width: 100%;
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid #fff;
+    box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+
+    .inner {
+        margin-left: auto;
+        margin-right:auto;
+        display: flex;
+        justify-content: space-between;
+        padding:0 24px;
+
+        .logo {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 8px;
+
+            img {
+                height: 40px;
+            }
+        }
+
+        .navbar {
+            @apply lg:flex items-center hidden;
+        
+            &-item {
+                // @apply flex items-center px-4 -mb-3 border-b-2 border-transparent text-base;
+                font-size: 1rem;
+                padding:0 16px;
+                margin-bottom: -12px;
+                display: flex;
+                align-items: stretch;
+            }
+        }
+
+        .action {
+           @apply items-center hidden lg:flex 
+        }
+    }
+}
+
+
+

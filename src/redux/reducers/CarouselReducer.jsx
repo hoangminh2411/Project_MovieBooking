@@ -1,14 +1,8 @@
+import { Img } from '../../_core/models/ThongTinCarousel';
 import { SET_CAROUSEL } from '../types/CarouselType';
 
 const stateDefault = {
-    arrImg: [
-        {
-            "maBanner": 1,
-            "maPhim": 1282,
-            "hinhAnh": "https://movienew.cybersoft.edu.vn/hinhanh/ban-tay-diet-quy.png"
-        }
-
-    ]
+    arrImg: [Img]
 
 }
 
