@@ -1,8 +1,9 @@
-import React, {memo} from 'react'
+import React from 'react'
 import { Carousel } from 'antd';
 import styles from './HomeCarousel.module.scss'
 import TicketSearch from '../../../../components/TicketSearch/TicketSearch';
 
+import { memo } from 'react';
 
 const contentStyle = {
     height: '600px',
@@ -23,8 +24,6 @@ function HomeCarousel({arrImg}) {
             </div>
         })
     }
-
-
     return (
         <div className={`${styles['wrapper']}`}>
             <Carousel autoplay>

@@ -29,7 +29,7 @@ import Nomatch from './components/Nomatch/Nomatch';
 // import {Suspense, lazy} from 'react'
 
 // const CheckoutTemplateLazy = lazy(()=> import('./templates/CheckoutTemplate/CheckoutTemplate'))
-
+  // const LazyHome = React.lazy(()=>import('./pages/Home/Home'))
 
 // Thư viện hổ trợ di chuyển giữa các router
 export const history = createBrowserHistory();
@@ -46,9 +46,6 @@ function App() {
           <HomeTemplate path="/" exact Component={Home} />
           <HomeTemplate path="/detail/:id" exact Component={Detail} mobileComponent={Detail_mobile} />
           <CheckoutTemplate path="/checkout/:id" exact component={Checkout} />
-          {/* <Suspense fallback={<h1>LOADING...</h1>}>
-            <CheckoutTemplateLazy path="/checkout/:id" exact component={Checkout} />
-          </Suspense> */}
           <HomeTemplate path="/profile" exact Component ={ProfileV2} />
 
 

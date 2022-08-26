@@ -6,6 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './redux/configStore';
+
 // Cài thư viện antd design
 import 'antd/dist/antd.css';
 
@@ -21,14 +22,12 @@ import * as singalR from '@aspnet/signalr'
 
 
 // Đoạn code để kết nối sever lắng nghe sự kiện từ sever
-export const connection = new singalR.HubConnectionBuilder().withUrl(`${DOMAIN_CYBERBUG}/DatVeHub`).configureLogging(singalR.LogLevel.Information).build();
+export const connection = new singalR.HubConnectionBuilder().withUrl(`${DOMAIN_CYBERBUG}/DatVeHub`)?.configureLogging(singalR.LogLevel.Information)?.build();
 
 connection.start().then(() => {
   console.log('SignalR Connected');
  
   ReactDOM.render(
-    
-
       <Provider store={store}>
         <GlobalStyles>
           <App />

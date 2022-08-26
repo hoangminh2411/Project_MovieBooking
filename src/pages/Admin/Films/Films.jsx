@@ -61,7 +61,7 @@ export default function Films() {
       title: 'Phim',
       dataIndex: 'tenPhim',
       render: (text, film,index) => {
-        return <motion.div key={index} layout className="flex">
+        return <motion.div  layout className="flex">
           <img className="w-14 h-16   rounded-lg" src={film.hinhAnh} alt="" />
           <div className="ml-2">
             <h3>{film.tenPhim}</h3>
@@ -84,7 +84,7 @@ export default function Films() {
       title: 'Ngày chiếu',
       dataIndex: 'ngayKhoiChieu',
       render: (text, film, index) => {
-        return <p key={index}>{moment(film.ngayKhoiChieu).format('DD/MM/YYYY')}</p>
+        return <p>{moment(film.ngayKhoiChieu).format('DD/MM/YYYY')}</p>
       }
 
     },

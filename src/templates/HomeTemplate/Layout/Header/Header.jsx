@@ -29,7 +29,6 @@ function Header(props) {
     const { userLogin } = useSelector(state => state.QuanLyNguoiDungReducer);
     const dispatch = useDispatch()
     const [visible, setVisible] = useState(false);
-    console.log(props);
     // function đóng mở drawer
     const showDrawer = () => {
         setVisible(true);

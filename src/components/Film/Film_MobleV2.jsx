@@ -4,19 +4,9 @@ import { history } from '../../App'
 import './Film.css'
 import { SET_PHIM_DANG_CHIEU, SET_PHIM_SAP_CHIEU } from "../../redux/types/QuanLyPhimType";
 import Slider from "react-slick";
-const settings = {
-    className: "slider variable-width center",
-    centerMode: true,
-    centerPadding: "0",
-    slidesToShow: 1,
-    speed: 500,
-    slidesToScroll: 1,
-    variableWidth: true,
-    adaptiveHeight: true,
-    dots: true,
 
-};
-export default function Film_Moble({arrFilm}) {
+
+export default function Film_Moble({ arrFilm }) {
     const [filmStatus, setFilmStatus] = useState({
         dangChieu: false,
         sapChieu: false
@@ -25,7 +15,8 @@ export default function Film_Moble({arrFilm}) {
     const [nav2, setNav2] = useState();
 
     const dispatch = useDispatch();
-
+    
+    
     const renderFilmsSubNav = () => {
         return arrFilm.slice(0, 18).map((item, index) => {
             return <div key={index} className="mx-4 mt-20" >
@@ -44,7 +35,7 @@ export default function Film_Moble({arrFilm}) {
                     <div style={{background:'linear-gradient(to top, #0d0d0c 20%, transparent 100%)'}} className="absolute bottom-0 left-0 h-screen w-screen -z-0 "></div>
                     <div className="w-full absolute top-0 left-0 z-10 flex flex-col items-center mt-40 ">
                         <p className=" text-sm mb-0 text-white">NEW . MOVIE</p>
-                        <h1 className="text-4xl text-white ">{item.tenPhim}</h1>
+                        <h1 className="text-2xl text-white ">{item.tenPhim}</h1>
                         <div className="flex">
                             <div className="mr-3 px-3 py-4 text-white rounded-lg" style={{ backgroundColor: 'rgba(0,0,0,0.5' }}>POPULAR WITH FRIEND</div>
                             <div className="mr-3 px-3 py-4 text-white rounded-lg" style={{ backgroundColor: 'rgba(0,0,0,0.5' }}>15+</div>
@@ -96,6 +87,7 @@ export default function Film_Moble({arrFilm}) {
                 </div>
 
             </div>
+            <div>
             <Slider asNavFor={nav2} ref={(slider1) => setNav1(slider1)}>
                 {renderFilmsMainNav()}
             </Slider>
@@ -114,6 +106,8 @@ export default function Film_Moble({arrFilm}) {
                 >
                     {renderFilmsSubNav()}
                 </Slider>
+            </div>
+
             </div>
 
         </div>

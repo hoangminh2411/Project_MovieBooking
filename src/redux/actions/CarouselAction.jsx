@@ -1,14 +1,11 @@
-import axios from 'axios';
-import { baseService } from '../../services/baseService';
-import {http } from '../../util/setting';
+
 import { SET_CAROUSEL } from '../types/CarouselType';
 import { quanLyPhimService } from '../../services/QuanLyPhimService';
 
 
-export const getCarouselAction = (thamSo)=> {
+export const getCarouselAction = ()=> {
 
     return async (dispatch) => {
-
         try {
             // Sử dụng tham số
             // const result = await axios({
@@ -29,7 +26,7 @@ export const getCarouselAction = (thamSo)=> {
                 arrImg: result.data.content
             })
         } catch (errors) {
-            console.log('errors', errors)
+            console.log(errors)
         }
     }
 }

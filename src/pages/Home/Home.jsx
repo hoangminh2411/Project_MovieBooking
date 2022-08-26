@@ -5,11 +5,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { layDanhSachPhimAction } from '../../redux/actions/QuanLyPhimAction';
 import { layDanhSachRapAction } from '../../redux/actions/QuanLyRapAction';
 
-
+import Theaters from './Theaters/Theaters'
 import HomeCarousel from '../../templates/HomeTemplate/Layout/HomeCarousel/HomeCarousel';
 import MultipleRows from '../../components/RSlick/MultipleRowSlick';
 import Film_MobleV2 from '../../components/Film/Film_MobleV2';
-import HomeMenu from './HomeMenu/HomeMenu'
+
 import News from './News/News'
 import AppSection from './AppSection/AppSection';
 import { getCarouselAction } from '../../redux/actions/CarouselAction';
@@ -19,10 +19,10 @@ export default function Home() {
         width: window.innerWidth,
         height: window.innerHeight
     })
+
     const { arrFilm } = useSelector(state => state.QuanLyPhimReducer);
     const { heThongRapChieu } = useSelector(state => state.QuanLyRapReducer);
-    const {arrImg} = useSelector(state=>state.CarouselReducer);
-
+    const { arrImg } = useSelector(state => state.CarouselReducer);
     const dispatch = useDispatch();
     useEffect(() => {
         window.onload = () => {
@@ -51,7 +51,7 @@ export default function Home() {
         <>
             <HomeCarousel arrImg={arrImg} />
             {state.width <= 768 ? <Film_MobleV2 arrFilm={arrFilm} /> : <MultipleRows arrFilm={arrFilm} />}
-            <HomeMenu heThongRapChieu={heThongRapChieu} />
+            <Theaters heThongRapChieu={heThongRapChieu} />
             <News />
             <AppSection />
         </>

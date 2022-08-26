@@ -11,6 +11,8 @@ import { useFormik } from 'formik';
 import { GROUP_ID} from '../../../util/setting';
 import _ from 'lodash';
 import { NavLink } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+
 export default function Users() {
   const { danhSachNguoiDung } = useSelector(state => state.QuanLyNguoiDungReducer);
   const [users, setUsers] = useState(danhSachNguoiDung)
@@ -103,7 +105,7 @@ export default function Users() {
       // specify the condition of filtering result
       // here is that finding the name started with `value`
       render: (text, user, index) => {
-        return <motion.div layout className="flex items-center">
+        return <motion.div  layout className="flex items-center">
           <img className="w-10 h-10 shadow-lg  rounded-full" src={`https://i.pravatar.cc/150?u=${index}`} alt="" />
           <div className="ml-6">
             <h3>{user.hoTen}</h3>
@@ -255,10 +257,11 @@ export default function Users() {
 
       </div>
 
-      <Table rowKey={record => record.hoTen} pagination={{ pageSize: 6 }} showSizeChanger={false} indentSize="7" columns={columns} dataSource={data} scroll={{ x: 1200 }} />
+      <Table rowKey={record => `${record.hoTen}-${uuidv4()}`} pagination={{ pageSize: 6 }} showSizeChanger={false} indentSize="7" columns={columns} dataSource={data} scroll={{ x: 1200 }} />
 
 
     </>
   )
 }
 
+// key={`${uuidv4()} ${user.hoTen}`}
