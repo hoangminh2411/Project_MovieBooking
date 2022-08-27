@@ -52,7 +52,7 @@ export default function AddFilm() {
                 }
             }
             // Gọi api gửi các giá trị formdata về backend xử Lý
-                // dispatch(themPhimUploadHinhAction(frmData))
+                dispatch(themPhimUploadHinhAction(frmData))
 
             // Nên viết actions
            

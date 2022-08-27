@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import { Rate } from 'antd';
 import moment from 'moment';
 import { postCommentAction } from '../../redux/actions/QuanLyBinhLuanAction';
-import { Redirect } from 'react-router-dom';
+
 
 
 export default function ModalComment({binhLuan, user, maPhim, onPopup, onClosePopup }) {
@@ -29,8 +30,12 @@ export default function ModalComment({binhLuan, user, maPhim, onPopup, onClosePo
       userLikeThisComment: [],
       id: binhLuan.length + 1
     },
+    validationSchema: Yup.object({
+      post: Yup.string().required('Đánh giá không được bỏ trống').min(16,'Đánh giả phải tối thiểu 16 kí tự'),
+      
+  }),
     onSubmit: values => {
-      // console.log(values);
+      
       dispatch(postCommentAction(values))
      
 
@@ -65,6 +70,9 @@ export default function ModalComment({binhLuan, user, maPhim, onPopup, onClosePo
 
           <div className='rounded-lg' style={{ padding: '8px 24px', minHeight: '95px' }}>
             <input name="post" onChange={formik.handleChange} style={{ padding: '30px 20px' }} className="w-full h-full border border-gray-500 rounded-lg" placeholder="Nói cho mọi người biết bạn nghĩ gì về phim này.." type="text" />
+            {formik.touched.post && formik.errors.post ? (
+                        <div className="text-red-500 italic ">{formik.errors.post}</div>
+                    ) : null}
           </div>
 
           <div onClick={()=>{
