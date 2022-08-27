@@ -1,25 +1,35 @@
 import React, { useState } from 'react'
-import Icon from '@ant-design/icons';
+
 import { CloseCircleOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons'
 import { history } from '../../App';
 import { NavLink } from 'react-router-dom';
+
 import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import * as Yup from 'yup';
+
+import { useDispatch } from 'react-redux';
 import { dangNhapAction } from '../../redux/actions/QuanLyNguoiDungAction';
 
 export default function Login(props) {
 
   const dispatch = useDispatch()
   
-  const {userLogin} = useSelector(state => state.QuanLyNguoiDungReducer);
 
-  const [inputType, setInputType] =  useState('text')
+
+  const [inputType, setInputType] =  useState('password')
 
   const formik = useFormik({
     initialValues: {
       taiKhoan: '',
       matKhau: '',
     },
+
+    validationSchema: Yup.object({
+      taiKhoan: Yup.string().required('Tài Khoản không được bỏ trống').min(6,'Tài khoản từ 6-32 ký tự').max(32,'Tài khoản từ 6-32 ký tự'),
+      matKhau: Yup.string().required('Mật khẩu không được bỏ trống').min(6,'Mật khẩu từ 6-32 ký tự').max(32,'Mật khẩu từ 6-32 ký tự'),
+   
+    }),
+
     onSubmit: values => {
       
       const action = dangNhapAction(values);
@@ -47,6 +57,9 @@ export default function Login(props) {
             <div>
               <div className="text-sm font-bold text-white tracking-wide mb-1">Tài khoản</div>
               <input name="taiKhoan" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border-b border-gray-300 focus:shadow-outline focus:caret-pink-500 " />
+              {formik.touched.taiKhoan && formik.errors.taiKhoan ? (
+                        <div className="text-red-500 italic ">{formik.errors.taiKhoan}</div>
+                    ) : null}
             </div>
             <div className="mt-8 relative">
               <div className="flex justify-between items-center">
@@ -64,6 +77,9 @@ export default function Login(props) {
               <div onClick={handleTypeInput} className="absolute top-6 right-2 font-bold text-xl cursor-pointer">
                 {inputType=='text'?<EyeOutlined />:<EyeInvisibleOutlined />}
               </div>
+              {formik.touched.matKhau && formik.errors.matKhau ? (
+                        <div className="text-red-500 italic">{formik.errors.matKhau}</div>
+                    ) : null}
             </div>
             <div className="mt-10">
               <button type="submit" className="bg-indigo-500 text-gray-100 p-4 w-full rounded-full tracking-wide

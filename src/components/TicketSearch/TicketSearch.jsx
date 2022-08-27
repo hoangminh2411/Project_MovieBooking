@@ -9,7 +9,7 @@ import styles from './TicketSearch.module.scss'
 import { quanLyPhimService } from '../../services/QuanLyPhimService';
 import { quanLyRapService } from '../../services/QuanLyRapService';
 
-import _ from 'lodash';
+import _, { conforms } from 'lodash';
 
 import { history } from '../../App'
 
@@ -18,14 +18,23 @@ function TicketSearch() {
 
     const [state, setState] = useState({
         phim: undefined,
-        maPhim:undefined,
+        maPhim: undefined,
+        
         heThongRapChieu: undefined,
         cumRapChieu: undefined,
-        tenRapChieu:undefined,
+        tenRapChieu: undefined,
+
         ngayChieu: undefined,
-        day:undefined,
+        day: undefined,
         gioChieu: undefined,
+
         maLichChieu: null,
+
+        checkP: false,
+        checkR: false,
+        checkD: false,
+
+       
     })
     useEffect(() => {
         async function fechData() {
@@ -45,32 +54,38 @@ function TicketSearch() {
     }, [])
     const handleChangeFilm = async (value) => {
         if (value !== undefined) {
-            if(value!==state.maPhim){
-                document.querySelectorAll('.ant-select-selection-item').forEach((item,index)=>{
-                    if(index>0){
-                        item.innerHTML="...."
+            if (value !== state.maPhim) {
+                
+                document.querySelectorAll('.ant-select-selection-item').forEach((item, index) => {
+                    if (index > 0) {
+                        item.innerHTML = "...."
                     }
-               })
+                })
             }
             try {
                 let result = await quanLyRapService.layThongTinLichChieuPhim(value);
-                    setState({
-                        ...state,
-                        maPhim:value,
-                        heThongRapChieu: result.data.content.heThongRapChieu
-    
-                    })  
+                setState({
+                    ...state,
+                    maPhim: value,
+                    maLichChieu: null,
+                    checkP: true,
+                    heThongRapChieu: result.data.content.heThongRapChieu,
+                    ngayChieu: undefined,
+                    gioChieu: undefined,
+                    maLichChieu: null,
+
+                })
             }
             catch (errors) {
                 console.log('errors', errors)
             }
         }
-        else{
-            
-           document.querySelectorAll('.ant-select-selection-item').forEach((item)=>{
-                item.innerHTML="...."
-           })
-            
+        else {
+
+            document.querySelectorAll('.ant-select-selection-item').forEach((item) => {
+                item.innerHTML = "...."
+            })
+
             setState({
                 ...state,
                 heThongRapChieu: undefined,
@@ -84,13 +99,14 @@ function TicketSearch() {
     }
     const handleChangeRap = (value) => {
         if (value !== undefined) {
-            if(value!==state.tenRapChieu){
-                document.querySelectorAll('.ant-select-selection-item').forEach((item,index)=>{
-                    if(index>1){
-                        item.innerHTML="...."
+            if (value !== state.tenRapChieu) {
+                document.querySelectorAll('.ant-select-selection-item').forEach((item, index) => {
+                    if (index > 1) {
+                        item.innerHTML = "...."
                     }
-               })
+                })
             }
+
             let cumRap = state.heThongRapChieu?.map((heThongRap, index) => {
                 return heThongRap.cumRapChieu?.filter((item, index) => {
                     return item.tenCumRap === value
@@ -104,6 +120,7 @@ function TicketSearch() {
 
                 return cumRap.map((rap, index) => {
                     return rap.lichChieuPhim.map((film, index) => {
+
                         return film.ngayChieuGioChieu.slice(0, 10)
                     })
                 })
@@ -111,24 +128,37 @@ function TicketSearch() {
             let ngayChieuSelect = _.uniq(...ngayChieu[0])
             setState({
                 ...state,
+                checkP: false,
+                checkR: true,
+                maLichChieu: null,
                 cumRapChieu: cumRapSelect,
-                tenRapChieu:value,
-                ngayChieu: ngayChieuSelect
+                tenRapChieu: value,
+                ngayChieu: ngayChieuSelect,
+                gioChieu: undefined,
+                maLichChieu: null,
             })
         }
-       
+
 
     }
 
     const handleChangeNgayXem = (value) => {
-       
+        
         if (value !== undefined) {
-            if(value!==state.day){
-                document.querySelectorAll('.ant-select-selection-item').forEach((item,index)=>{
-                    if(index>2){
-                        item.innerHTML="...."
+            if (value !== state.day) {
+                document.querySelectorAll('.ant-select-selection-item').forEach((item, index) => {
+                    if (index > 2) {
+                        item.innerHTML = "...."
                     }
-               })
+                   
+                })
+            }
+            else{
+                document.querySelectorAll('.ant-select-selection-item').forEach((item, index) => {
+                    if (index === 2) {
+                        item.innerHTML = value
+                    }
+                })
             }
             let gioChieu
             state.cumRapChieu.forEach((cumRap, index) => {
@@ -144,16 +174,25 @@ function TicketSearch() {
             let gioChieuSelect = gioChieu;
             setState({
                 ...state,
-                day:value,
+                checkR: false,
+                checkD: true,
+                day: value,
+                maLichChieu: null,
                 gioChieu: gioChieuSelect
             })
         }
-       
+
 
     }
 
     const handleChangeGioXem = (value) => {
+
         if (value !== undefined) {
+            document.querySelectorAll('.ant-select-selection-item').forEach((item, index) => {
+                if (index === 3) {
+                    item.innerHTML = value
+                }
+            })
             let maLichChieu;
             state.cumRapChieu.forEach((cumRap, index) => {
                 cumRap.forEach((rap, index) => {
@@ -167,10 +206,12 @@ function TicketSearch() {
             let maLichChieuSelect = maLichChieu[0].maLichChieu
             setState({
                 ...state,
+                checkD: false,
+                disabled:false,
                 maLichChieu: maLichChieuSelect
             })
         }
-       
+
 
     }
     
@@ -203,13 +244,14 @@ function TicketSearch() {
 
             <div className={`${styles['select-item']}`}>
                 <div className="border-r-2 ">
-                    <Select notFoundContent={state.heThongRapChieu===undefined?"vui lòng chọn phim":(state.heThongRapChieu.length>0?"":"Hiện tại không có rạp vui lòng chọn phim khác")}
+                    <Select notFoundContent={state.heThongRapChieu === undefined ? "vui lòng chọn phim" : (state.heThongRapChieu.length > 0 ? "" : "Hiện tại không có rạp vui lòng chọn phim khác")}
                         dropdownMatchSelectWidth={false}
-                        
+
                         style={{ width: 140 }}
                         bordered={false}
-                        
-                        loading={state.heThongRapChieu!== undefined?false:true}
+                        open={state.checkP ? true : undefined}
+
+                        loading={state.heThongRapChieu !== undefined ? false : true}
                         onChange={handleChangeRap}
                         placeholder="Rạp">
                         {state.heThongRapChieu?.map((heThongRap) => {
@@ -228,15 +270,17 @@ function TicketSearch() {
                 <div className="border-r-2 ">
                     <Select notFoundContent={'Vui lòng chọn rạp'}
                         dropdownMatchSelectWidth={false}
-                     
+
                         style={{ width: 140 }}
                         bordered={false}
-                        onChange={handleChangeNgayXem}
-                        loading={state.ngayChieu!== undefined?false:true}
+                        onSelect={handleChangeNgayXem}
+                        loading={state.ngayChieu !== undefined ? false : true}
+                        open={state.checkR ? true : undefined}
+
                         placeholder="Ngày xem">
                         {state.ngayChieu?.map((ngayChieu, index) => {
                             // return <Option  key={`ngay-chieu-${index}`} title={ngayChieu} value={ngayChieu}> {moment(ngayChieu).format('DD/MM/YYYY')}</Option>
-                            return <Option  key={`ngay-chieu-${index}`} value={ngayChieu.toString()}>{ngayChieu.toString()}</Option>
+                            return <Option key={`ngay-chieu-${index}`} value={ngayChieu.toString()}>{ngayChieu.toString()}</Option>
                         })}
                     </Select>
 
@@ -247,18 +291,21 @@ function TicketSearch() {
                 <div className="border-r-2 ">
                     <Select notFoundContent={'Vui lòng chọn ngày xem'}
                         dropdownMatchSelectWidth={false}
-                         
+
                         style={{ width: 140 }}
                         bordered={false}
-                        onChange={handleChangeGioXem}
-                        loading={state.gioChieu!== undefined?false:true}
+                        onSelect={handleChangeGioXem}
+                        loading={state.gioChieu !== undefined ? false : true}
+                        open={state.checkD ? true : undefined}
+
                         placeholder="Xuất chiếu">
 
                         {state.gioChieu?.map((gioChieu, index) => {
-                           
+
                             let gioChieuCovert = moment(gioChieu.ngayChieuGioChieu).format('h:mm A').toString();
-                            
-                            return <Option optionLabelProp={gioChieuCovert} key={`gio-chieu-${index}`}  value={gioChieuCovert}/>
+
+                            return <Option optionLabelProp={gioChieuCovert} key={`gio-chieu-${index}`} value={gioChieuCovert} />
+                            // return <Option  key={`ngay-chieu-${index}`} value={gioChieuCovert}>{gioChieuCovert}</Option>
                         })}
                     </Select>
                 </div>

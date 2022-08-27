@@ -1,15 +1,11 @@
 import React , { useState, Fragment } from 'react'
 import {useFormik}  from 'formik'
+import * as Yup from 'yup'
 import {
     Form,
     Input,
-    Button,
-    Radio,
-    Select,
-    Cascader,
     DatePicker,
     InputNumber,
-    TreeSelect,
     Switch,
 } from 'antd';
 import { GROUP_ID } from '../../../../util/setting';
@@ -35,6 +31,14 @@ export default function AddFilm() {
             danhGia:0,
             hinhAnh:{}
         },
+        validationSchema: Yup.object({
+            tenPhim: Yup.string().required('Tên phim không được bỏ trống'),
+            trailer: Yup.string().required('trailer không được bỏ trống').matches(/^(https?\:\/\/)?(www\.youtube\.com|youtu\.be)\/.+$/, 'địa chỉ đường dẫn không hợp lệ'),
+            moTa: Yup.string().required('mô tả không được bỏ trống'),
+            ngayKhoiChieu: Yup.date().required('ngày khởi chiếu không được bỏ trống'),
+            danhGia: Yup.number().typeError('Bạn phải nhập số').min(0, 'tối thiếu là 0').max(10, 'tối đa là 10'),
+            hinhAnh:Yup.object().required('Hình ảnh không được bỏ trống'),
+        }),
         onSubmit: (values) => {
             console.log(values);
             // Đây là đối tượng browser đưa dữ liệu về backend => bảo mật
@@ -48,7 +52,7 @@ export default function AddFilm() {
                 }
             }
             // Gọi api gửi các giá trị formdata về backend xử Lý
-                dispatch(themPhimUploadHinhAction(frmData))
+                // dispatch(themPhimUploadHinhAction(frmData))
 
             // Nên viết actions
            
@@ -57,7 +61,6 @@ export default function AddFilm() {
 
     const handleChangeDatePicker = (date, dateString) => {
         const dateLocal = moment(date).format('DD/MM/YYYY');
-        console.log('datelocal',dateLocal);
         //Đưa dữ liệu vào formik
         formik.setFieldValue('ngayKhoiChieu',dateLocal);
     }
@@ -106,15 +109,27 @@ export default function AddFilm() {
                 
                 <Form.Item className="text-center lg:text-left" label="Tên Phim">
                     <Input name="tenPhim" onChange={formik.handleChange}/>
+                    {formik.touched.tenPhim && formik.errors.tenPhim ? (
+                                <div className="text-red-500 italic ">{formik.errors.tenPhim}</div>
+                            ) : null}
                 </Form.Item>
                 <Form.Item label="Mô Tả">
                     <Input name="moTa" onChange={formik.handleChange} />
+                    {formik.touched.moTa && formik.errors.moTa ? (
+                                <div className="text-red-500 italic ">{formik.errors.moTa}</div>
+                            ) : null}
                 </Form.Item>
                 <Form.Item label="Trailer">
                     <Input name="trailer" onChange={formik.handleChange} />
+                    {formik.touched.trailer && formik.errors.trailer ? (
+                                <div className="text-red-500 italic ">{formik.errors.trailer}</div>
+                            ) : null}
                 </Form.Item>
                 <Form.Item label="Ngày khởi chiếu">
                     <DatePicker name="ngayKhoiChieu" format="DD/MM/YYYY" onChange={handleChangeDatePicker} />
+                    {formik.touched.ngayKhoiChieu && formik.errors.ngayKhoiChieu ? (
+                                <div className="text-red-500 italic ">{formik.errors.ngayKhoiChieu}</div>
+                            ) : null}
                 </Form.Item>
                 <Form.Item label="Đang chiếu" valuePropName="checked">
                     <Switch name="dangChieu" onChange={(checked)=>{formik.setFieldValue('sapChieu',checked)}}  />
@@ -129,10 +144,16 @@ export default function AddFilm() {
                 </Form.Item>
                 <Form.Item label="Đánh giá">
                     <InputNumber name="danhGia" onChange={(value)=>{formik.setFieldValue('danhGia',value)}}  />
+                    {formik.touched.danhGia && formik.errors.danhGia ? (
+                                <div className="text-red-500 italic ">{formik.errors.danhGia}</div>
+                            ) : null}
                 </Form.Item>
-                <Form.Item label="Đánh giá">
-                    <input type="file" name="danhGia" onChange={handleChangeFile} accept="image/png, image/jpg, image.jpeg, image.gif" />
+                <Form.Item label="Hình ảnh">
+                    <input type="file" name="hinhAnh" onChange={handleChangeFile} accept="image/png, image/jpg, image.jpeg, image.gif" />
                     <img className = "mt-2" src={imgSrc} alt="..." />
+                    {formik.touched.hinhAnh && formik.errors.hinhAnh ? (
+                                <div className="text-red-500 italic ">{formik.errors.hinhAnh}</div>
+                            ) : null}
                 </Form.Item>
 
                 <Form.Item label="Button">

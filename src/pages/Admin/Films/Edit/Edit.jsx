@@ -1,22 +1,18 @@
 import React, { useState, Fragment, useEffect } from 'react'
 import { useFormik } from 'formik'
+import * as Yup from 'yup';
 import {
     Form,
     Input,
-    Button,
-    Radio,
-    Select,
-    Cascader,
     DatePicker,
     InputNumber,
-    TreeSelect,
     Switch,
 } from 'antd';
 import { GROUP_ID } from '../../../../util/setting';
 // thư viện format về thời gian
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { capNhapPhimUploadHinhAnhAction, layThongTinPhimAction, themPhimUploadHinhAction } from '../../../../redux/actions/QuanLyPhimAction';
+import { capNhapPhimUploadHinhAnhAction, layThongTinPhimAction } from '../../../../redux/actions/QuanLyPhimAction';
 
 export default function Edit(props) {
     const [componentSize, setComponentSize] = useState('default');
@@ -28,7 +24,7 @@ export default function Edit(props) {
         const action = layThongTinPhimAction(id)
         dispatch(action);
     }, [])
-
+    
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
@@ -44,14 +40,26 @@ export default function Edit(props) {
             danhGia: thongTinPhim.danhGia,
             hinhAnh: null
         },
+        validationSchema: Yup.object({
+            tenPhim: Yup.string().required('Tên phim không được bỏ trống'),
+            trailer: Yup.string().required('trailer không được bỏ trống').matches(/^(https?\:\/\/)?(www\.youtube\.com|youtu\.be)\/.+$/, 'địa chỉ đường dẫn không hợp lệ'),
+            moTa: Yup.string().required('mô tả không được bỏ trống'),
+            ngayKhoiChieu: Yup.date().required('ngày khởi chiếu không được bỏ trống'),
+            danhGia: Yup.number().typeError('Bạn phải nhập số').min(0, 'tối thiếu là 0').max(10, 'tối đa là 10')
+
+
+
+        }),
         onSubmit: (values) => {
             // Đây là đối tượng browser đưa dữ liệu về backend => bảo mật
+            console.log(values)
             let frmData = new FormData();
             // frmData.append('tenPhim',values.tenPhim)
             for (let key in values) {
                 if (key !== 'hinhAnh') {
                     frmData.append(key, values[key])
                 } else {
+                    // Nếu hình ảnh không thay đổi sẽ gửi giá trị null về backend-> backend sẽ trả lại hình ảnh cũ
                     if (values.hinhAnh !== null) {
                         frmData.append('File', values.hinhAnh, values.hinhAnh.names);
                     }
@@ -96,7 +104,7 @@ export default function Edit(props) {
     return (
         <Fragment>
             <div className="flex">
-                <div style={{width: '200px'}}>
+                <div style={{ width: '200px' }}>
                     <img className="mt-2" src={imgSrc === '' ? thongTinPhim.hinhAnh : imgSrc} alt="..." />
                 </div>
                 <div>
@@ -117,15 +125,27 @@ export default function Edit(props) {
                     >
                         <Form.Item label="Tên Phim">
                             <Input value={formik.values.tenPhim} name="tenPhim" onChange={formik.handleChange} />
+                            {formik.touched.tenPhim && formik.errors.tenPhim ? (
+                                <div className="text-red-500 italic ">{formik.errors.tenPhim}</div>
+                            ) : null}
                         </Form.Item>
                         <Form.Item label="Mô Tả">
                             <Input value={formik.values.moTa} name="moTa" onChange={formik.handleChange} />
+                            {formik.touched.moTa && formik.errors.moTa ? (
+                                <div className="text-red-500 italic ">{formik.errors.moTa}</div>
+                            ) : null}
                         </Form.Item>
                         <Form.Item label="Trailer">
                             <Input value={formik.values.trailer} name="trailer" onChange={formik.handleChange} />
+                            {formik.touched.trailer && formik.errors.trailer ? (
+                                <div className="text-red-500 italic ">{formik.errors.trailer}</div>
+                            ) : null}
                         </Form.Item>
                         <Form.Item label="Ngày khởi chiếu">
                             <DatePicker value={moment(formik.values.ngayKhoiChieu, 'YYYY-MM-DD')} name="ngayKhoiChieu" format="DD/MM/YYYY" onChange={handleChangeDatePicker} />
+                            {formik.touched.ngayKhoiChieu && formik.errors.ngayKhoiChieu ? (
+                                <div className="text-red-500 italic ">{formik.errors.ngayKhoiChieu}</div>
+                            ) : null}
 
                         </Form.Item>
                         <Form.Item label="Đang chiếu" valuePropName="checked">
@@ -141,10 +161,13 @@ export default function Edit(props) {
                         </Form.Item>
                         <Form.Item label="Đánh giá">
                             <InputNumber value={formik.values.danhGia} name="danhGia" onChange={(value) => { formik.setFieldValue('danhGia', value) }} />
+                            {formik.touched.danhGia && formik.errors.danhGia ? (
+                                <div className="text-red-500 italic ">{formik.errors.danhGia}</div>
+                            ) : null}
                         </Form.Item>
                         <Form.Item label="Hình ảnh">
-                            <input type="file" name="danhGia" onChange={handleChangeFile} accept="image/png, image/jpg, image.jpeg, image.gif" />
-                            
+                            <input type="file" name="hinhAnh" onChange={handleChangeFile} accept="image/png, image/jpg, image.jpeg, image.gif" />
+
                         </Form.Item>
 
                         <Form.Item label="button">

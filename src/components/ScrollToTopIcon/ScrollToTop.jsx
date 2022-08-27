@@ -26,7 +26,7 @@ export default function ScrollToTop() {
 
         return (
 
-            <div onClick={handleScrolltoTop} className="fixed right-0 bottom-10 cursor-pointer">
+            <div onClick={handleScrolltoTop} className="fixed right-0 bottom-10 cursor-pointer z-50 ">
 
                 <img className="w-14 h-14 rotate-180 " src="https://movie-booking-project.vercel.app/img/logoTixLoading.png" alt="totop" />
 

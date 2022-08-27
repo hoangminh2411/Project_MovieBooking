@@ -21,6 +21,7 @@ export default function ProfileV2() {
     const [checked, setChecked] = useState([]);
     const [visible, setVisible] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
     useEffect(() => {
         const action = layThongTinNguoiDung()
         dispatch(action);
@@ -39,15 +40,16 @@ export default function ProfileV2() {
         validationSchema: Yup.object({
             
             matKhau: Yup.string().required('Mật khẩu không được bỏ trống').min(6, 'Mật khẩu từ 6-32 ký tự').max(32, 'Mật khẩu từ 6-32 ký tự'),
-            hoTen: Yup.string().required('Họ tên không được bỏ trống').matches(/^[A-Z a-z]+$/, 'Họ tên không được chứa số'),
+            hoTen: Yup.string().required('Họ tên không được bỏ trống').matches(/^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?:[ ][A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)*$/gm, 'Họ tên không được chứa số'),
+            soDt: Yup.string().required('Số điện thoại không được bỏ trống').matches(phoneRegExp, 'Số điện thoại không hợp lệ')
             
-            // soDT: Yup.string().required('số điện thoại Khoản không được bỏ trống')
         }),
 
         onSubmit: values => {
-           
+            
             const action = suaThongTinNguoiDung(values);
             dispatch(action);
+            setIsModalVisible(false);
 
         },       
     }); 
@@ -65,8 +67,7 @@ export default function ProfileV2() {
     };
 
     const handleOk = () => {
-        formik.handleSubmit()
-        setIsModalVisible(false);
+        formik.handleSubmit() 
     };
 
     const handleCancel = () => {
@@ -149,7 +150,7 @@ export default function ProfileV2() {
     return (
         <>
             <Modal title="Edit User" visible={isModalVisible} onCancel={handleCancel} footer={[
-                <button key="submit"  onClick={handleOk} className="px-6 py-2 rounded-lg text-white font-medium hover:bg-cyan-900  bg-cyan-600">Save all</button>
+                <button type="submit" key="submit"  onClick={handleOk} className="px-6 py-2 rounded-lg text-white font-medium hover:bg-cyan-900  bg-cyan-600">Save all</button>
             ]}>
                 <form onSubmit={formik.handleSubmit}>
                     <div>
@@ -197,6 +198,9 @@ export default function ProfileV2() {
                             </div>
                         </div>
                         <input placeholder={userLogin.soDt} name="soDt" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500"  />
+                        {formik.touched.soDt && formik.errors.soDt ? (
+                            <div className="text-red-500 italic">{formik.errors.soDt}!</div>
+                        ) : null}
                     </div>
                 </form>
             </Modal>

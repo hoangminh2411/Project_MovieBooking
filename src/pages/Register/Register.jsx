@@ -1,10 +1,10 @@
 import React from 'react'
-import Icon from '@ant-design/icons';
+
 import { CloseCircleOutlined, CloseOutlined } from '@ant-design/icons'
 import { history } from '../../App';
 import { NavLink } from 'react-router-dom';
 import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { GROUP_ID } from '../../util/setting';
 import * as Yup from 'yup';
 import { dangKyAction } from '../../redux/actions/QuanLyNguoiDungAction';
@@ -13,7 +13,7 @@ import { dangKyAction } from '../../redux/actions/QuanLyNguoiDungAction';
 export default function Register() {
 
   const dispatch = useDispatch();
-
+  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
   const formik = useFormik({
     initialValues: {
       taiKhoan: '',
@@ -27,9 +27,9 @@ export default function Register() {
     validationSchema: Yup.object({
       taiKhoan: Yup.string().required('Tài Khoản không được bỏ trống').min(6,'Tài khoản từ 6-32 ký tự').max(32,'Tài khoản từ 6-32 ký tự'),
       matKhau: Yup.string().required('Mật khẩu không được bỏ trống').min(6,'Mật khẩu từ 6-32 ký tự').max(32,'Mật khẩu từ 6-32 ký tự'),
-      hoTen: Yup.string().required('Họ tên không được bỏ trống').matches(/^[A-Z a-z]+$/,'Họ tên không được chứa số'),
+      hoTen: Yup.string().required('Họ tên không được bỏ trống').matches(/^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?:[ ][A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)*$/gm, 'Họ tên không được chứa số'),
       email: Yup.string().required('email không được bỏ trống').email('Email không đúng định dạng!'),
-      // soDT: Yup.string().required('số điện thoại Khoản không được bỏ trống')
+      soDt: Yup.string().required('Số điện thoại không được bỏ trống').matches(phoneRegExp, 'Số điện thoại không hợp lệ')
   }),
 
     onSubmit: values => {
@@ -95,7 +95,11 @@ export default function Register() {
                 </div>
               </div>
               <input name="soDt" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500" type />
+              {formik.touched.soDt && formik.errors.soDt ? (
+                        <div className="text-red-500 italic ">{formik.errors.soDt}</div>
+                    ) : null}
             </div>
+
 
             
             <div className="mt-10">
