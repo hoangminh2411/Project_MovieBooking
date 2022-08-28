@@ -1,7 +1,7 @@
 
 .ghe {
     width: 40px;
-    height: calc(15/20 * 40px);
+    /* height: calc(15/20 * 40px); */
     border-radius: 5px;
     cursor: pointer;
    margin-right: 5px;

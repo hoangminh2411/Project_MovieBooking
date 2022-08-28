@@ -45,7 +45,7 @@ function App() {
           <HomeTemplate path="/home" exact Component={Home} />
           <HomeTemplate path="/" exact Component={Home} />
           <HomeTemplate path="/detail/:id" exact Component={Detail} mobileComponent={Detail_mobile} />
-          <CheckoutTemplate path="/checkout/:id" exact component={Checkout} />
+          <CheckoutTemplate path="/checkout/:id" exact Component={Checkout} />
           <HomeTemplate path="/profile" exact Component ={ProfileV2} />
 
 

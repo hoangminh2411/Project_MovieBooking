@@ -12,6 +12,7 @@ import { GROUP_ID} from '../../../util/setting';
 import _ from 'lodash';
 import { NavLink } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { useRef } from 'react';
 
 export default function Users() {
   const { danhSachNguoiDung } = useSelector(state => state.QuanLyNguoiDungReducer);
@@ -19,6 +20,7 @@ export default function Users() {
   const [user, setUser] = useState({})
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [values, setValues] = useState()
+  const typingTimeoutRef = useRef(null)
   const dispatch = useDispatch()
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
   useEffect(() => {
@@ -72,6 +74,8 @@ export default function Users() {
     },
   
   });
+
+  
   const showModal = (user) => {
     setUser(user)
     setIsModalVisible(true);
@@ -89,14 +93,23 @@ export default function Users() {
 
 
   const handleChangeInput = (event) => {
+    const value = event.target.value
+    if(typingTimeoutRef.current){
+      clearTimeout(typingTimeoutRef.current);
+    }
 
-    setValues(event.target.value)
+    typingTimeoutRef.current = setTimeout(() => {
+        handleSearch(value)
+    },300)
+    
+    // setValues(event.target.value)
 
   }
   const handleSearch = (searchText) => {
+    const newSearchText = searchText.toLowerCase()
     let filteredEvents = danhSachNguoiDung.filter(({ hoTen }) => {
       hoTen = hoTen.toLowerCase();
-      return hoTen.includes(searchText);
+      return hoTen.includes(newSearchText);
     });
 
 
@@ -112,7 +125,7 @@ export default function Users() {
       // here is that finding the name started with `value`
       render: (text, user, index) => {
         return <motion.div  layout className="flex items-center">
-          <img className="w-10 h-10 shadow-lg  rounded-full" src={`https://i.pravatar.cc/150?u=${index}`} alt="" />
+          <img loading="lazy" className="w-10 h-10 shadow-lg  rounded-full" src={`https://i.pravatar.cc/150?u=${index}-${user.hoTen}`} alt="" />
           <div className="ml-6">
             <h3>{user.hoTen}</h3>
             <p className="text-slate-500 mb-0">{user.email}</p>

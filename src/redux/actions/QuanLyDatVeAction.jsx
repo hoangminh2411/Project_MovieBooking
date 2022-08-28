@@ -20,8 +20,8 @@ export const layChiTietPhongVe = (maLichChieu) => {
         }
         catch(errors){
             dispatch(hideLoadingAction)
-            console.log('error FE layChiTietPhongVe',errors)
-            console.log('error BE layChiTietPhongVe',errors.response?.data)
+            console.log(errors)
+            
         }
     }
 }
@@ -66,9 +66,7 @@ export const datGheAction = (ghe,maLichChieu) => {
         let danhSachgheDangDat = getState().QuanLyDatVeReducer.danhSachGheDangDat;
         let taiKhoan = getState().QuanLyNguoiDungReducer.userLogin.taiKhoan;
         danhSachgheDangDat = JSON.stringify(danhSachgheDangDat)
-        console.log('danhSachGheDnagDat',danhSachgheDangDat)
-        console.log('taiKhoan',taiKhoan);
-        console.log('maLichChieu',maLichChieu);
+        
 
 
         // callAPI 

@@ -31,9 +31,10 @@ export default function Films() {
     setValues(event.target.value);
   }
   const handleSearch = (searchText)=> {
+    const newSearchText = searchText.toLowerCase();
     let filteredEvents = arrFilmDefault.filter(({tenPhim}) => {
       tenPhim = tenPhim.toLowerCase();
-      return tenPhim.includes(searchText);
+      return tenPhim.includes(newSearchText);
     });
    
     if(filteredEvents.length === 0){
@@ -44,6 +45,12 @@ export default function Films() {
     }
    
     setFilm(filteredEvents);
+  }
+
+  const handleEnterKey = (e) =>{
+    if(e.code ==="Enter"){
+      handleSearch(values)
+    }
   }
  
   const columns = [
@@ -141,7 +148,7 @@ export default function Films() {
         <div className="flex justify-between items-center">
         <div className="pl-5 lg:pl-0 w-1/2 lg:w-1/4 mb-5 flex items-center">
 
-          <input onChange={handleChangeInput} placeholder='Tìm kiếm phim' name="search" className="pl-2 rounded-xl w-full text-lg py-1 border border-gray-300 focus:outline-none focus:shadow-outline focus:border-indigo-500" />
+          <input onKeyDown={handleEnterKey} onChange={handleChangeInput} placeholder='Tìm kiếm phim' name="search" className="pl-2 rounded-xl w-full text-lg py-1 border border-gray-300 focus:outline-none focus:shadow-outline focus:border-indigo-500" />
           <div onClick={()=>{
               handleSearch(values)
             }}>

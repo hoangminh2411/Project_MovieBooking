@@ -6,7 +6,7 @@ import { SET_PHIM_DANG_CHIEU, SET_PHIM_SAP_CHIEU } from "../../redux/types/QuanL
 import Slider from "react-slick";
 
 
-export default function Film_Moble({ arrFilm }) {
+export default function Film_Moble({ arrFilm, windowHeight }) {
     const [filmStatus, setFilmStatus] = useState({
         dangChieu: false,
         sapChieu: false
@@ -34,17 +34,16 @@ export default function Film_Moble({ arrFilm }) {
                     <img style={{filter:'blur(2px)'}} className="rounded-xl transition h-screen w-screen"  src={item.hinhAnh} alt=""/>
                     <div style={{background:'linear-gradient(to top, #0d0d0c 20%, transparent 100%)'}} className="absolute bottom-0 left-0 h-screen w-screen -z-0 "></div>
                     <div className="w-full absolute top-0 left-0 z-10 flex flex-col items-center mt-40 ">
-                        <p className=" text-sm mb-0 text-white">NEW . MOVIE</p>
                         <h1 className="text-2xl text-white ">{item.tenPhim}</h1>
                         <div className="flex">
                             <div className="mr-3 px-3 py-4 text-white rounded-lg" style={{ backgroundColor: 'rgba(0,0,0,0.5' }}>POPULAR WITH FRIEND</div>
                             <div className="mr-3 px-3 py-4 text-white rounded-lg" style={{ backgroundColor: 'rgba(0,0,0,0.5' }}>15+</div>
                             <div className="px-3 py-4 text-black rounded-lg font-bold" style={{ backgroundColor: 'rgb(251,191,16)' }}>{item.danhGia}/10</div>
                         </div>
-                        <div className="flex text-white font-base mt-5">
-                            <p className="mr-3">2019</p>
-                            <p className="mr-3">Crime, Drama, Thriller</p>
-                            <p className="mr-3">Datasat, Dolby  Digital</p>
+                        <div className="flex justify-around text-white font-base mt-5">
+                            <p className="mx-3">2019</p>
+                            <p className="mx-3">Crime, Drama, Thriller</p>
+                            <p>Datasat, Dolby  Digital</p>
                         </div>
                         <div className="w-2/3 h-px   bg-red-500 mb-5 mt-5 shadow-red-500 shadow-xl" ></div>
                         <div onClick={() => {
@@ -56,6 +55,7 @@ export default function Film_Moble({ arrFilm }) {
             </div>
         })
     }
+    console.log(windowHeight)
     // style={{ width: '134px', height: '165px' }}
     let activeClassDC = filmStatus.dangChieu === true ? 'active_FilmMoble' : 'none_active_filmMoble'
     let activeClassSC = filmStatus.sapChieu === true ? 'active_FilmMoble' : 'none_active_filmMoble'
@@ -91,7 +91,8 @@ export default function Film_Moble({ arrFilm }) {
             <Slider asNavFor={nav2} ref={(slider1) => setNav1(slider1)}>
                 {renderFilmsMainNav()}
             </Slider>
-            <div className="-translate-y-80    " >
+
+            {windowHeight>700?<div className="-translate-y-80    " >
                 <Slider
                     centerMode={true}
                     asNavFor={nav1}
@@ -106,7 +107,7 @@ export default function Film_Moble({ arrFilm }) {
                 >
                     {renderFilmsSubNav()}
                 </Slider>
-            </div>
+            </div>:""}
 
             </div>
 

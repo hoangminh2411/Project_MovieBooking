@@ -13,7 +13,7 @@ import Film_MobleV2 from '../../components/Film/Film_MobleV2';
 import News from './News/News'
 import AppSection from './AppSection/AppSection';
 import { getCarouselAction } from '../../redux/actions/CarouselAction';
-
+import {  Spin } from 'antd';
 export default function Home() {
     const [state, setState] = useState({
         width: window.innerWidth,
@@ -23,6 +23,7 @@ export default function Home() {
     const { arrFilm } = useSelector(state => state.QuanLyPhimReducer);
     const { heThongRapChieu } = useSelector(state => state.QuanLyRapReducer);
     const { arrImg } = useSelector(state => state.CarouselReducer);
+    
     const dispatch = useDispatch();
     useEffect(() => {
         window.onload = () => {
@@ -49,9 +50,10 @@ export default function Home() {
     }, [])
     return (
         <>
-            <HomeCarousel arrImg={arrImg} />
-            {state.width <= 768 ? <Film_MobleV2 arrFilm={arrFilm} /> : <MultipleRows arrFilm={arrFilm} />}
-            <Theaters heThongRapChieu={heThongRapChieu} />
+             <HomeCarousel arrImg={arrImg} />
+            
+            {state.width <= 768 ? <Spin spinning={arrFilm.length<=1}><Film_MobleV2 windowHeight={state.height} arrFilm={arrFilm} /></Spin> : <Spin spinning={arrFilm.length<=1}><MultipleRows arrFilm={arrFilm} /></Spin>}
+            <Spin spinning={heThongRapChieu.length===0}><Theaters heThongRapChieu={heThongRapChieu} /></Spin>
             <News />
             <AppSection />
         </>

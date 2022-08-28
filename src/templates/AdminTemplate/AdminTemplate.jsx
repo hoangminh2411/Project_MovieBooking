@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {Redirect,Route} from "react-router";
+import {Route} from "react-router";
 import { USER_LOGIN } from "../../util/setting";
 import { NavLink } from 'react-router-dom'
 import {history} from "../../App"
@@ -14,7 +14,7 @@ import Header from "../HomeTemplate/Layout/Header/Header";
         history.push('/login')
     }
     const dispatch = useDispatch()
-    const { thongTinNguoiDung, userLogin } = useSelector(state => state.QuanLyNguoiDungReducer);
+    const { userLogin } = useSelector(state => state.QuanLyNguoiDungReducer);
 
 
     return <Route {...restProps} render={(propsRoute)=>{

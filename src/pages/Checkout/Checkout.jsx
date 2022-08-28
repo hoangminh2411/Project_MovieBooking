@@ -164,9 +164,9 @@ export default function Checkout(props) {
         <div className="flex flex-col items-center">
           <div className="flex justify-center">
 
-            <img className="h-24 " src='https://img.freepik.com/free-vector/ticket-mascot-character-saying-i-know-cute-style-design-t-shirt-sticker-logo-element_152558-21574.jpg?size=338&ext=jpg&ga=GA1.2.1050152923.1653044197' alt="" />
-            <img className="h-24 " src='https://img.freepik.com/free-vector/ticket-mascot-character-saying-i-know-cute-style-design-t-shirt-sticker-logo-element_152558-21574.jpg?size=338&ext=jpg&ga=GA1.2.1050152923.1653044197' alt="" />
-            <img className="h-24 " src='https://img.freepik.com/free-vector/ticket-mascot-character-saying-i-know-cute-style-design-t-shirt-sticker-logo-element_152558-21574.jpg?size=338&ext=jpg&ga=GA1.2.1050152923.1653044197' alt="" />
+            <img className="h-24 " src={require('../../assets/images/Ticket.png')} alt="ticket" />
+            <img className="h-24 " src={require('../../assets/images/Ticket.png')} alt="ticket" />
+            <img className="h-24 " src={require('../../assets/images/Ticket.png')} alt="ticket" />
 
 
 
@@ -177,12 +177,12 @@ export default function Checkout(props) {
 
       </Modal>
       <div className="grid grid-cols-12">
-        <div className="col-span-12 xl:col-span-9  overflow-auto">
+        <div className="col-span-12 xl:col-span-9">
           {/* -----------Begin of sidebar Status dat ve---------------------- */}
           <div className="w-full h-28 border shadow-md   flex flex-row items-center pr-5 xl:pr-0 justify-around ">
-            <div className="xl:hidden block text-gray-500 font-bold text-2xl pl-5">
+            <NavLink to="/" className="xl:hidden block text-gray-500 font-bold text-2xl pl-5">
               <CloseOutlined />
-            </div>
+            </NavLink>
             <div className="xl:hidden h-full flex flex-row basis-full items-center justify-center">
               <p className={`${danhSachGheDangDat.length > 0 ? 'hidden' : 'block'} text-gray-500 font-bold text-2xl mb-0`}>1.CHỌN GHẾ</p>
               <p className={`${danhSachGheDangDat.length > 0 ? 'block' : 'hidden'} text-gray-500 font-bold text-2xl mb-0`}>2.ĐẶT VÉ</p>
@@ -207,17 +207,15 @@ export default function Checkout(props) {
 
           {/* -----------Begin of Booking ticket place------------------------ */}
           <div className="relative flex flex-col justify-start items-center mt-5" style={{ backgroundColor: 'rgb(245,245,245)' }}>
-            {/* <div className="bg-black w-full xl:w-4/5" style={{ height: '15px' }}>
-            </div> */}
+
             <div className="relative screenMovie relavtive  mb-0 flex justify-center items-center xl:w-4/5 w-full">
               <p className="text-black text-xl font-bold">Screen</p>
 
             </div>
-            {/* <div className={`${style['trapezoid']}`}>
-            </div> */}
 
 
-            <div className="py-5 w-4/5 xl:px-40 xl:w-full relative">
+
+            <div className="py-5  xl:px-40 xl:w-full relative w-4/5">
               {renderSeats()}
             </div>
           </div>
@@ -270,14 +268,14 @@ export default function Checkout(props) {
             </div>
             <hr />
             <div className="my-5">
-              <i className="text-gray-500">Email</i><br />
+              <span className="text-gray-500 font-semibold text-sm">Email</span><br />
               {userLogin.email}
 
             </div>
             <hr />
             <div className="my-5">
-              <i className="text-gray-500">Phone</i><br />
-              {'0909724980' || userLogin.soDT}
+              <span className="text-gray-500 font-semibold text-sm">Số điện thoại</span><br />
+              {userLogin.soDT || '1111233213'}
             </div>
             <hr />
 

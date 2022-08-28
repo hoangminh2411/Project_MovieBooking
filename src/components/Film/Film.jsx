@@ -20,7 +20,8 @@ function Film(props) {
             }}>
                  <img className="hidden group-hover:inline hover:opacity-50" src={require("../../assets/images/PlayVideo.png")} alt="123" />
             </div>
-            <div  style={{ backgroundImage: `url(${film.hinhAnh})`}} className={`${styles['movie-img']}`}></div>
+            {/* <div  style={{ backgroundImage: `url(${film.hinhAnh})`}} className={`${styles['movie-img']}`}></div> */}
+            <img className={`${styles['movie-img']}`} src={film.hinhAnh} loading="lazy" atl={film.tenPhim}/>
             <div className={`${styles['action']}`}>
                 <div onClick={()=>{
                     history.push(`/detail/${film.maPhim}`)
