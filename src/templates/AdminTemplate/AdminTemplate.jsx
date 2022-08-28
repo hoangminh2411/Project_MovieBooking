@@ -5,6 +5,7 @@ import { USER_LOGIN } from "../../util/setting";
 import { NavLink } from 'react-router-dom'
 import {history} from "../../App"
 import Header from "../HomeTemplate/Layout/Header/Header";
+import { Alert } from "antd";
 
 
  const AdminTemplate = (props) => { //path, exac, Component (component truyền từ component sử dụng template)
@@ -13,9 +14,13 @@ import Header from "../HomeTemplate/Layout/Header/Header";
     if (!localStorage.getItem(USER_LOGIN)) {
         history.push('/login')
     }
+    const {maLoaiNguoiDung}=JSON.parse(localStorage.getItem(USER_LOGIN))
     const dispatch = useDispatch()
     const { userLogin } = useSelector(state => state.QuanLyNguoiDungReducer);
-
+    if(maLoaiNguoiDung!=="QuanTri"){
+        alert('Bạn không đủ quyền truy cập vào trang này')
+        history.push('/home')
+    }
 
     return <Route {...restProps} render={(propsRoute)=>{
         // props.location, props.history, props.match

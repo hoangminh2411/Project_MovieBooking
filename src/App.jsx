@@ -12,8 +12,7 @@ import Detail_mobile from './pages/Detail/Detail_mobile'
 import  CheckoutTemplate  from './templates/CheckoutTemplate/CheckoutTemplate';
 import Checkout from './pages/Checkout/Checkout';
 import { UserTemplate } from './templates/UserTemplate/UserTemplate';
-import ModalResult from './pages/Checkout/ModalResult/ModalResult';
-import Profile from './pages/Profile/Profile';
+
 import Loading from './components/Loading/Loading';
 import ProfileV2 from './pages/Profile/ProfileV2';
 import AdminTemplate from './templates/AdminTemplate/AdminTemplate';
@@ -24,7 +23,10 @@ import ShowTimes from './pages/Admin/Films/ShowTimes/ShowTimes';
 import Users from './pages/Admin/Users/Users';
 import AddFilm from './pages/Admin/Films/AddFilm/AddFilm';
 import Edit from './pages/Admin/Films/Edit/Edit';
-import Nomatch from './components/Nomatch/Nomatch';
+import PageNotFound from './pages/PageNotFound/PageNotFound';
+import MaintenancePage from './pages/MaintenancePage/MaintenancePage';
+
+
 
 // import {Suspense, lazy} from 'react'
 
@@ -59,8 +61,8 @@ function App() {
           <AdminTemplate path="/admin/films/showtimes/:id" exact Component={ShowTimes} />
           <AdminTemplate path="/admin/users" exact Component={Users} />
 
-
-          <Route exact component={Nomatch}/>
+          <Route path="/maintenance" exact component={MaintenancePage} />
+          <Route exact component={PageNotFound}/>
         </Switch>
       </Router>
 

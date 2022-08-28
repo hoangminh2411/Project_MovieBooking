@@ -38,45 +38,63 @@ function Header(props) {
         setVisible(false);
     };
 
-
+    const menuItems = userLogin?.maLoaiNguoiDung === "KhachHang"? [{
+        label: (
+            <NavLink to="/profile">
+                Tài khoản của bạn
+            </NavLink>
+        ),
+        key: '0',
+    },
+    {
+        label: (
+            <div onClick={(e) => {
+                dispatch({
+                    type: THOAT_ACTION
+                })
+                history.push('/login')
+            }} target="_blank" rel="noopener noreferrer">
+                Thoát
+            </div>
+        ),
+        key: '1',
+    },] : [{
+        label: (
+            <NavLink to="/profile">
+                Tài khoản của bạn
+            </NavLink>
+        ),
+        key: '0',
+    },
+    {
+        label: (
+            <div onClick={(e) => {
+                dispatch({
+                    type: THOAT_ACTION
+                })
+                history.push('/login')
+            }} target="_blank" rel="noopener noreferrer">
+                Thoát
+            </div>
+        ),
+        key: '1',
+    },
+    {
+        type: 'divider',
+    },
+    {
+        label: (
+            <NavLink to="/admin/films">
+                Admin dashboard
+            </NavLink>
+        ),
+        key: '3',
+        disabled: userLogin?.maLoaiNguoiDung === "KhachHang",
+    },]
 
     const menu = (
         <Menu
-            items={[
-                {
-                    label: (
-                        <NavLink to="/profile">
-                            Tài khoản của bạn
-                        </NavLink>
-                    ),
-                    key: '0',
-                },
-                {
-                    label: (
-                        <div onClick={(e) => {
-                            dispatch({
-                                type: THOAT_ACTION
-                            })
-                            history.push('/login')
-                        }} target="_blank" rel="noopener noreferrer">
-                            Thoát
-                        </div>
-                    ),
-                    key: '1',
-                },
-                {
-                    type: 'divider',
-                },
-                {
-                    label: (
-                        <NavLink to="/admin/films">
-                            Admin dashboard
-                        </NavLink>
-                    ),
-                    key: '3',
-                    disabled: userLogin?.maLoaiNguoiDung === "KhachHang",
-                },
-            ]}
+            items={menuItems}
         />
     );
     const renderLogin = () => {

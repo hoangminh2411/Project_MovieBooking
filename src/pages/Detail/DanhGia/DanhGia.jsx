@@ -6,10 +6,11 @@ import { LikeFilled,UserOutlined, ExclamationOutlined  } from '@ant-design/icons
 import { layDanhSachCommentAction, likeCommentAction } from '../../../redux/actions/QuanLyBinhLuanAction';
 import ModalComment from '../../../components/ModalComment/ModalComment';
 import { useCallback } from 'react';
+import { memo } from 'react';
 
 
 
-export default function DanhGia({maPhim}) {
+ function DanhGia({maPhim}) {
     const [showPopup, setShowPopup] = useState(false)
     const { discussData } = useSelector(state => state.QuanLyBinhLuanReducer)
     const { userLogin } = useSelector(state => state.QuanLyNguoiDungReducer);
@@ -133,3 +134,4 @@ export default function DanhGia({maPhim}) {
         </div>
     )
 }
+export default memo(DanhGia)

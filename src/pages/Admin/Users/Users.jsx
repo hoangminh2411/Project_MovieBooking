@@ -1,14 +1,14 @@
-import React, { useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { Table, Modal } from 'antd';
-import {DeleteOutlined, SearchOutlined, EditOutlined } from '@ant-design/icons';
+import { DeleteOutlined, SearchOutlined, EditOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { PlusOutlined, LeftOutlined } from '@ant-design/icons'
 import { layDanhSachNguoiDung, xoaNguoiDungAction, capNhatThongTinNguoiDungAction, dangKyAction } from '../../../redux/actions/QuanLyNguoiDungAction';
-import { motion} from "framer-motion"
+import { motion } from "framer-motion"
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { GROUP_ID} from '../../../util/setting';
+import { GROUP_ID } from '../../../util/setting';
 import _ from 'lodash';
 import { NavLink } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
@@ -42,12 +42,12 @@ export default function Users() {
       email: user.email,
       soDt: user.soDt,
       maNhom: GROUP_ID,
-      maLoaiNguoiDung: "QuanTri",
+      maLoaiNguoiDung: user.maLoaiNguoiDung,
       hoTen: user.hoTen,
     },
 
     validationSchema: Yup.object({
-
+      taiKhoan: Yup.string().required('Tài Khoản không được bỏ trống').min(3,'Tài khoản từ 6-32 ký tự').max(32,'Tài khoản từ 6-32 ký tự'),
       matKhau: Yup.string().required('Mật khẩu không được bỏ trống').min(6, 'Mật khẩu từ 6-32 ký tự').max(32, 'Mật khẩu từ 6-32 ký tự'),
       hoTen: Yup.string().required('Họ tên không được bỏ trống').matches(/^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?:[ ][A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)*$/gm, 'Họ tên không được chứa số'),
       email: Yup.string().required('email không được bỏ trống').email('Email không đúng định dạng!'),
@@ -57,25 +57,25 @@ export default function Users() {
 
     onSubmit: values => {
       console.log(values)
-      if(_.isEmpty(user)){ 
+      if (_.isEmpty(user)) {
         const action = dangKyAction(values);
         dispatch(action);
         setIsModalVisible(false);
       }
       else {
-        
+
         const action = capNhatThongTinNguoiDungAction(values);
         dispatch(action);
         setIsModalVisible(false);
-       
+
       }
-     
+
 
     },
-  
+
   });
 
-  
+
   const showModal = (user) => {
     setUser(user)
     setIsModalVisible(true);
@@ -83,7 +83,7 @@ export default function Users() {
 
   const handleOk = () => {
     formik.handleSubmit()
-    
+
   };
 
   const handleCancel = () => {
@@ -94,14 +94,14 @@ export default function Users() {
 
   const handleChangeInput = (event) => {
     const value = event.target.value
-    if(typingTimeoutRef.current){
+    if (typingTimeoutRef.current) {
       clearTimeout(typingTimeoutRef.current);
     }
 
     typingTimeoutRef.current = setTimeout(() => {
-        handleSearch(value)
-    },300)
-    
+      handleSearch(value)
+    }, 300)
+
     // setValues(event.target.value)
 
   }
@@ -124,7 +124,7 @@ export default function Users() {
       // specify the condition of filtering result
       // here is that finding the name started with `value`
       render: (text, user, index) => {
-        return <motion.div  layout className="flex items-center">
+        return <motion.div layout className="flex items-center">
           <img loading="lazy" className="w-10 h-10 shadow-lg  rounded-full" src={`https://i.pravatar.cc/150?u=${index}-${user.hoTen}`} alt="" />
           <div className="ml-6">
             <h3>{user.hoTen}</h3>
@@ -155,7 +155,7 @@ export default function Users() {
       title: '',
       dataIndex: 'hanhDong',
       render: (text, user, index) => {
-        
+
         return <div className="flex ">
           <div onClick={() => {
             showModal(user)
@@ -185,14 +185,27 @@ export default function Users() {
 
   return (
     <>
-      <Modal title={_.isEmpty(user) ? 'Register':'Edit user'} visible={isModalVisible} onCancel={handleCancel} footer={[
-        <button key="submit" onClick={handleOk} type="submit" className="px-6 py-2 rounded-lg text-white font-medium hover:bg-cyan-900  bg-cyan-600">{_.isEmpty(user) ? 'Register':'Save all'}</button>,
+      <Modal title={_.isEmpty(user) ? 'Register' : 'Edit user'} visible={isModalVisible} onCancel={handleCancel} footer={[
+        <button key="submit" onClick={handleOk} type="submit" className="px-6 py-2 rounded-lg text-white font-medium hover:bg-cyan-900  bg-cyan-600">{_.isEmpty(user) ? 'Register' : 'Save all'}</button>,
 
       ]}>
         <form onSubmit={formik.handleSubmit}>
           <div>
             <div className="text-sm font-bold  tracking-wide mb-1">Tài khoản</div>
-            <input  disabled={formik.values.taiKhoan === undefined ? '':'disabled'} value={formik.values.taiKhoan === undefined ? '':formik.values.taiKhoan}  placeholder={user.taiKhoan} name="taiKhoan" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:shadow-outline focus:border-indigo-500" />
+            <input disabled={formik.values.taiKhoan === undefined ? '' : 'disabled'} value={formik.values.taiKhoan === undefined ? '' : formik.values.taiKhoan} placeholder={user.taiKhoan} name="taiKhoan" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:shadow-outline focus:border-indigo-500" />
+            {formik.touched.taiKhoan && formik.errors.taiKhoan ? (
+              <div className="text-red-500 italic">{formik.errors.taiKhoan}!</div>
+            ) : null}
+          </div>
+          <div className="mt-8">
+            <div className="flex justify-between items-center">
+              <label className="text-sm font-bold  tracking-wide mb-1" htmlFor="maLoaiNguoiDung">Phân quyền</label>
+
+              <select onChange={formik.handleChange} value={formik.values.maLoaiNguoiDung === undefined ? '' : formik.values.maLoaiNguoiDung} name="maLoaiNguoiDung" id="maLoaiNguoiDung">
+                <option value="QuanTri">Quản Trị</option>
+                <option value="KhachHang">Khách Hàng</option>
+              </select>
+            </div>
 
           </div>
           <div className="mt-8">
@@ -201,7 +214,7 @@ export default function Users() {
                 Họ tên
               </div>
             </div>
-            <input value={formik.values.hoTen === undefined ? '':formik.values.hoTen} placeholder={user.hoTen} name="hoTen" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500"  />
+            <input value={formik.values.hoTen === undefined ? '' : formik.values.hoTen} placeholder={user.hoTen} name="hoTen" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500" />
             {formik.touched.hoTen && formik.errors.hoTen ? (
               <div className="text-red-500 italic">{formik.errors.hoTen}!</div>
             ) : null}
@@ -212,7 +225,7 @@ export default function Users() {
                 Mật khẩu
               </div>
             </div>
-            <input value={formik.values.matKhau === undefined ? '':formik.values.matKhau} name="matKhau" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500"  />
+            <input value={formik.values.matKhau === undefined ? '' : formik.values.matKhau} name="matKhau" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500" />
             {formik.touched.matKhau && formik.errors.matKhau ? (
               <div className="text-red-500 italic">{formik.errors.matKhau}</div>
             ) : null}
@@ -224,7 +237,7 @@ export default function Users() {
                 Email
               </div>
             </div>
-            <input value={formik.values.email === undefined ? '':formik.values.email}  placeholder={user.email} name="email" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500"  />
+            <input value={formik.values.email === undefined ? '' : formik.values.email} placeholder={user.email} name="email" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500" />
             {formik.touched.email && formik.errors.email ? (
               <div className="text-red-500 italic">{formik.errors.email}!</div>
             ) : null}
@@ -237,25 +250,27 @@ export default function Users() {
                 Số điện thoại
               </div>
             </div>
-            <input value={formik.values.soDt === undefined ? '':formik.values.soDt} placeholder={user.soDt} name="soDt" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500"  />
+            <input value={formik.values.soDt === undefined ? '' : formik.values.soDt} placeholder={user.soDt} name="soDt" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border border-gray-300 focus:outline-none focus:border-indigo-500" />
             {formik.touched.soDt && formik.errors.soDt ? (
               <div className="text-red-500 italic">{formik.errors.soDt}!</div>
             ) : null}
           </div>
+
+          
         </form>
       </Modal>
       <h1 className="font-bold text-3xl lg:text-left text-center ">User management</h1>
       <div className="block lg:hidden absolute   left-0 text-2xl">
-          <NavLink to="/admin/films"><LeftOutlined /></NavLink>
-        </div>
+        <NavLink to="/admin/films"><LeftOutlined /></NavLink>
+      </div>
       <div className="flex flex-col lg:flex-row justify-between items-center my-7">
         <ul>
           <li className="inline-block mr-2 font-bold">
-            <a href="#" className="text-red-500 text-lg">All Users</a>
+            <a href="/#" className="text-red-500 text-lg">All Users</a>
           </li>
 
         </ul>
-   
+
       </div>
       <div className="flex justify-between items-center">
         <div className="pl-5 lg:pl-0 w-2/3 lg:w-1/4 mb-5 flex items-center">

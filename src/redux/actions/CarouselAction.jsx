@@ -1,7 +1,7 @@
 
 import { SET_CAROUSEL } from '../types/CarouselType';
 import { quanLyPhimService } from '../../services/QuanLyPhimService';
-
+import {history} from '../../App'
 
 export const getCarouselAction = ()=> {
 
@@ -26,7 +26,12 @@ export const getCarouselAction = ()=> {
                 arrImg: result.data.content
             })
         } catch (errors) {
-            console.log(errors)
+
+            const {statusCode,content} =  errors.response.data;
+            if(statusCode===403){
+                history.push('/maintenance')
+            }
+            console.log(content)
         }
     }
 }

@@ -30,14 +30,13 @@ export const postCommentAction = (comment)=>{
         try{
            
             const result = await quanLyCommentService.postComments(comment);
-            console.log(result);
             if(result.status === 201) {
               
                 await dispatch(layDanhSachCommentAction());
             }
         }
         catch(errors){  
-            console.log('errors',errors) 
+            console.log(errors)
         }
     }
 }
@@ -48,14 +47,13 @@ export const likeCommentAction = (id,comment)=>{
         try{
            
             const result = await quanLyCommentService.likeComments(id,comment);
-            console.log(result);
             if(result.status === 200) {
               
                 await dispatch(layDanhSachCommentAction());
             }
         }
         catch(errors){  
-            console.log('errors',errors) 
+            console.log(errors)
         }
     }
 }

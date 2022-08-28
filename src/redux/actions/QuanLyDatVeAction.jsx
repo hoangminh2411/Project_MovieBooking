@@ -20,7 +20,11 @@ export const layChiTietPhongVe = (maLichChieu) => {
         }
         catch(errors){
             dispatch(hideLoadingAction)
-            console.log(errors)
+            const {statusCode,content} =  errors.response.data;
+            if(statusCode===403){
+                history.push('/maintenance')
+            }
+            console.log(content)
             
         }
     }
@@ -47,8 +51,11 @@ export const datVe = (thongTinDatVe = new ThongTinDatVe()) => {
         }
         catch(errors) {
             dispatch(hideLoadingAction)
-            console.log('error FE  datVe',errors);
-            console.log('error BE datVe',errors.response?.data)
+            const {statusCode,content} =  errors.response.data;
+            if(statusCode===403){
+                history.push('/maintenance')
+            }
+            console.log(content)
         }     
     }
 }

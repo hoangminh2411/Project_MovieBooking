@@ -46,8 +46,8 @@ function TicketSearch() {
                 })
 
             }
-            catch (error) {
-                console.log(error)
+            catch (errors) {
+                console.log(errors.response.data.content)
             }
         }
         fechData()
@@ -280,7 +280,7 @@ function TicketSearch() {
                         placeholder="Ngày xem">
                         {state.ngayChieu?.map((ngayChieu, index) => {
                             // return <Option  key={`ngay-chieu-${index}`} title={ngayChieu} value={ngayChieu}> {moment(ngayChieu).format('DD/MM/YYYY')}</Option>
-                            return <Option key={`ngay-chieu-${index}`} value={ngayChieu.toString()}>{ngayChieu.toString()}</Option>
+                            return <Option key={`ngay-chieu-${index}`} value={ngayChieu.toString()}>{moment(ngayChieu).format('DD/MM/YYYY').toString()}</Option>
                         })}
                     </Select>
 

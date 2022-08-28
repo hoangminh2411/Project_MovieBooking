@@ -2,7 +2,7 @@
 import { quanLyRapService } from "../../services/QuanLyRapService";
 import { LAY_DANH_SAC_RAP, SET_CHI_TIET_PHIM } from "../types/QuanLyRapType";
 import {hideLoadingAction,displayLoadingAction} from "../actions/LoadingAction"
-
+import {history} from '../../App'
 
 
 export const  layDanhSachRapAction = () => {
@@ -19,8 +19,12 @@ export const  layDanhSachRapAction = () => {
                 dispatch(hideLoadingAction)
             } 
         } catch (errors) {
-            console.log('errors', errors)
             dispatch(hideLoadingAction)
+            const {statusCode,content} =  errors.response.data;
+            if(statusCode===403){
+                history.push('/maintenance')
+            }
+            console.log(content)
         }
     }
 }
@@ -40,7 +44,11 @@ export const layThongTinChiTietPhim = (id) => {
         }
         catch(errors) {
             dispatch(hideLoadingAction)
-            console.log('errors', errors)
+            const {statusCode,content} =  errors.response.data;
+            if(statusCode===403){
+                history.push('/maintenance')
+            }
+            console.log(content)
         }
     }
 }

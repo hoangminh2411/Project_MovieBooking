@@ -5,6 +5,7 @@ import { DatePicker, Space } from 'antd';
 import { InputNumber } from 'antd';
 import { quanLyRapService } from '../../../../services/QuanLyRapService';
 import { useFormik } from 'formik'
+import * as Yup from 'yup';
 import moment from 'moment'
 import { quanLyDatVeService, QuanLyDatVeService } from '../../../../services/QuanLyDatVeService';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,8 +22,16 @@ export default function ShowTimes(props) {
       maRap: '',
       giaVe: ''
     },
+    validationSchema: Yup.object({
+      ngayChieuGioChieu: Yup.string().required('Ngày chiếu giờ chiếu không được bỏ trống'),
+      maRap: Yup.string().required('Mã rạp không được bỏ trống vui lòng chọn Rạp và Cụm Rạp'),
+      giaVe: Yup.string().required('Giá vé không được bỏ trống'),
+      
+    }),
+
 
     onSubmit: async (values) => {
+     
       try {
         const result = await quanLyDatVeService.taoLichChieu(values);
 
@@ -143,15 +152,24 @@ export default function ShowTimes(props) {
           <Select options={state.cumRapChieu?.map((cumRap, index) => {
             return { label: cumRap.tenCumRap, value: cumRap.maCumRap }
           })} onChange={handleChangeCumRap} placeholder="Chọn cụm rạp" />
+          {formik.touched.maRap && formik.errors.maRap ? (
+              <div className="text-red-500 italic">{formik.errors.maRap}!</div>
+            ) : null}
         </Form.Item>
 
 
         <Form.Item label="Ngày giờ chiếu">
           <DatePicker showTime onChange={handleChangeNgayGioChieu} onOk={onOk} />
+          {formik.touched.ngayChieuGioChieu && formik.errors.ngayChieuGioChieu ? (
+              <div className="text-red-500 italic">{formik.errors.ngayChieuGioChieu}!</div>
+            ) : null}
         </Form.Item>
 
         <Form.Item label="Giá vé">
           <InputNumber min={75000} max={150000} onChange={handleChangeGiaVe} />
+          {formik.touched.giaVe && formik.errors.giaVe ? (
+              <div className="text-red-500 italic">{formik.errors.giaVe}!</div>
+            ) : null}
         </Form.Item>
 
         <Form.Item label="Chức năng">
