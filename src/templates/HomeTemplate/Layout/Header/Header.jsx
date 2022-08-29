@@ -146,7 +146,7 @@ function Header(props) {
 
                 {/* Header logo */}
                 <NavLink rel="noopener noreferrer" to="/" aria-label="Back to homepage" className={`${styles['logo']}`}>
-                    <img src="https://cdn-icons-png.flaticon.com/512/230/230994.png" alt="logo header" />
+                    <img src={require("../../../../assets/images/logo.png")} alt="logo header" />
                 </NavLink>
 
                 {/* Header menu */}

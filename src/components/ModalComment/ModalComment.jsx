@@ -37,7 +37,7 @@ export default function ModalComment({binhLuan, user, maPhim, onPopup, onClosePo
     onSubmit: values => {
       
       dispatch(postCommentAction(values))
-     
+      onClosePopup()
 
     },
   });

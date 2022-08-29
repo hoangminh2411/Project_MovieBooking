@@ -88,7 +88,7 @@ export default function Checkout(props) {
 
   const { thongTinPhim, danhSachGhe } = chiTietPhongVe;
 
-  console.log(thongTinPhim)
+  
 
   const handleDatVe = () => {
     const thongTinDatVe = new ThongTinDatVe()
