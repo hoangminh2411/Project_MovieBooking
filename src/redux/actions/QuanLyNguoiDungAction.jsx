@@ -34,7 +34,7 @@ export const dangNhapAction = (thongtinDangNhap) => {
         catch(errors) {
             dispatch(hideLoadingAction)
             dispatch(hideLoadingAction)
-            const {statusCode,content} =  errors.response.data;
+            const {statusCode,content} =  errors?.response?.data;
             if(statusCode===403){
                 history.push('/maintenance')
             }
@@ -61,7 +61,7 @@ export const dangKyAction = (thongtinDangKy) => {
         catch(errors) {
             dispatch(hideLoadingAction)
             dispatch(hideLoadingAction)
-            const {statusCode,content} =  errors.response.data;
+            const {statusCode,content} =  errors?.response?.data;
             if(statusCode===403){
                 history.push('/maintenance')
             }
@@ -90,7 +90,7 @@ export const suaThongTinNguoiDung = (thongTinNguoiDung)=>{
         }
         catch(errors) {
             dispatch(hideLoadingAction)
-            const {statusCode,content} =  errors.response.data;
+            const {statusCode,content} =  errors?.response?.data;
             if(statusCode===403){
                 history.push('/maintenance')
             }
@@ -117,7 +117,7 @@ export const layThongTinNguoiDung = () => {
         }
         catch(errors) {
             dispatch(hideLoadingAction)
-            const {statusCode,content} =  errors.response.data;
+            const {statusCode,content} =  errors?.response?.data;
             if(statusCode===403){
                 history.push('/maintenance')
             }
@@ -144,7 +144,7 @@ export const layDanhSachNguoiDung = () => {
         }
         catch(errors) {
             dispatch(hideLoadingAction)
-            const {statusCode,content} =  errors.response.data;
+            const {statusCode,content} =  errors?.response?.data;
             if(statusCode===403){
                 history.push('/maintenance')
             }
@@ -165,7 +165,7 @@ export const xoaNguoiDungAction = (taiKhoan) => {
         }
         catch(errors) {
             dispatch(hideLoadingAction)
-            const {statusCode,content} =  errors.response.data;
+            const {statusCode,content} =  errors?.response?.data;
             if(statusCode===403){
                 history.push('/maintenance')
             }
@@ -186,7 +186,7 @@ export const capNhatThongTinNguoiDungAction  = (thongTinNguoiDung) => {
         }
         catch(errors) {
             dispatch(hideLoadingAction)
-            const {statusCode,content} =  errors.response.data;
+            const {statusCode,content} =  errors?.response?.data;
             if(statusCode===403){
                 history.push('/maintenance')
             }

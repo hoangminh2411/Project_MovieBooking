@@ -16,7 +16,7 @@ export const  layDanhSachPhimAction = (tenPhim) => {
              dispatch(hideLoadingAction)
         } catch (errors) {
             dispatch(hideLoadingAction)
-            const {statusCode,content} =  errors.response.data;
+            const {statusCode,content} =  errors?.response?.data;
             if(statusCode===403){
                 history.push('/maintenance')
             }
@@ -35,7 +35,7 @@ export const themPhimUploadHinhAction = (formData) => {
         }
         catch(errors) {
             dispatch(hideLoadingAction)
-            const {statusCode,content} =  errors.response.data;
+            const {statusCode,content} =  errors?.response?.data;
             if(statusCode===403){
                 history.push('/maintenance')
             }
@@ -58,7 +58,7 @@ export const capNhapPhimUploadHinhAnhAction = (formData) => {
         }
         catch(errors) {
             dispatch(hideLoadingAction)
-            const {statusCode,content} =  errors.response.data;
+            const {statusCode,content} =  errors?.response?.data;
             if(statusCode===403){
                 history.push('/maintenance')
             }
@@ -82,7 +82,7 @@ export const layThongTinPhimAction =  (maPhim) => {
         }
         catch(errors) {
             dispatch(hideLoadingAction)
-            const {statusCode,content} =  errors.response.data;
+            const {statusCode,content} =  errors?.response?.data;
             if(statusCode===403){
                 history.push('/maintenance')
             }
@@ -103,7 +103,7 @@ export const xoaPhimAction = (maPhim) => {
         }
         catch(errors) {
             dispatch(hideLoadingAction)
-            const {statusCode,content} =  errors.response.data;
+            const {statusCode,content} =  errors?.response?.data;
             if(statusCode===403){
                 history.push('/maintenance')
             }

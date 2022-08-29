@@ -88,12 +88,13 @@ export default function Checkout(props) {
 
   const { thongTinPhim, danhSachGhe } = chiTietPhongVe;
 
-
+  console.log(thongTinPhim)
 
   const handleDatVe = () => {
     const thongTinDatVe = new ThongTinDatVe()
     thongTinDatVe.maLichChieu = props.match.params.id;
     thongTinDatVe.danhSachVe = danhSachGheDangDat;
+    
     const action = datVe(thongTinDatVe)
     setIsSuccess(true)
     dispatch(action);

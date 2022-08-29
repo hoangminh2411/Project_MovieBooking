@@ -20,7 +20,7 @@ export const  layDanhSachRapAction = () => {
             } 
         } catch (errors) {
             dispatch(hideLoadingAction)
-            const {statusCode,content} =  errors.response.data;
+            const {statusCode,content} =  errors?.response?.data;
             if(statusCode===403){
                 history.push('/maintenance')
             }
@@ -44,7 +44,7 @@ export const layThongTinChiTietPhim = (id) => {
         }
         catch(errors) {
             dispatch(hideLoadingAction)
-            const {statusCode,content} =  errors.response.data;
+            const {statusCode,content} =  errors?.response?.data;
             if(statusCode===403){
                 history.push('/maintenance')
             }

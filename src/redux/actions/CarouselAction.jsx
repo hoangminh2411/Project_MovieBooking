@@ -27,7 +27,7 @@ export const getCarouselAction = ()=> {
             })
         } catch (errors) {
 
-            const {statusCode,content} =  errors.response.data;
+            const {statusCode,content} =  errors?.response?.data;
             if(statusCode===403){
                 history.push('/maintenance')
             }

@@ -20,7 +20,7 @@ export const layChiTietPhongVe = (maLichChieu) => {
         }
         catch(errors){
             dispatch(hideLoadingAction)
-            const {statusCode,content} =  errors.response.data;
+            const {statusCode,content} =  errors?.response?.data;
             if(statusCode===403){
                 history.push('/maintenance')
             }
@@ -36,6 +36,7 @@ export const datVe = (thongTinDatVe = new ThongTinDatVe()) => {
         try {
             dispatch(displayLoadingAction)
             const result = await quanLyDatVeService.datVe(thongTinDatVe)
+        
             // Đạt vé thành công gọi api load lại phòng vé 
             await dispatch(layChiTietPhongVe(thongTinDatVe.maLichChieu))
             await dispatch({
@@ -43,15 +44,15 @@ export const datVe = (thongTinDatVe = new ThongTinDatVe()) => {
             })
             await dispatch(hideLoadingAction)
             
-            let userlogin = getState().QualyNguoiDUngReducer.userlogin;
-            connection.invoke('datGheThanhCong',userlogin.taiKhoan,thongTinDatVe.maLichChieu)
+            let userlogin = getState().QualyNguoiDUngReducer?.userlogin;
+            connection.invoke('datGheThanhCong',userlogin?.taiKhoan,thongTinDatVe.maLichChieu)
 
             // history.push('/profile');
             
         }
         catch(errors) {
             dispatch(hideLoadingAction)
-            const {statusCode,content} =  errors.response.data;
+            const {statusCode,content} =  errors?.response?.data;
             if(statusCode===403){
                 history.push('/maintenance')
             }

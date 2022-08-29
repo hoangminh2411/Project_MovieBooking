@@ -33,7 +33,7 @@ export default function ModalResult(props) {
 
                 </div>
                 <div className="mt-3 border-b  border-dashed border-gray-400" style={{ marginLeft: '31px', marginRight: '31px' }}   >
-                    <h1>{thongTinPhim.tenPhim}</h1>
+                    <h1>{thongTinPhim?.tenPhim}</h1>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, aliquid.</p>
                 </div>
                 <div className="mt-3 flex flex-row justify-around">
@@ -49,11 +49,11 @@ export default function ModalResult(props) {
                     </div>
                     <div className="flex flex-col">
                         <div>
-                            <h1>{`${moment(thongTinPhim.ngayChieu).format(`DD/MM`)} - ${thongTinPhim.gioChieu} `}</h1>
+                            <h1>{`${thongTinPhim?.ngayChieu.slice(0,-5)} - ${thongTinPhim?.gioChieu} `}</h1>
                             <p>Ngày - Giờ</p>
                         </div>
                         <div>
-                            <h1>{thongTinPhim.tenRap}</h1>
+                            <h1>{thongTinPhim?.tenRap}</h1>
                             <p>Rạp</p>
                         </div>
                     </div>
