@@ -9,17 +9,21 @@ import { useCallback } from 'react';
 import { memo } from 'react';
 import unknowUser from '../../../assets/images/unknowUser.png'
 
+import PropTypes from 'prop-types';
 
 function DanhGia({ maPhim }) {
     const [showPopup, setShowPopup] = useState(false)
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
     const { discussData } = useSelector(state => state.QuanLyBinhLuanReducer)
     const { userLogin } = useSelector(state => state.QuanLyNguoiDungReducer);
     const dispatch = useDispatch()
+
     useEffect(() => {
         dispatch(layDanhSachCommentAction())
     }, [dispatch])
+
     // -------------------------Ant design modal----------------
-    const [isModalVisible, setIsModalVisible] = useState(false);
     const LOGIN_FAIL = userLogin == null
     const showModal = () => {
         setIsModalVisible(true);
@@ -155,4 +159,9 @@ function DanhGia({ maPhim }) {
         </div>
     )
 }
+
+DanhGia.propTypes = {
+    maPhim: PropTypes.object,
+}
+
 export default memo(DanhGia)

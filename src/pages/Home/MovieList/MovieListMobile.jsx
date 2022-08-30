@@ -20,8 +20,7 @@ function MovieListMobile({ movieList, windowHeight }) {
 
     const dispatch = useDispatch();
     const MOBILE_HEIGHT =700
-    const handleGoToDetailPage = (item ) => {
-        console.log(item);
+    const handleGoToDetailPage = (item) => {
         history.push(`/detail/${item.maPhim}`)
     }
     const renderFilmsSubNav = () => {
@@ -121,7 +120,7 @@ function MovieListMobile({ movieList, windowHeight }) {
             id="lichChieu"
             className="text-gray-600 pt-10"
         >
-            <div className="relative w-screen h-screen overflow-hidden">
+            <div className="relative w-screen  overline-scroll">
                 <div
                     className="flex justify-center items-center absolute w-full top-2 left-1/2 -translate-x-1/2"
                     style={{ zIndex: '99' }}

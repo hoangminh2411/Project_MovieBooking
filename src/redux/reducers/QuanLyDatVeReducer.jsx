@@ -29,7 +29,7 @@ export const QuanLyDatVeReducer = (state= stateDefault,action) => {
 
             let index = danhSachGheCapNhat.findIndex(gheDD => gheDD.maGhe === action.gheDuocChon.maGhe);
             
-            if(index != -1) {
+            if(index !== -1) {
                 // Nếu tìm thấy ghế được chọn trong mảng có nghĩa là trước đó đã có click vào => xóa đi
                 danhSachGheCapNhat.splice(index,1);
                 

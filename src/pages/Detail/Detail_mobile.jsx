@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { layThongTinChiTietPhim } from '../../redux/actions/QuanLyRapAction';
 
+import PropTypes from 'prop-types';
+
 import moment from 'moment'
 import Slider from "react-slick";
 import { NavLink } from 'react-router-dom';
@@ -9,13 +11,13 @@ import { Tabs, Select } from 'antd'
 import { CaretRightOutlined } from '@ant-design/icons';
 
 import './Detail.scss'
-import { HashLink } from 'react-router-hash-link';
+
 import ModalTrailer from '../../components/ModalTrailer/ModalTrailer';
 import theaterImage from '../../assets/images/13067-removebg-preview (1).png'
+import Toast from '../../components/Toast/Toast';
+import { history } from '../../App';
 const { TabPane } = Tabs;
 const { Option } = Select;
-
-
 
 const settings = {
 
@@ -28,7 +30,9 @@ const settings = {
   slidesToScroll: 5
 };
 
-export default function Detail_mobile(props) {
+const MAXIMUM_LENGTH_CONTENT = 200;
+
+function Detail_mobile(props) {
   const filmDetail = useSelector(state => state.QuanLyPhimReducer.filmDetail)
   const [rap, setRap] = useState('')
   const dispatch = useDispatch()
@@ -40,6 +44,7 @@ export default function Detail_mobile(props) {
     let { id } = props.match.params;
     dispatch(layThongTinChiTietPhim(id))
   }, [props.match.params, dispatch])
+  let RAP_DANG_CHIEU = filmDetail?.heThongRapChieu?.length>0
   const onChange = (value) => {
     setRap(value)
   };
@@ -79,17 +84,22 @@ export default function Detail_mobile(props) {
               <p className="text-gray-400 mb-0">😣 Crime, 😒 Drama, 😲 Thriller</p>
               <p className="text-gray-400 ">Runtime: 2h2min</p>
               <p style={{ color: '#d3d3d3' }}>
-                {filmDetail.moTa?.length > 200 ? filmDetail.moTa.substr(0, 200) + '...' : filmDetail.moTa}
+                {filmDetail.moTa?.length > MAXIMUM_LENGTH_CONTENT ? filmDetail.moTa.substr(0, MAXIMUM_LENGTH_CONTENT) + '...' : filmDetail.moTa}
               </p>
             </div>
-            {/* Chọn lịch chiếu + Đánh giá */}
+            {/* Chọn lịch chiếu*/}
             <div className="flex justify-center items-center mt-14">
               {filmDetail?.dangChieu ?
-                <HashLink to="#dateSelect">
+                <a onClick={()=>{
+                  if(!RAP_DANG_CHIEU){
+                    Toast('info','SORRY','XIN LỖI VÌ SỰ BẤT TIỆN NÀY XIN QUÝ KHÁCH CHỌN PHIM KHÁC');
+                    history.push("/home")
+                  }
+                }} href="#dateSelect">
                   <div className="text-lg w-full  shadow rounded-3xl py-4 px-14 bg-black text-white hover:bg-orange-600 cursor-pointer text-center font-bold ">
                     <p className="ml-2 mb-0">BUY TICKET</p>
                   </div>
-                </HashLink> :
+                </a> :
                 <h3 className="text-red-500 text-xl font-bold">COMING SOON.....</h3>}
             </div>
             {/* Play trailer button */}
@@ -104,6 +114,7 @@ export default function Detail_mobile(props) {
         </div>
         {/* movie booking */}
         {filmDetail?.dangChieu ?
+          (RAP_DANG_CHIEU?
           <div
             className="text-white "
             style={{ backgroundColor: 'rgb(10, 32, 41)', paddingTop: '10%', height: '700px' }}>
@@ -187,9 +198,14 @@ export default function Detail_mobile(props) {
             <div className="flex justify-center items-end">
               <img className="w-full h-full" src={theaterImage} alt="theater imgage" />
             </div>
-          </div> : ''}
+          </div>:"") : ''}
       </div>
     </>
   )
 
 }
+
+Detail_mobile.propTypes = {
+  props: PropTypes.object,
+}
+export default Detail_mobile

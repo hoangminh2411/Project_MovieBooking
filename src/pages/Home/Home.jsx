@@ -28,6 +28,7 @@ export default function Home() {
     const THEATER_IN_LIST = heThongRapChieu.length
     const MOVIES_IN_LIST = movieList.length;
     const MOBILE_WIDTH = 768
+    const MOBILE_HEIGHT =320
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -56,7 +57,7 @@ export default function Home() {
     return (
         <>
             <HomeCarousel imageList={imageList} />
-            {state.width <= MOBILE_WIDTH ? <Spin spinning={movieList?.length <= 1}><MovieListMobile windowHeight={state.height} movieList={movieList} /></Spin> : <Spin spinning={MOVIES_IN_LIST <= 1}><MovieList movieList={movieList} /></Spin>}
+            {state.width <= MOBILE_WIDTH&&state.height>MOBILE_HEIGHT  ? <Spin spinning={MOVIES_IN_LIST <= 1}><MovieListMobile windowHeight={state.height} movieList={movieList} /></Spin> : <Spin spinning={MOVIES_IN_LIST <= 1}><MovieList movieList={movieList} /></Spin>}
             <Spin spinning={THEATER_IN_LIST === 0}><Theaters heThongRapChieu={heThongRapChieu} /></Spin>
             <News />
             <AppSection />

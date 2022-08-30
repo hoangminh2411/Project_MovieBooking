@@ -1,6 +1,6 @@
 import Toast from "../../components/Toast/Toast";
 import { quanLyCommentService } from "../../services/QuanLyCommentService";
-import { LAY_DANH_SACH_BINH_LUAN } from "../types/QuanLyBinhLuanType";
+import { BINH_LUAN_THANH_CONG, LAY_DANH_SACH_BINH_LUAN, LIKE_BINH_LUAN_THANH_CONG } from "../types/QuanLyBinhLuanType";
 import { displayLoadingAction, hideLoadingAction } from "./LoadingAction";
 
 
@@ -12,7 +12,9 @@ export const layDanhSachCommentAction = ()=>{
             if(result.status === 200) {
                 await dispatch({
                     type:LAY_DANH_SACH_BINH_LUAN,
-                    danhSachComment: result.data
+                    payload:{
+                        danhSachComment: result.data
+                    }
                 })                
             }
             dispatch(hideLoadingAction)
@@ -36,9 +38,13 @@ export const postCommentAction = (comment)=>{
             dispatch(displayLoadingAction)
             const result = await quanLyCommentService.postComments(comment);
             if(result.status === 201) {
-              
+                dispatch({
+                    type:BINH_LUAN_THANH_CONG,
+                    payload:{
+                        binhLuan: result.data,
+                    }
+                })      
                 await dispatch(layDanhSachCommentAction());
-                
             }
             dispatch(hideLoadingAction)
 
@@ -62,8 +68,13 @@ export const likeCommentAction = (id,comment)=>{
             
             const result = await quanLyCommentService.likeComments(id,comment);
             if(result.status === 200) {
-              
-                await dispatch(layDanhSachCommentAction());
+                dispatch({
+                    type:LIKE_BINH_LUAN_THANH_CONG,
+                    payload:{
+                        binhLuan: result.data,
+                    }
+                }) 
+                // await dispatch(layDanhSachCommentAction());
             }
         }
         catch(errors){  

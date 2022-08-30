@@ -1,4 +1,4 @@
-import { LAY_DANH_SACH_BINH_LUAN } from "../types/QuanLyBinhLuanType"
+import { BINH_LUAN_THANH_CONG, LAY_DANH_SACH_BINH_LUAN, LIKE_BINH_LUAN_THANH_CONG } from "../types/QuanLyBinhLuanType"
 
 const stateDefault = {
     discussData : [
@@ -157,12 +157,31 @@ const stateDefault = {
       ]
 }
 
-export const QuanLyBinhLuanReducer = (state = stateDefault,action) =>{
-    switch(action.type) {
+export const QuanLyBinhLuanReducer = (state = stateDefault,{payload, type}) =>{
+    switch(type) {
         case  LAY_DANH_SACH_BINH_LUAN: {
-          state.discussData = action.danhSachComment;
+          state.discussData = payload.danhSachComment;
           return {...state}
         }
+
+        case BINH_LUAN_THANH_CONG:{
+          state.discussData.push(payload.binhLuan)
+          return {...state}
+        }
+
+        case LIKE_BINH_LUAN_THANH_CONG:{
+          
+          let newBinhLuanList =[...state.discussData]
+          let index = newBinhLuanList.findIndex((binhLuan)=>{
+            return binhLuan.id === payload.binhLuan.id
+          })
+          if(index!==-1){
+            newBinhLuanList[index]=payload.binhLuan
+          }
+          state.discussData = newBinhLuanList
+          return {...state}
+        }
+      
         default: return {...state}
     }
 }

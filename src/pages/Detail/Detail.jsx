@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+import PropTypes from 'prop-types';
+
 import './Detail.scss'
 import '../../assets/styles/circle.scss'
 
@@ -15,7 +17,7 @@ import DanhGia from './DanhGia/DanhGia';
 const { TabPane } = Tabs;
 const MAXIMUM_LICH_CHIEU = 5
 
-export default function Detail(props) {
+function Detail(props) {
   const [keyActiveTab, setKeyAcctiveTab] = useState(1)
   const filmDetail = useSelector(state => state.QuanLyPhimReducer.filmDetail)
   const dispatch = useDispatch()
@@ -30,7 +32,7 @@ export default function Detail(props) {
     setKeyAcctiveTab(key);
   }
   return (
-    <div >
+    <>
       <div
         style={{ backgroundImage: `url(${filmDetail.hinhAnh})` }}
         className="detailBackground relative">
@@ -38,7 +40,8 @@ export default function Detail(props) {
       <div
         style={{ background: 'linear-gradient(to top, rgb(10, 32, 41) 10%, transparent 70%)' }} className="absolute bottom-0 left-0 h-screen w-full -z-0"
       ></div>
-      <div className="detailContent w-full container mx-auto mt-20 lg:px-5 xl:px-20 ">
+
+      <section className="detailContent w-full container mx-auto mt-20 lg:px-5 xl:px-20 ">
         <div className=" flex justify-between items-center xl:px-40 lg:px-20   ">
           <div className="flex">
             <img
@@ -56,13 +59,13 @@ export default function Detail(props) {
                 Ngày chiếu: {moment(filmDetail.ngayKhoiChieu).format('DD.MM.YYYY')}
               </p>
               <a
-                href="#thongTinPhim"
+                href="#TapMovieDetail"
                 className="rounded-lg w-56 bg-red-700 text-base opacity-90 hover:opacity-100 hover:text-white cursor-pointer text-white px-6 py-3 text-center"
               >
                 Thông tin phim
               </a>
             </div>
-          </div>
+          </div> 
           <div
             style={{ left: '75.6%' }}
             className="absolute top-0">
@@ -79,8 +82,11 @@ export default function Detail(props) {
             </div>
           </div>
         </div>
-      </div>
-      <div className="py-5" style={{ backgroundColor: `rgb(10, 32, 41)`, minHeight: '500px' }}>
+      </section>
+
+
+
+      <section id="TapMovieDetail" className="py-5" style={{ backgroundColor: `rgb(10, 32, 41)`, minHeight: '500px' }}>
         <div className="container mx-auto w-full text-white" style={{ maxWidth: '1024px' }}>
           <Tabs
             onTabClick={handleAccessTab}
@@ -88,7 +94,7 @@ export default function Detail(props) {
             centered
           >
             <TabPane
-              tab={<h1 id="thongTinPhim" className={`tabNormal ${keyActiveTab === '1' ? 'tabActive' : ''}`}>THÔNG TIN</h1>}
+              tab={<h1 className={`tabNormal ${keyActiveTab === '1' ? 'tabActive' : ''}`}>THÔNG TIN</h1>}
               key="1">
               <div className="p-7 text-white">
                 <div className="grid grid-cols-12">
@@ -201,7 +207,14 @@ export default function Detail(props) {
         </div>
 
 
-      </div>
-    </div>
+      </section>
+    </>
   )
 }
+
+
+Detail.propTypes = {
+  props: PropTypes.number,
+}
+
+export default Detail
