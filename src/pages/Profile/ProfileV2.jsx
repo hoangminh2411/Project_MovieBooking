@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './Profile.css'
-import { Drawer, Modal, Button } from 'antd';
+import { Drawer, Modal} from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { layThongTinNguoiDung, suaThongTinNguoiDung } from '../../redux/actions/QuanLyNguoiDungAction';
 import moment from 'moment'
@@ -25,7 +25,7 @@ export default function ProfileV2() {
     useEffect(() => {
         const action = layThongTinNguoiDung()
         dispatch(action);
-    }, [])
+    }, [dispatch])
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
@@ -40,7 +40,7 @@ export default function ProfileV2() {
         validationSchema: Yup.object({
             
             matKhau: Yup.string().required('Mật khẩu không được bỏ trống').min(6, 'Mật khẩu từ 6-32 ký tự').max(32, 'Mật khẩu từ 6-32 ký tự'),
-            hoTen: Yup.string().required('Họ tên không được bỏ trống').matches(/^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?:[ ][A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)*$/gm, 'Họ tên không được chứa số'),
+            hoTen: Yup.string().required('Họ tên không được bỏ trống'),
             soDt: Yup.string().required('Số điện thoại không được bỏ trống').matches(phoneRegExp, 'Số điện thoại không hợp lệ')
             
         }),
@@ -104,7 +104,7 @@ export default function ProfileV2() {
                     <td className="px-6 py-4 rounded-l-xl">
                         {item.maVe}
                     </td>
-                    <td scope="row" className="px-6 py-4 font-medium text-gray-900  whitespace-nowrap">
+                    <td className="px-6 py-4 font-medium text-gray-900  whitespace-nowrap">
                         {item.tenPhim}
                     </td>
                     <td className="px-6 py-4">
@@ -117,10 +117,11 @@ export default function ProfileV2() {
                         {(item.giaVe * item.danhSachGhe.length).toLocaleString()} đ
                     </td>
                     <td className="px-6 py-4 text-right  rounded-r-xl">
-                        <a onClick={() => {
+                        <a href="/#" 
+                        onClick={() => {
                             showDrawer()
                             handleCheck(index)
-                        }} href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Thêm</a>
+                        }}  className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Thêm</a>
                     </td>
                 </motion.tr>
                 {checked.includes(index) && <Drawer mask={true} maskStyle={{ opacity: '50%' }} placement="right" onClose={() => {
@@ -234,10 +235,10 @@ export default function ProfileV2() {
                     <div className="flex lg:flex-row flex-col justify-between items-center my-14">
                         <ul>
                             <li className="inline-block mr-2 font-bold">
-                                <a href="#" className="text-red-500 text-lg">History</a>
+                                <a href="#/" className="text-red-500 text-lg">History</a>
                             </li>
                             <li className="inline-block font-bold">
-                                <a href="#" style={{ color: 'rgb(225,220,223)' }} className="text-lg">Sumary</a>
+                                <a href="#/" style={{ color: 'rgb(225,220,223)' }} className="text-lg">Sumary</a>
                             </li>
                         </ul>
                         {/* <div>

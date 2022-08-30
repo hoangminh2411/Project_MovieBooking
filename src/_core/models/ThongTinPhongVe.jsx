@@ -4,7 +4,7 @@ export class ThongTinLichChieu {
 }
 
 
-// React typescript
+
 
 export class ThongTinPhim {
     maLichChieu = '';

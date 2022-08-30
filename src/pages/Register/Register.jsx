@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { CloseCircleOutlined, CloseOutlined } from '@ant-design/icons'
 import { history } from '../../App';
 import { NavLink } from 'react-router-dom';
@@ -11,36 +10,38 @@ import { dangKyAction } from '../../redux/actions/QuanLyNguoiDungAction';
 
 
 export default function Register() {
-
   const dispatch = useDispatch();
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
   const formik = useFormik({
     initialValues: {
       taiKhoan: '',
       matKhau: '',
-      email:'',
-      soDt:'',
-      maNhom:GROUP_ID,
-      hoTen:'',
+      email: '',
+      soDt: '',
+      maNhom: GROUP_ID,
+      hoTen: '',
     },
 
     validationSchema: Yup.object({
-      taiKhoan: Yup.string().required('Tài Khoản không được bỏ trống').min(6,'Tài khoản từ 6-32 ký tự').max(32,'Tài khoản từ 6-32 ký tự'),
-      matKhau: Yup.string().required('Mật khẩu không được bỏ trống').min(6,'Mật khẩu từ 6-32 ký tự').max(32,'Mật khẩu từ 6-32 ký tự'),
-      hoTen: Yup.string().required('Họ tên không được bỏ trống').matches(/^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?:[ ][A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)*$/gm, 'Họ tên không được chứa số'),
+      taiKhoan: Yup.string().required('Tài Khoản không được bỏ trống').min(6, 'Tài khoản từ 6-32 ký tự').max(32, 'Tài khoản từ 6-32 ký tự'),
+      matKhau: Yup.string().required('Mật khẩu không được bỏ trống').min(6, 'Mật khẩu từ 6-32 ký tự').max(32, 'Mật khẩu từ 6-32 ký tự'),
+      hoTen: Yup.string().required('Họ tên không được bỏ trống'),
       email: Yup.string().required('email không được bỏ trống').email('Email không đúng định dạng!'),
       soDt: Yup.string().required('Số điện thoại không được bỏ trống').matches(phoneRegExp, 'Số điện thoại không hợp lệ')
-  }),
+    }),
 
     onSubmit: values => {
       const action = dangKyAction(values);
       dispatch(action);
-      
+
     },
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className="relative w-full h-full lg:h-auto  lg:w-1/2 xl:max-w-screen-sm xl:h-auto rounded  " style={{ backgroundColor: 'rgba(15,39,76,0.9)' }}>
+    <form
+      onSubmit={formik.handleSubmit}
+      className="relative w-full h-full lg:h-auto  lg:w-1/2 xl:max-w-screen-sm xl:h-auto rounded  "
+      style={{ backgroundColor: 'rgba(15,39,76,0.9)' }}>
 
       <div className="mt-10 px-12 sm:px-24 md:px-48 lg:px-12 lg:mt-16 xl:px-24 xl:max-w-2xl">
         <h2 className="text-center text-4xl text-white font-display font-semibold lg:text-left xl:text-5xl xl:text-bold">Đăng ký</h2>
@@ -48,10 +49,13 @@ export default function Register() {
           <div>
             <div>
               <div className="text-sm font-bold text-white tracking-wide mb-1">Tài khoản</div>
-              <input name="taiKhoan" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:shadow-outline focus:border-indigo-500" />
+              <input
+                name="taiKhoan"
+                onChange={formik.handleChange}
+                className="pl-2 rounded w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:shadow-outline focus:border-indigo-500" />
               {formik.touched.taiKhoan && formik.errors.taiKhoan ? (
-                        <div className="text-red-500 italic ">{formik.errors.taiKhoan}</div>
-                    ) : null}
+                <div className="text-red-500 italic ">{formik.errors.taiKhoan}</div>
+              ) : null}
             </div>
             <div className="mt-8">
               <div className="flex justify-between items-center">
@@ -59,10 +63,13 @@ export default function Register() {
                   Họ tên
                 </div>
               </div>
-              <input name="hoTen" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500" type />
+              <input
+                name="hoTen"
+                onChange={formik.handleChange}
+                className="pl-2 rounded w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500" />
               {formik.touched.hoTen && formik.errors.hoTen ? (
-                        <div className="text-red-500 italic">{formik.errors.hoTen}!</div>
-                    ) : null}
+                <div className="text-red-500 italic">{formik.errors.hoTen}!</div>
+              ) : null}
             </div>
             <div className="mt-8">
               <div className="flex justify-between items-center">
@@ -70,61 +77,77 @@ export default function Register() {
                   Mật khẩu
                 </div>
               </div>
-              <input name="matKhau" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500" type />
+              <input
+                name="matKhau"
+                onChange={formik.handleChange}
+                className="pl-2 rounded w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500" />
               {formik.touched.matKhau && formik.errors.matKhau ? (
-                        <div className="text-red-500 italic">{formik.errors.matKhau}</div>
-                    ) : null}
+                <div className="text-red-500 italic">{formik.errors.matKhau}</div>
+              ) : null}
             </div>
-
             <div className="mt-8">
               <div className="flex justify-between items-center">
                 <div className="text-sm font-bold text-white tracking-wide mb-1">
                   Email
                 </div>
               </div>
-              <input name="email" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500" type />
+              <input
+                name="email"
+                onChange={formik.handleChange}
+                className="pl-2 rounded w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500" />
               {formik.touched.email && formik.errors.email ? (
-                        <div className="text-red-500 italic">{formik.errors.email}</div>
-                    ) : null}
+                <div className="text-red-500 italic">{formik.errors.email}</div>
+              ) : null}
             </div>
-
             <div className="mt-8">
               <div className="flex justify-between items-center">
                 <div className="text-sm font-bold text-white tracking-wide mb-1">
                   Số điện thoại
                 </div>
               </div>
-              <input name="soDt" onChange={formik.handleChange} className="pl-2 rounded w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500" type />
+              <input
+                name="soDt"
+                onChange={formik.handleChange}
+                className="pl-2 rounded w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500" />
               {formik.touched.soDt && formik.errors.soDt ? (
-                        <div className="text-red-500 italic ">{formik.errors.soDt}</div>
-                    ) : null}
+                <div className="text-red-500 italic ">{formik.errors.soDt}</div>
+              ) : null}
             </div>
-
-
-            
             <div className="mt-10">
-              <button type="submit" className="bg-indigo-500 text-gray-100 p-4 w-full rounded-full tracking-wide
-                          font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-indigo-600
-                          shadow-lg">
+              <button
+                type="submit"
+                className="bg-indigo-500 text-gray-100 p-4 w-full rounded-full tracking-widefont-semibold font-display focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg">
                 Đăng ký
               </button>
             </div>
           </div>
           <div className="mt-5 mb-5 text-sm font-display font-semibold text-gray-700 text-center">
-            You have an account ? <NavLink to="/login" className="cursor-pointer text-indigo-600 hover:text-indigo-800">Log in</NavLink>
+            You have an account ?
+            <NavLink
+              to="/login"
+              className="cursor-pointer text-indigo-600 hover:text-indigo-800"
+            >
+              Log in
+            </NavLink>
           </div>
         </div>
-        <div className="cursor-pointer " onClick={(e) => {
-          history.push('/login')
-        }}>
+        <div
+          className="cursor-pointer "
+          onClick={() => {
+            history.push('/login')
+          }}>
           <div className="hidden xl:block lg:block">
-          <CloseCircleOutlined className="text-5xl absolute hover:opacity-30" style={{ top: '-3%', right: '-4%', color: 'white' }} />
+            <CloseCircleOutlined
+              className="text-5xl absolute hover:opacity-30"
+              style={{ top: '-3%', right: '-4%', color: 'white' }}
+            />
           </div>
-
           <div className="xl:hidden lg:hidden">
-            <CloseOutlined className="text-2xl absolute opacity-30" style={{ top: '0%', right: '0%', color: 'white' }} />
+            <CloseOutlined
+              className="text-2xl absolute opacity-30"
+              style={{ top: '0%', right: '0%', color: 'white' }}
+            />
           </div>
-
         </div>
       </div>
     </form>

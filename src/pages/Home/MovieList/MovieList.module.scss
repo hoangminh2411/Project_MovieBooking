@@ -2,13 +2,12 @@
     // Color
     color: rgb(75 85 99);
 
-    // margin-padding-width-height
     padding-top: 88px;
     margin: 0 auto;
     max-width: 940px;
 
 
-   .action {
+    .actionFilter {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -17,16 +16,16 @@
             margin-right: 8px;
             padding: 12px 32px;
 
-            border-radius:8px;
+            border-radius: 8px;
 
             color: #fff;
-            background-color:  rgb(239 68 68);
+            background-color: rgb(239 68 68);
 
             font-weight: 600;
         }
 
         .none_active_film {
-            border-radius:8px;
+            border-radius: 8px;
 
             margin-right: 8px;
             padding: 12px 32px;
@@ -36,36 +35,22 @@
             color: rgb(31 41 55);
             background-color: #fff;
         }
-        
-   }
 
-   .movies {
+    }
+
+    .movies {
         padding: 20px 0;
-        
+
         // tailwind css
-        @apply   grid grid-cols-2 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3;
+        @apply grid grid-cols-2 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3;
+    }
+
+    .moreButton {
+        @apply flex justify-center;
         
-    
-   }
+    }
 
+    .moreButton button {
+        @apply py-[7px] px-[25px]  uppercase text-gray-500 border border-gray-500 rounded-md transition-all hover:text-white hover:border-red-700 hover:bg-red-700 transition-colors
+    }
 }
-
-
-
-
-// .slick-prev::before, .slick-next::before {
-//     color: gray !important;
-//     font-size: 3rem !important;
-    
-// }
-
-// .slick-prev{
-//    left:-49px!important;
-//    z-index: 100!important;
-// }
-
-// .width-item{
-//     /* width: 100% !important; */
-//     width: 33% !important;
-//     height: 453px !important; 
-// }

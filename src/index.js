@@ -21,24 +21,33 @@ import { DOMAIN_CYBERBUG } from './util/setting';
 import * as singalR from '@aspnet/signalr'
 
 
+
 // Đoạn code để kết nối sever lắng nghe sự kiện từ sever
 export const connection = new singalR.HubConnectionBuilder().withUrl(`${DOMAIN_CYBERBUG}/DatVeHub`)?.configureLogging(singalR.LogLevel.Information)?.build();
 
-connection.start().then(() => {
-  console.log('SignalR Connected');
- 
-  ReactDOM.render(
-      <Provider store={store}>
-        <GlobalStyles>
-          <App />
-        </GlobalStyles>
-      </Provider>,
-    document.getElementById('root')
-  );
-}).catch(errors => {
-  console.log(errors)
-})
+// connection.start().then(() => {
+//   console.log('SignalR Connected');
 
+//   ReactDOM.render(
+//       <Provider store={store}>
+//         <GlobalStyles>
+//           <App />
+//         </GlobalStyles>
+//       </Provider>,
+//     document.getElementById('root')
+//   );
+// }).catch(errors => {
+//   console.log(errors);
+//   Toast('error','ERROR',"Mất kết nối internet")
+// })
+ReactDOM.render(
+  <Provider store={store}>
+    <GlobalStyles>
+      <App />
+    </GlobalStyles>
+  </Provider>,
+  document.getElementById('root')
+);
 
 
 // If you want to start measuring performance in your app, pass a function

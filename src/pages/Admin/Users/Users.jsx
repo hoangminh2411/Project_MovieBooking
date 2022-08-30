@@ -49,7 +49,7 @@ export default function Users() {
     validationSchema: Yup.object({
       taiKhoan: Yup.string().required('Tài Khoản không được bỏ trống').min(3,'Tài khoản từ 6-32 ký tự').max(32,'Tài khoản từ 6-32 ký tự'),
       matKhau: Yup.string().required('Mật khẩu không được bỏ trống').min(6, 'Mật khẩu từ 6-32 ký tự').max(32, 'Mật khẩu từ 6-32 ký tự'),
-      hoTen: Yup.string().required('Họ tên không được bỏ trống').matches(/^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?:[ ][A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)*$/gm, 'Họ tên không được chứa số'),
+      hoTen: Yup.string().required('Họ tên không được bỏ trống'),
       email: Yup.string().required('email không được bỏ trống').email('Email không đúng định dạng!'),
       soDt: Yup.string().required('Số điện thoại không được bỏ trống').matches(phoneRegExp, 'Số điện thoại không hợp lệ')
 

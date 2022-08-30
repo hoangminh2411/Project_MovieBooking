@@ -1,3 +1,4 @@
+import Toast from "../../components/Toast/Toast";
 import { quanLyCommentService } from "../../services/QuanLyCommentService";
 import { LAY_DANH_SACH_BINH_LUAN } from "../types/QuanLyBinhLuanType";
 import { displayLoadingAction, hideLoadingAction } from "./LoadingAction";
@@ -18,7 +19,12 @@ export const layDanhSachCommentAction = ()=>{
         }
         catch(errors){
             dispatch(hideLoadingAction)
-            console.log('error lay danh sach binh luan',errors)
+            if(errors.message ==="Network Error") {
+                Toast('error','ERROR',"mất kết nối với internet vui lòng kiểm tra lại")
+            }
+            else{
+                Toast('error','ERROR',errors.message)  
+            }
           
         }
     }
@@ -39,7 +45,12 @@ export const postCommentAction = (comment)=>{
         }
         catch(errors){  
             dispatch(hideLoadingAction)
-            console.log(errors)
+            if(errors.message ==="Network Error") {
+                Toast('error','ERROR',"mất kết nối với internet vui lòng kiểm tra lại")
+            }
+            else{
+                Toast('error','ERROR',errors.message)  
+            }
         }
     }
 }
@@ -56,7 +67,13 @@ export const likeCommentAction = (id,comment)=>{
             }
         }
         catch(errors){  
-            console.log(errors)
+            
+            if(errors.message ==="Network Error") {
+                Toast('error','ERROR',"mất kết nối với internet vui lòng kiểm tra lại")
+            }
+            else{
+                Toast('error','ERROR',errors.message)  
+            }
         }
     }
 }

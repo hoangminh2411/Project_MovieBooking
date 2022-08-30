@@ -1,11 +1,8 @@
 import React, { memo } from 'react'
 import { Tabs } from 'antd';
-
 import styles from './News.module.scss'
 
 const { TabPane } = Tabs;
-
-
 function News() {
     return (
         <div id="news" className={`${styles['wrapper']}`}>

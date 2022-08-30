@@ -2,6 +2,7 @@
 import { SET_CAROUSEL } from '../types/CarouselType';
 import { quanLyPhimService } from '../../services/QuanLyPhimService';
 import {history} from '../../App'
+import Toast from '../../components/Toast/Toast';
 
 export const getCarouselAction = ()=> {
 
@@ -23,15 +24,26 @@ export const getCarouselAction = ()=> {
             const result = await quanLyPhimService.layDanhSachBanner();
             dispatch({
                 type: SET_CAROUSEL,
-                arrImg: result.data.content
+                payload:{
+                    imageList: result.data.content
+                }
             })
         } catch (errors) {
 
-            const {statusCode,content} =  errors?.response?.data;
-            if(statusCode===403){
-                history.push('/maintenance')
+            if(errors.message ==="Network Error") {
+                Toast('error','ERROR',"mất kết nối với internet vui lòng kiểm tra lại")
             }
-            console.log(content)
+            else{
+                const {statusCode,content} =  errors?.response?.data;
+                Toast('error','ERROR',content)
+                if(statusCode===403){
+                    history.push('/maintenance')
+                }
+                if(statusCode===400){
+                    history.push('/home')
+                }
+               
+            }
         }
     }
 }

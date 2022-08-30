@@ -1,33 +1,32 @@
 import React, { useState, memo, useCallback } from "react";
+
+import PropTypes from 'prop-types';
+
 import { useDispatch } from 'react-redux'
-import { SET_PHIM_DANG_CHIEU, SET_PHIM_SAP_CHIEU } from "../../redux/types/QuanLyPhimType";
-import Film from "../Film/Film";
-import styles from './MultipleRowSlick.module.scss'
+import { SET_PHIM_DANG_CHIEU, SET_PHIM_SAP_CHIEU } from "../../../redux/types/QuanLyPhimType";
 
-import ModalTrailer from "../ModalTrailer/ModalTrailer";
+import ModalTrailer from "../../../components/ModalTrailer/ModalTrailer";
+import Movie from "../../../components/Movie/Movie";
 
+import styles from './MovieList.module.scss'
 
+const MAXIMUM_MOVIES_PER_APPEAR = 8;
 
-const maximumFilm = 8;
-
-const MultipleRows = ({ arrFilm }) => {
+const MovieList = ({ movieList }) => {
   const [filmStatus, setFilmStatus] = useState({
     dangChieu: false,
     sapChieu: false
   })
+  const [moviesAppear, setMoviesAppear] = useState(MAXIMUM_MOVIES_PER_APPEAR)
+  const MAXIMUM_MOVIES_IN_LIST = movieList.length
   const [showTrailer, setShowTrailer] = useState(false)
   const [trailer, setTrailer] = useState('')
 
-  const [maxFilms, setMaxFilms] = useState(maximumFilm)
-
   const dispatch = useDispatch();
-
-
 
   const handleShowTrailer = useCallback(() => {
     setShowTrailer(true);
   }, [])
-  
   const handleCloseTrailer = () => {
     setShowTrailer(false)
   }
@@ -35,12 +34,14 @@ const MultipleRows = ({ arrFilm }) => {
     setTrailer(trailer)
   }, [])
 
-  const renderFilms = () => {
-    return arrFilm.slice(0, maxFilms).map((item, index) => {
+  const renderMovies = () => {
+    return movieList.slice(0, moviesAppear).map((item, index) => {
       //className={`${styleSlick['width-item']}`}
-      return <Film key={index} renderTrailer={renderTrailer} onShowTrailer={handleShowTrailer} film={item} />
+      return <Movie key={index} renderTrailer={renderTrailer} onShowTrailer={handleShowTrailer} film={item} />
     })
   }
+
+
 
   let activeClassDC = filmStatus.dangChieu === true ? 'active_Film' : 'none_active_film'
   let activeClassSC = filmStatus.sapChieu === true ? 'active_Film' : 'none_active_film'
@@ -48,8 +49,7 @@ const MultipleRows = ({ arrFilm }) => {
     <>
       <ModalTrailer trailer={trailer} onCloseTrailer={handleCloseTrailer} onTrailer={showTrailer} />
       <section id="lichChieu" className={`${styles['wrapper']}`}>
-
-        <div className={`${styles['action']}`}>
+        <div className={`${styles['actionFilter']}`}>
           <button onClick={() => {
             setFilmStatus({
               dangChieu: true,
@@ -58,7 +58,6 @@ const MultipleRows = ({ arrFilm }) => {
             const action = { type: SET_PHIM_DANG_CHIEU }
             dispatch(action);
           }} className={`${styles[activeClassDC]}`}>PHIM ĐANG CHIẾU</button>
-
           <button onClick={() => {
             setFilmStatus({
               sapChieu: true,
@@ -67,23 +66,25 @@ const MultipleRows = ({ arrFilm }) => {
             const action = { type: SET_PHIM_SAP_CHIEU }
             dispatch(action);
           }} className={`${styles[activeClassSC]}`}>PHIM SẮP CHIẾU</button>
-
         </div>
         <div className={`${styles['movies']}`}>
-          {renderFilms()}
+          {renderMovies()}
         </div>
-        {(maxFilms > arrFilm.length) ? '' : <div className='flex justify-center'>
-
-          <button className='py-[7px] px-[25px]  uppercase text-gray-500 border border-gray-500 rounded-md hover:text-white hover:border-red-700 hover:bg-red-700 transition-colors' onClick={() => {
-            setMaxFilms(maxFilms + 8)
+        {(moviesAppear > MAXIMUM_MOVIES_IN_LIST) ? '' : <div className={`${styles['moreButton']}`}>
+          <button onClick={() => {
+            setMoviesAppear(moviesAppear + MAXIMUM_MOVIES_PER_APPEAR)
           }}>
             Xem thêm
           </button>
         </div>}
-      </section> 
+      </section>
 
     </>
   );
 }
 
-export default memo(MultipleRows);
+MovieList.propTypes = {
+  movieList: PropTypes.array
+}
+
+export default memo(MovieList);

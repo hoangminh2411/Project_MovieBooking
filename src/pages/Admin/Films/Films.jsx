@@ -12,19 +12,19 @@ import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 export default function Films() {
-  const { arrFilmDefault } = useSelector(state => state.QuanLyPhimReducer);
-  const [film,setFilm] = useState(arrFilmDefault)
+  const { movieListDefault } = useSelector(state => state.QuanLyPhimReducer);
+  const [film,setFilm] = useState(movieListDefault)
   
   const dispatch = useDispatch()
   useEffect(() => {
     const action = layDanhSachPhimAction();
     dispatch(action);
     
-  }, [])
+  }, [dispatch])
   useEffect(() => {
-    setFilm(arrFilmDefault);
+    setFilm(movieListDefault);
     
-  }, [arrFilmDefault])
+  }, [movieListDefault])
   
   const [values, setValues] = useState('')
   const handleChangeInput = (event)=>{
@@ -32,14 +32,14 @@ export default function Films() {
   }
   const handleSearch = (searchText)=> {
     const newSearchText = searchText.toLowerCase();
-    let filteredEvents = arrFilmDefault.filter(({tenPhim}) => {
+    let filteredEvents = movieListDefault.filter(({tenPhim}) => {
       tenPhim = tenPhim.toLowerCase();
       return tenPhim.includes(newSearchText);
     });
    
     if(filteredEvents.length === 0){
      
-      filteredEvents = arrFilmDefault.filter(({maPhim}) => {
+      filteredEvents = movieListDefault.filter(({maPhim}) => {
         return maPhim.toString().includes(searchText.toString()) ;
       });
     }
@@ -67,7 +67,7 @@ export default function Films() {
     {
       title: 'Phim',
       dataIndex: 'tenPhim',
-      render: (text, film,index) => {
+      render: (text, film) => {
         return <motion.div  layout className="flex">
           <img className="w-14 h-16   rounded-lg" src={film.hinhAnh} alt="" />
           <div className="ml-2">
@@ -90,7 +90,7 @@ export default function Films() {
     {
       title: 'Ngày chiếu',
       dataIndex: 'ngayKhoiChieu',
-      render: (text, film, index) => {
+      render: (text, film) => {
         return <p>{moment(film.ngayKhoiChieu).format('DD/MM/YYYY')}</p>
       }
 
@@ -125,7 +125,7 @@ export default function Films() {
     }
   ];
 
-  const data = film ||  arrFilmDefault
+  const data = film ||  movieListDefault
  
 
 

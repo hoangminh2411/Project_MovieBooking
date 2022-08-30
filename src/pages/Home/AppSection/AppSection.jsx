@@ -1,8 +1,8 @@
 import React, { memo } from 'react'
 import { Carousel } from 'antd';
 import styles from './AppSection.module.scss'
-function AppSection() {
 
+function AppSection() {
     return (
         <div id="apps" className={`${styles['wrapper']}`}>
             <div className={`${styles['inner']}`}>
@@ -54,8 +54,6 @@ function AppSection() {
                 </div>
             </div>
         </div>
-
     )
 }
-
 export default memo(AppSection)

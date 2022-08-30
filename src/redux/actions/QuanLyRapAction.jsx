@@ -3,7 +3,7 @@ import { quanLyRapService } from "../../services/QuanLyRapService";
 import { LAY_DANH_SAC_RAP, SET_CHI_TIET_PHIM } from "../types/QuanLyRapType";
 import {hideLoadingAction,displayLoadingAction} from "../actions/LoadingAction"
 import {history} from '../../App'
-
+import Toast from "../../components/Toast/Toast";
 
 export const  layDanhSachRapAction = () => {
     return async (dispatch) => {
@@ -20,11 +20,21 @@ export const  layDanhSachRapAction = () => {
             } 
         } catch (errors) {
             dispatch(hideLoadingAction)
-            const {statusCode,content} =  errors?.response?.data;
-            if(statusCode===403){
-                history.push('/maintenance')
+            if(errors.message ==="Network Error") {
+                Toast('error','ERROR',"mất kết nối với internet vui lòng kiểm tra lại")
             }
-            console.log(content)
+            else{
+                const {statusCode,content} =  errors?.response?.data;
+                Toast('error','ERROR',content)
+                if(statusCode===403){
+                    history.push('/maintenance')
+                }
+                if(statusCode===400){
+                    history.push('/home')
+                }
+               
+            }
+            
         }
     }
 }
@@ -44,11 +54,21 @@ export const layThongTinChiTietPhim = (id) => {
         }
         catch(errors) {
             dispatch(hideLoadingAction)
-            const {statusCode,content} =  errors?.response?.data;
-            if(statusCode===403){
-                history.push('/maintenance')
+            if(errors.message ==="Network Error") {
+                Toast('error','ERROR',"mất kết nối với internet vui lòng kiểm tra lại")
             }
-            console.log(content)
+            else{
+                const {statusCode,content} =  errors?.response?.data;
+                Toast('error','ERROR',content)
+                if(statusCode===403){
+                    history.push('/maintenance')
+                }
+                if(statusCode===400){
+                    history.push('/home')
+                }
+               
+            }
+           
         }
     }
 }

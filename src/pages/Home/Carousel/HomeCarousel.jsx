@@ -1,11 +1,9 @@
-import React from 'react'
+import React, { memo } from 'react'
+import PropTypes from 'prop-types';
 import { Carousel } from 'antd';
 import styles from './HomeCarousel.module.scss'
-import TicketSearch from '../../../../components/TicketSearch/TicketSearch';
-
-import { memo } from 'react';
-
-const contentStyle = {
+import TicketSearch from '../../../components/TicketSearch/TicketSearch';
+const CONTENT_STYLE = {
     height: '600px',
     color: '#fff',
     lineHeight: '160px',
@@ -15,11 +13,11 @@ const contentStyle = {
     backgroundRepeat: 'no-repeat'
 };
 
-function HomeCarousel({arrImg}) {
+function HomeCarousel({imageList}) {
     const renderCarousel = ()=> {
-        return arrImg.map((item,index)=>{
+        return imageList?.map((item,index)=>{
             return <div key={index} className="bg-black">
-                <div  style={{...contentStyle,backgroundImage:`url(${item.hinhAnh})`}}>
+                <div  style={{...CONTENT_STYLE,backgroundImage:`url(${item.hinhAnh})`}}>
                 </div>
             </div>
         })
@@ -33,4 +31,8 @@ function HomeCarousel({arrImg}) {
         </div>
     )
 }
+HomeCarousel.propTypes = {
+    imageList: PropTypes.array
+}
 export default memo(HomeCarousel)
+

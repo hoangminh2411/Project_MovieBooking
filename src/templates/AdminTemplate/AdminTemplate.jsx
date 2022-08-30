@@ -14,10 +14,10 @@ import { Alert } from "antd";
     if (!localStorage.getItem(USER_LOGIN)) {
         history.push('/login')
     }
-    const {maLoaiNguoiDung}=JSON.parse(localStorage.getItem(USER_LOGIN))
-    const dispatch = useDispatch()
+    
     const { userLogin } = useSelector(state => state.QuanLyNguoiDungReducer);
-    if(maLoaiNguoiDung!=="QuanTri"){
+
+    if(userLogin.maLoaiNguoiDung!=="QuanTri"){
         alert('Bạn không đủ quyền truy cập vào trang này')
         history.push('/home')
     }
