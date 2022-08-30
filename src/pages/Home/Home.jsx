@@ -28,7 +28,7 @@ export default function Home() {
     const THEATER_IN_LIST = heThongRapChieu.length
     const MOVIES_IN_LIST = movieList.length;
     const MOBILE_WIDTH = 768
-    const MOBILE_HEIGHT =320
+    const MOBILE_HEIGHT =400
     const dispatch = useDispatch();
 
     useEffect(() => {

@@ -45,7 +45,7 @@ function Detail(props) {
         <div className=" flex justify-between items-center xl:px-40 lg:px-20   ">
           <div className="flex">
             <img
-              style={{ height: '320px', width: '216px' }}
+              style={{ height: '240px', width: '40%' }}
               src={filmDetail.hinhAnh}
               alt="Hình ảnh chi tiết phim" />
             <div className="text-white ml-3 w-2/3 flex flex-col justify-center">

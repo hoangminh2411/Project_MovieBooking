@@ -73,8 +73,6 @@ export default function ProfileV2() {
     const handleCancel = () => {
         setIsModalVisible(false);
     };
-
-    
     const handleCheck = (id) => {
         setChecked(prev => {
             const isChecked = checked.includes(id);
@@ -86,7 +84,6 @@ export default function ProfileV2() {
             }
         })
     }
-
     const renderTicketItem = () => {
 
         return thongTinNguoiDung?.thongTinDatVe?.map((item, index) => {
@@ -117,8 +114,9 @@ export default function ProfileV2() {
                         {(item.giaVe * item.danhSachGhe.length).toLocaleString()} đ
                     </td>
                     <td className="px-6 py-4 text-right  rounded-r-xl">
-                        <a href="/#" 
-                        onClick={() => {
+                        <a href="#/" 
+                        onClick={(e) => {
+                            e.preventDefault();
                             showDrawer()
                             handleCheck(index)
                         }}  className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Thêm</a>

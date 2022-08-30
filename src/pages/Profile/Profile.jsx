@@ -33,9 +33,6 @@ export default function Profile(props) {
     })
   }
   
-  console.log('checked',checked);
-
-  console.log('thongTinNguoiDung', thongTinNguoiDung);
 
   const renderTicketItem = () => {
     return thongTinNguoiDung?.thongTinDatVe?.map((item, index) => {
