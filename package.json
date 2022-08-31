@@ -15,7 +15,7 @@
     "loader": "^2.1.1",
     "lodas": "^1.2.0",
     "lodash": "^4.17.21",
-    "moment": "^2.29.3",
+    "moment": "^2.29.4",
     "node-sass": "^7.0.1",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.8.1",

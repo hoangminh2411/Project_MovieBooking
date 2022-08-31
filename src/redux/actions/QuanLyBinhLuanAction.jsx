@@ -68,6 +68,7 @@ export const likeCommentAction = (id,comment)=>{
             
             const result = await quanLyCommentService.likeComments(id,comment);
             if(result.status === 200) {
+                console.log('like thanh cong')
                 dispatch({
                     type:LIKE_BINH_LUAN_THANH_CONG,
                     payload:{

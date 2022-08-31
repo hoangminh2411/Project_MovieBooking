@@ -1,10 +1,9 @@
-// import thư viện lodash
-// import _ from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { datGheAction, datVe, layChiTietPhongVe } from '../../redux/actions/QuanLyDatVeAction'
 
 import './Checkout.css'
+
 
 // import thu vien antd
 import { Steps, Modal, Button } from 'antd';
@@ -20,6 +19,7 @@ import ModalResult from './ModalResult/ModalResult'
 import toLetters from '../../util/NumbertoString'
 // import { connection } from '../../index'
 import { NavLink } from 'react-router-dom'
+
 const { Step } = Steps
 
 export default function Checkout(props) {

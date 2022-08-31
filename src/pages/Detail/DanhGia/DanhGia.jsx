@@ -10,6 +10,7 @@ import { memo } from 'react';
 import unknowUser from '../../../assets/images/unknowUser.png'
 
 import PropTypes from 'prop-types';
+import { LIKE_BINH_LUAN_THANH_CONG } from '../../../redux/types/QuanLyBinhLuanType';
 
 function DanhGia({ maPhim }) {
     const [showPopup, setShowPopup] = useState(false)
@@ -81,9 +82,21 @@ function DanhGia({ maPhim }) {
                                 ...user,
                                 userLikeThisComment: [...user.userLikeThisComment, userLogin?.email],
                             }))
+                            dispatch({
+                                type: LIKE_BINH_LUAN_THANH_CONG,
+                                payload: {
+                                    binhLuan: { ...user,userLikeThisComment: [...user.userLikeThisComment, userLogin?.email]},
+                                }
+                            })
                         } else {
                             const newUser = user.userLikeThisComment.filter((user) => {
                                 return user !== userLogin?.email
+                            })
+                            dispatch({
+                                type: LIKE_BINH_LUAN_THANH_CONG,
+                                payload: {
+                                    binhLuan: { ...user,userLikeThisComment: newUser},
+                                }
                             })
                             dispatch(likeCommentAction(user.id, {
                                 ...user,

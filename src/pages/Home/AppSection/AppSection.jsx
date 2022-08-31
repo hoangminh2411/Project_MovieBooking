@@ -1,6 +1,13 @@
 import React, { memo } from 'react'
 import { Carousel } from 'antd';
+
 import styles from './AppSection.module.scss'
+
+import mobile from '../../../assets/images/moblie/mobile.png'
+import slider1 from '../../../assets/images/moblie/slide1.jpg'
+import slider2 from '../../../assets/images/moblie/slide2.jpg'
+import slider3 from '../../../assets/images/moblie/slide3.jpg'
+import slider4 from '../../../assets/images/moblie/slide4.jpg'
 
 function AppSection() {
     return (
@@ -31,20 +38,20 @@ function AppSection() {
                 </div>
                 <div className="lg:col-span-6 col-span-12">
                     <div className={`${styles['app-mobile']}`}>
-                        <img className={`${styles['mobile']}`} src={require('../../../assets/images/moblie/mobile.png')} alt="mobile" />
+                        <img className={`${styles['mobile']}`} src={mobile} alt="mobile" />
                         <div className={`${styles['carousel']}`}>
-                            <Carousel dots={false} style={{ height: '369px', width: '171px' }} className="opacity-90 overflow-hidden rounded-2xl" autoplay>
+                            <Carousel dots={false} style={{ height: '372px',width:'169px'}} className="opacity-90 overflow-hidden rounded-[25px]" autoplay>
                                 <div>
-                                    <img className="w-full h-full" src={require('../../../assets/images/moblie/slide1.jpg')} alt="123" />
+                                    <img className="w-full h-full" src={slider1} alt="Slider 1 Mobile" />
                                 </div>
                                 <div>
-                                    <img className="w-full h-full" src={require('../../../assets/images/moblie/slide2.jpg')} alt="123" />
+                                    <img className="w-full h-full" src={slider2} alt="Slider 2 Mobile" />
                                 </div>
                                 <div>
-                                    <img className="w-full h-full" src={require('../../../assets/images/moblie/slide3.jpg')} alt="123" />
+                                    <img className="w-full h-full" src={slider3} alt="Slider 3 Mobile" />
                                 </div>
                                 <div>
-                                    <img className="w-full h-full" src={require('../../../assets/images/moblie/slide4.jpg')} alt="123" />
+                                    <img className="w-full h-full" src={slider4} alt="Slider 4 Mobile" />
                                 </div>
                             </Carousel>
 

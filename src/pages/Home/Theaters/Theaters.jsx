@@ -7,8 +7,10 @@ import PropTypes from 'prop-types';
 import { Tabs } from 'antd';
 
 import styles from './Theaters.module.scss'
-
+import _ from 'lodash';
 import moment from 'moment';
+import localization from 'moment/locale/vi'
+moment.updateLocale('vi',localization)
 const MAXIMUM_LICH_CHIEU = 5
 const { TabPane } = Tabs;
 function Theaters({ heThongRapChieu }) {
@@ -22,7 +24,33 @@ function Theaters({ heThongRapChieu }) {
     const handleAccessRap = (key) => {
         setKeyAcctiverap(key)
     }
-
+    const renderNgayChieuPhim = (phim) =>{
+        let ngayChieu = []
+        phim.lstLichChieuTheoPhim?.slice(0, MAXIMUM_LICH_CHIEU).forEach((lichChieu) => {
+            ngayChieu.push(lichChieu.ngayChieuGioChieu.slice(0, 10))      
+        })
+        ngayChieu = _.uniq(ngayChieu)
+        const renderGioChieu =  (ngayChieu, phim)=>{
+            let day = phim.lstLichChieuTheoPhim?.slice(0, MAXIMUM_LICH_CHIEU).filter((lichChieu) => ngayChieu===lichChieu.ngayChieuGioChieu.slice(0, 10))
+            return day.map((lichChieu)=>{
+                return <NavLink key={`${lichChieu.maLichChieu}`} to={`/checkout/${lichChieu.maLichChieu}`} className="px-1 py-1 bg-slate-100 rounded-lg mr-2 mb-2 cursor-pointer hover:bg-slate-200">
+                        <span className="text-red-500 font-semibold">{moment(lichChieu.ngayChieuGioChieu).format('HH:mm ')}</span>
+                        ~
+                        <span className="text-gray-500 font-semibold">{moment(lichChieu.ngayChieuGioChieu).add(2,'hours').format('HH:mm ')}</span>
+                </NavLink>
+            })
+                
+            
+        }
+        return ngayChieu.map((ngayChieu,index)=>{
+            return <div key={`${index} ${ngayChieu}`}>
+                <h1  className="capitalize">{moment(ngayChieu).format('dddd')}, ngày {moment(ngayChieu).format('Do MMMM YYYY')}</h1>
+                <div className="flex flex-wrap">
+                     {renderGioChieu(ngayChieu,phim)}
+                </div>
+            </div>
+    })
+}
     const renderCumRap = () => {
         return heThongRapChieu?.map((heThongRap, index) => {
             return <TabPane
@@ -31,7 +59,7 @@ function Theaters({ heThongRapChieu }) {
                     minHeight: 600,
                     overflow: 'auto'
                 }}
-                key={index}
+                key={heThongRap.maHeThongRap}
                 tab={
                     <div className="border-b-2 pb-1">
                         <img
@@ -45,11 +73,13 @@ function Theaters({ heThongRapChieu }) {
                 <Tabs
                     defaultActiveKey={0}
                     onTabClick={handleAccessRap}
-                    tabPosition="left" >
+                    tabPosition="left" 
+                >
                     {heThongRap.lstCumRap?.map((cumRap, index) => {
+
                         return <TabPane
-                            style={{ maxHeight: 600, minHeight: 600 }}
-                            key={index}
+                            style={{ maxHeight: 600, minHeight: 600}}
+                            key={cumRap.tenCumRap}
                             tab={
                                 <div
                                     className={keyActiverap === index.toString() ?
@@ -75,8 +105,8 @@ function Theaters({ heThongRapChieu }) {
                                 </div>
                             }>
                             {/* Load Phim tương ứng */}
-                            {cumRap.danhSachPhim.map((phim, index) => {
-                                return <Fragment key={index}>
+                            {cumRap.danhSachPhim.map((phim) => {
+                                return <Fragment key={`${phim.tenPhim}-${cumRap.tenCumRap}`}>
                                     {/* Hình ảnh và thông tin phim */}
                                     <div className="my-5 flex">
                                         <img
@@ -89,26 +119,9 @@ function Theaters({ heThongRapChieu }) {
                                         </div>
                                     </div>
                                     {/* Ngày chiếu của phim */}
-                                    <div className="flex flex-wrap ">
-                                        {phim.lstLichChieuTheoPhim?.slice(0, MAXIMUM_LICH_CHIEU).map((lichChieu, index) => {
-                                            return <NavLink
-                                                className="group hover:bg-black hover:text-white text-black text-center border px-2  mr-2 my-2"
-                                                to={`/checkout/${lichChieu.maLichChieu}`}
-                                                key={index}
-                                            >
-                                                <div className="group-hover:font-bold">
-                                                    {lichChieu.tenRap}
-                                                </div>
-                                                <hr />
-                                                <div className="py-2 px-2">
-                                                    {moment(lichChieu.ngayChieuGioChieu).format('h:mm A')}
-                                                </div>
-                                                <hr />
-                                                <div>
-                                                    {moment(lichChieu.ngayChieuGioChieu).format('DD/MM/YYYY')}
-                                                </div>
-                                            </NavLink>
-                                        })}
+                                    <div>
+                                        {renderNgayChieuPhim(phim)}
+                                               
                                     </div>
                                     <hr />
                                 </Fragment>
@@ -119,6 +132,7 @@ function Theaters({ heThongRapChieu }) {
             </TabPane>
         })
     }
+   
 
     return (
         <div className={`${styles['wrapper']}`}>
@@ -143,3 +157,20 @@ Theaters.propTypes = {
 
 // use memo là 1 hook giúp function có chức năng như Pure component bên class component
 export default memo(Theaters)
+// return <NavLink
+                                            //     className="group hover:bg-black hover:text-white text-black text-center border px-2  mr-2 my-2"
+                                            //     to={`/checkout/${lichChieu.maLichChieu}`}
+                                            //     key={index}
+                                            // >
+                                            //     <div className="group-hover:font-bold">
+                                            //         {lichChieu.tenRap}
+                                            //     </div>
+                                            //     <hr />
+                                            //     <div className="py-2 px-2">
+                                            //         {moment(lichChieu.ngayChieuGioChieu).format('h:mm A')}
+                                            //     </div>
+                                            //     <hr />
+                                            //     <div>
+                                            //         {moment(lichChieu.ngayChieuGioChieu).format('DD/MM/YYYY')}
+                                            //     </div>
+                                            // </NavLink>

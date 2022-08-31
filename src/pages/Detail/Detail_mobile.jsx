@@ -137,14 +137,9 @@ function Detail_mobile(props) {
                   </div>}>
                   <div className="mb-5">
                     <Select
-                      showSearch
                       placeholder="CHỌN RẠP CHIẾU"
-                      optionFilterProp="children"
                       bordered={false}
                       style={{ color: 'white', fontWeight: '700' }}
-                      filterOption={(input, option) =>
-                        option.children.toLowerCase().includes(input.toLowerCase())
-                      }
                       onSelect={onChange}
                     >
                       {heThongRap.cumRapChieu?.map((cumRap, index) => {
@@ -179,7 +174,7 @@ function Detail_mobile(props) {
                               <div className="group opacity-50 hover:opacity-100 transition-all hover:bg-orange-500 hover:shadow-orange-500 bg-slate-500 rounded-full flex flex-col justify-center items-center hover:shadow  shadow-gray-800"
                                 style={{ width: '60px', height: '100px' }}
                               >
-                                <p className="text-sm mb-0">{moment(film.ngayChieuGioChieu).format('MMMM')}</p>
+                                <p className="text-black font-bold mb-0">{moment(film.ngayChieuGioChieu).format('MM')}</p>
                                 <p className="mb-0 text-white">{moment(film.ngayChieuGioChieu).format('DD')}</p>
                                 <div className="w-10 h-10 text-black font-bold flex justify-center items-center group-hover:bg-white rounded-full group-hover:shadow group-hover:shadow-orange-800">
                                   {moment(film.ngayChieuGioChieu).format('h:mm')}
