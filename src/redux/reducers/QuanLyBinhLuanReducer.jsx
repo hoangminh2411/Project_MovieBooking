@@ -154,7 +154,11 @@ const stateDefault = {
           userLikeThisComment: [],
           createdAt: "2021-04-23T18:45:15.151Z"
         },
-      ]
+      ],
+
+
+    isPendingLike: false,
+    isSuccessLike: false,
 }
 
 export const QuanLyBinhLuanReducer = (state = stateDefault,{payload, type}) =>{
@@ -178,6 +182,7 @@ export const QuanLyBinhLuanReducer = (state = stateDefault,{payload, type}) =>{
           if(index!==-1){
             newBinhLuanList[index]=payload.binhLuan
           }
+          state.isPendingLike = payload.isPending
           state.discussData = newBinhLuanList
           return {...state}
         }

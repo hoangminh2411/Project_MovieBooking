@@ -121,13 +121,13 @@ export default function Register() {
               </button>
             </div>
           </div>
-          <div className="mt-5 mb-5 text-sm font-display font-semibold text-gray-700 text-center">
-            You have an account ?
+          <div className="mt-5 mb-5 text-sm font-display font-semibold text-gray-700 text-center flex justify-center">
+            <p className="mr-2">You have an account ?</p> 
             <NavLink
               to="/login"
               className="cursor-pointer text-indigo-600 hover:text-indigo-800"
             >
-              Log in
+               Log in
             </NavLink>
           </div>
         </div>

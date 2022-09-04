@@ -14,6 +14,7 @@ import { THOAT_ACTION } from '../../../../redux/types/QuanLyNguoiDungType'
 
 import { Menu, Dropdown, Space, Drawer } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
+import unknowUser from '../../../../assets/images/unknowUser.png'
 
 function Header() {
     const [isSroll, setIsScroll] = useState(false)
@@ -67,13 +68,19 @@ function Header() {
             return <>
                 <NavLink
                     exact to="/login"
-                    className="text-black text-base py-1 px-2 self-center hover:text-red-500 hover:font-medium"
+                    className="text-black text-base py-1 px-2 self-center flex justify-center items-center hover:text-red-500 hover:scale-105  transition-all border-r-2 border-gray-200"
                 >
-                    Đăng nhập
+                        <img
+                            src={unknowUser}
+                            alt="anoymouse avatar"
+                            className="rounded-full w-7 h-7 mr-2"
+                        />
+                        Đăng nhập
+
                 </NavLink>
                 <NavLink
                     exact to="/register"
-                    className="text-black text-base py-1 px-2 self-center hover:text-red-500 hover:font-medium"
+                    className="text-black text-base py-1 px-2 self-center hover:text-red-500 hover:scale-105 transition-all"
                 >
                     Đăng ký
                 </NavLink>

@@ -33,7 +33,7 @@ function Theaters({ heThongRapChieu }) {
         const renderGioChieu =  (ngayChieu, phim)=>{
             let day = phim.lstLichChieuTheoPhim?.slice(0, MAXIMUM_LICH_CHIEU).filter((lichChieu) => ngayChieu===lichChieu.ngayChieuGioChieu.slice(0, 10))
             return day.map((lichChieu)=>{
-                return <NavLink key={`${lichChieu.maLichChieu}`} to={`/checkout/${lichChieu.maLichChieu}`} className="px-1 py-1 bg-slate-100 rounded-lg mr-2 mb-2 cursor-pointer hover:bg-slate-200">
+                return <NavLink key={`${lichChieu.maLichChieu}`} to={`/checkout/${lichChieu.maLichChieu}`} className="px-1 py-1 text-lg bg-slate-100 rounded-lg mr-2 mb-2 cursor-pointer hover:bg-slate-200">
                         <span className="text-red-500 font-semibold">{moment(lichChieu.ngayChieuGioChieu).format('HH:mm ')}</span>
                         ~
                         <span className="text-gray-500 font-semibold">{moment(lichChieu.ngayChieuGioChieu).add(2,'hours').format('HH:mm ')}</span>
@@ -44,7 +44,7 @@ function Theaters({ heThongRapChieu }) {
         }
         return ngayChieu.map((ngayChieu,index)=>{
             return <div key={`${index} ${ngayChieu}`}>
-                <h1  className="capitalize">{moment(ngayChieu).format('dddd')}, ngày {moment(ngayChieu).format('Do MMMM YYYY')}</h1>
+                <h1  className="capitalize text-lg">{moment(ngayChieu).format('dddd')}, ngày {moment(ngayChieu).format('Do MMMM YYYY')}</h1>
                 <div className="flex flex-wrap">
                      {renderGioChieu(ngayChieu,phim)}
                 </div>
@@ -52,7 +52,7 @@ function Theaters({ heThongRapChieu }) {
     })
 }
     const renderCumRap = () => {
-        return heThongRapChieu?.map((heThongRap, index) => {
+        return heThongRapChieu?.map((heThongRap) => {
             return <TabPane
                 style={{
                     maxHeight: 600,
@@ -64,7 +64,7 @@ function Theaters({ heThongRapChieu }) {
                     <div className="border-b-2 pb-1">
                         <img
                             src={heThongRap.logo}
-                            className={keyActiveBrand === index.toString() ?
+                            className={keyActiveBrand === heThongRap.maHeThongRap ?
                                 'rounded-full w-10 h-10 opacity-100' :
                                 'rounded-full w-10 h-10 opacity-20'}
                             alt="Hệ Thống Rạp Logo" />
@@ -75,14 +75,14 @@ function Theaters({ heThongRapChieu }) {
                     onTabClick={handleAccessRap}
                     tabPosition="left" 
                 >
-                    {heThongRap.lstCumRap?.map((cumRap, index) => {
-
+                    {heThongRap.lstCumRap?.map((cumRap) => {
+                        
                         return <TabPane
                             style={{ maxHeight: 600, minHeight: 600}}
                             key={cumRap.tenCumRap}
                             tab={
                                 <div
-                                    className={keyActiverap === index.toString() ?
+                                    className={keyActiverap === cumRap.tenCumRap ?
                                         'opacity-100' : 'opacity-20'}
                                     style={{ display: 'flex' }}>
 
@@ -132,8 +132,6 @@ function Theaters({ heThongRapChieu }) {
             </TabPane>
         })
     }
-   
-
     return (
         <div className={`${styles['wrapper']}`}>
             <div id="cumRap" className={`${styles['inner']}`}>
@@ -157,20 +155,3 @@ Theaters.propTypes = {
 
 // use memo là 1 hook giúp function có chức năng như Pure component bên class component
 export default memo(Theaters)
-// return <NavLink
-                                            //     className="group hover:bg-black hover:text-white text-black text-center border px-2  mr-2 my-2"
-                                            //     to={`/checkout/${lichChieu.maLichChieu}`}
-                                            //     key={index}
-                                            // >
-                                            //     <div className="group-hover:font-bold">
-                                            //         {lichChieu.tenRap}
-                                            //     </div>
-                                            //     <hr />
-                                            //     <div className="py-2 px-2">
-                                            //         {moment(lichChieu.ngayChieuGioChieu).format('h:mm A')}
-                                            //     </div>
-                                            //     <hr />
-                                            //     <div>
-                                            //         {moment(lichChieu.ngayChieuGioChieu).format('DD/MM/YYYY')}
-                                            //     </div>
-                                            // </NavLink>

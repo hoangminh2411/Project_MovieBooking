@@ -7,7 +7,7 @@ import styles from './Movie.module.scss'
 import { history } from '../../App'
 import playIcon from '../../assets/images/PlayVideo.png'
 
-function Movie({ onShowTrailer, renderTrailer, film }) {
+function Movie({ onShowTrailer, renderTrailer, film, contentHidden }) {
     const handlePlayTrailer = () => {
         renderTrailer(film.trailer)
         onShowTrailer()
@@ -35,7 +35,7 @@ function Movie({ onShowTrailer, renderTrailer, film }) {
                 loading="lazy"
                 alt={film.tenPhim}
             />
-            <div className={`${styles['action']}`}>
+            <div className={`${contentHidden?'hidden':''} ${styles['action']}`}>
                 <div
                     onClick={handleGoToDetailPage}
                     className={film.dangChieu === true ?
@@ -54,6 +54,7 @@ function Movie({ onShowTrailer, renderTrailer, film }) {
 Movie.propTypes = {
     film: PropTypes.object,
     onShowTrailer: PropTypes.func,
-    renderTrailer: PropTypes.func
+    renderTrailer: PropTypes.func,
+    contentHidden: PropTypes.bool,
 }
 export default memo(Movie)

@@ -97,8 +97,8 @@ export default function Login() {
               </button>
             </div>
           </div>
-          <div className="mt-5 mb-5 text-sm font-display font-semibold text-gray-700 text-center">
-            Don't have an account ?
+          <div className="mt-5 mb-5 text-sm font-display font-semibold text-gray-700 text-center flex justify-center">
+            <p className="mr-2">Don't have an account ?</p>
             <NavLink
               to="/register"
               className="cursor-pointer text-indigo-600 hover:text-indigo-800"

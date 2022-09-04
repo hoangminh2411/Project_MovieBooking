@@ -18,7 +18,7 @@ const MovieList = ({ movieList }) => {
     sapChieu: false
   })
   const [moviesAppear, setMoviesAppear] = useState(MAXIMUM_MOVIES_PER_APPEAR)
-  const MAXIMUM_MOVIES_IN_LIST = movieList.length
+  const MAXIMUM_MOVIES_IN_LIST = movieList?.length
   const [showTrailer, setShowTrailer] = useState(false)
   const [trailer, setTrailer] = useState('')
 
@@ -35,9 +35,15 @@ const MovieList = ({ movieList }) => {
   }, [])
 
   const renderMovies = () => {
-    return movieList.slice(0, moviesAppear).map((item, index) => {
+    return movieList?.slice(0, moviesAppear).map((item, index) => {
       //className={`${styleSlick['width-item']}`}
-      return <Movie key={index} renderTrailer={renderTrailer} onShowTrailer={handleShowTrailer} film={item} />
+      return <Movie
+        key={index}
+        renderTrailer={renderTrailer}
+        onShowTrailer={handleShowTrailer}
+        film={item}
+        contentHidden={false}
+      />
     })
   }
 
@@ -48,6 +54,7 @@ const MovieList = ({ movieList }) => {
   return (
     <>
       <ModalTrailer trailer={trailer} onCloseTrailer={handleCloseTrailer} onTrailer={showTrailer} />
+
       <section id="lichChieu" className={`${styles['wrapper']}`}>
         <div className={`${styles['actionFilter']}`}>
           <button onClick={() => {

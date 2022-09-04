@@ -19,19 +19,28 @@ const { TabPane } = Tabs;
 const MAXIMUM_LICH_CHIEU = 1000
 
 function Detail(props) {
+  
   const [keyActiveTab, setKeyAcctiveTab] = useState(9)
   const [keyActiveDay, setKeyActiveDay] = useState(2)
+  const [keyActiveBrand, setKeyAcctiveBrand] = useState(0)
+
   const filmDetail = useSelector(state => state.QuanLyPhimReducer.filmDetail)
   const dispatch = useDispatch()
+
   const RAP_CO_PHIM = filmDetail.heThongRapChieu?.length > 0
+
   useEffect(() => {
     // Lấy thông tin param từ url
     let { id } = props.match.params;
     dispatch(layThongTinChiTietPhim(id))
     window.scrollTo({ top: 0 });
   }, [props.match.params, dispatch]);
+
   const handleAccessTab = (key) => {
     setKeyAcctiveTab(key);
+  }
+  const handleAccessBrand = (key)=>{
+    setKeyAcctiveBrand(key)
   }
   const handleAccessDaytab = (key) => {
     setKeyActiveDay(key)
@@ -64,7 +73,7 @@ function Detail(props) {
             </div>
             <div className="flex">
               {gioChieuList.map((lichChieu) => {
-                return <NavLink key={`${lichChieu.maLichChieu}`} to={`/checkout/${lichChieu.maLichChieu}`} className="px-1 py-1 bg-slate-100 rounded-md mr-2 mb-2 cursor-pointer hover:bg-slate-200">
+                return <NavLink key={`${lichChieu.maLichChieu}`} to={`/checkout/${lichChieu.maLichChieu}`} className="px-1 py-1 text-lg bg-slate-100 rounded-md mr-2 mb-2 cursor-pointer hover:bg-slate-200">
                   <span className="text-red-500 font-semibold">{moment(lichChieu.ngayChieuGioChieu).format('HH:mm ')} ~</span>
 
                   <span className="text-gray-500 font-semibold">{moment(lichChieu.ngayChieuGioChieu).add(2, 'hours').format('HH:mm ')}</span>
@@ -131,10 +140,7 @@ function Detail(props) {
   }
   return (
     <>
-
       <FilmContent filmDetail={filmDetail} />
-
-
       <section id="TapMovieDetail" className="py-5" style={{ backgroundColor: `rgb(10, 32, 41)`, minHeight: '500px' }}>
         <div className="container mx-auto w-full text-white" style={{ maxWidth: '1024px' }}>
           <Tabs
@@ -202,16 +208,16 @@ function Detail(props) {
                 <Tabs
                   className="booketMovieTable "
                   tabPosition="left"
+                  onTabClick={handleAccessBrand}
                 >
 
                   {filmDetail.heThongRapChieu?.map((heThongRap, index) => {
-
-                    return <TabPane tab={<div className="flex flex-row items-center justify-center">
+                    return <TabPane tab={<div className={`${keyActiveBrand === index.toString()? 'opacity-100':'opacity-50'} hover:opacity-100 flex flex-row items-center justify-center`}>
                       <img
                         className="w-10 h-10 rounded-full"
                         src={heThongRap.logo}
                         alt="hình ảnh hệ thống rạp" />
-                      <div className="text-center ml-2 text-white">
+                      <div className="text-center uppercase  ml-2 text-white">
                         {heThongRap.tenHeThongRap}
                       </div>
                     </div>} key={index}>

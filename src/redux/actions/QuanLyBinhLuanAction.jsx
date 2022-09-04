@@ -41,7 +41,7 @@ export const postCommentAction = (comment)=>{
                 dispatch({
                     type:BINH_LUAN_THANH_CONG,
                     payload:{
-                        binhLuan: result.data,
+                        binhLuan: result.data
                     }
                 })      
                 await dispatch(layDanhSachCommentAction());
@@ -68,11 +68,11 @@ export const likeCommentAction = (id,comment)=>{
             
             const result = await quanLyCommentService.likeComments(id,comment);
             if(result.status === 200) {
-                console.log('like thanh cong')
                 dispatch({
                     type:LIKE_BINH_LUAN_THANH_CONG,
                     payload:{
                         binhLuan: result.data,
+                        isPending: false
                     }
                 }) 
                 // await dispatch(layDanhSachCommentAction());

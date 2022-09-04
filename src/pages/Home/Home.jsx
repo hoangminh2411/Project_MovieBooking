@@ -25,8 +25,8 @@ export default function Home() {
     const { heThongRapChieu } = useSelector(state => state.QuanLyRapReducer);
     const { imageList } = useSelector(state => state.CarouselReducer);
 
-    const THEATER_IN_LIST = heThongRapChieu.length
-    const MOVIES_IN_LIST = movieList.length;
+    const THEATER_IN_LIST = heThongRapChieu?.length
+    const MOVIES_IN_LIST = movieList?.length;
     const MOBILE_WIDTH = 768
     const MOBILE_HEIGHT =400
     const dispatch = useDispatch();

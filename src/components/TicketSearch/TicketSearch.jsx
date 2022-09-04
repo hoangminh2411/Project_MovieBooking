@@ -226,10 +226,10 @@ function TicketSearch() {
 
         if (value !== undefined) {
             let maLichChieu;
-            state.cumRapChieu.forEach((cumRap) => {
+            state.cumRapChieu?.forEach((cumRap) => {
                 cumRap.forEach((rap) => {
                     let result = rap.lichChieuPhim.filter((film) => {
-                        let ngayGioConvert = moment(film.ngayChieuGioChieu).format('h:mm A');
+                        let ngayGioConvert = moment(film.ngayChieuGioChieu).format('HH:mm');
                         return ngayGioConvert === value
                     })
                     maLichChieu = result
@@ -348,7 +348,7 @@ function TicketSearch() {
                         placeholder="Xuất chiếu"
                     >
                         {state.gioChieuList?.map((gioChieu, index) => {
-                            let gioChieuCovert = moment(gioChieu.ngayChieuGioChieu).format('h:mm A').toString();
+                            let gioChieuCovert = moment(gioChieu.ngayChieuGioChieu).format('HH:mm').toString();
                             return <Option
                                 optionLabelProp={gioChieuCovert}
                                 key={`gio-chieu-${index}`}

@@ -2,9 +2,6 @@ import React from 'react'
 import { NavLink } from 'react-router-dom';
 
 export default function PageNotFound() {
-
-
-
     return (
         <div className="flex justify-center items-center w-screen h-screen bg-gray-100 overflow-scroll">
             

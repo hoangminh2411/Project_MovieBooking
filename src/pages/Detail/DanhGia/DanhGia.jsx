@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback, memo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Rate, Modal } from 'antd';
+import { LikeFilled, ExclamationOutlined, LoadingOutlined } from '@ant-design/icons';
 import moment from 'moment'
-import { LikeFilled, ExclamationOutlined } from '@ant-design/icons';
 import { layDanhSachCommentAction, likeCommentAction } from '../../../redux/actions/QuanLyBinhLuanAction';
-import ModalComment from '../../../components/ModalComment/ModalComment';
-import { useCallback } from 'react';
-import { memo } from 'react';
-import unknowUser from '../../../assets/images/unknowUser.png'
-
-import PropTypes from 'prop-types';
 import { LIKE_BINH_LUAN_THANH_CONG } from '../../../redux/types/QuanLyBinhLuanType';
+import ModalComment from '../../../components/ModalComment/ModalComment';
+import unknowUser from '../../../assets/images/unknowUser.png'
+import PropTypes from 'prop-types';
+import { history } from '../../../App';
 
 function DanhGia({ maPhim }) {
     const [showPopup, setShowPopup] = useState(false)
     const [isModalVisible, setIsModalVisible] = useState(false);
 
-    const { discussData } = useSelector(state => state.QuanLyBinhLuanReducer)
+    const { discussData,isPendingLike } = useSelector(state => state.QuanLyBinhLuanReducer)
     const { userLogin } = useSelector(state => state.QuanLyNguoiDungReducer);
     const dispatch = useDispatch()
 
@@ -24,12 +22,13 @@ function DanhGia({ maPhim }) {
         dispatch(layDanhSachCommentAction())
     }, [dispatch])
 
-    // -------------------------Ant design modal----------------
+    // ------------------------Modal UnknowUser Comment----------------
     const LOGIN_FAIL = userLogin == null
-    const showModal = () => {
+    const showModalUnknowUserComment = () => {
         setIsModalVisible(true);
     };
     const handleOk = () => {
+        history.push('/login')
         setIsModalVisible(false);
     };
     const handleCancel = () => {
@@ -75,7 +74,7 @@ function DanhGia({ maPhim }) {
                 <div className="py-4 flex items-center ">
                     <span onClick={() => {
                         if (LOGIN_FAIL) {
-                            showModal();
+                            showModalUnknowUserComment();
                         }
                         else if (!likeCheck) {
                             dispatch(likeCommentAction(user.id, {
@@ -86,6 +85,7 @@ function DanhGia({ maPhim }) {
                                 type: LIKE_BINH_LUAN_THANH_CONG,
                                 payload: {
                                     binhLuan: { ...user,userLikeThisComment: [...user.userLikeThisComment, userLogin?.email]},
+                                    isPending:true,
                                 }
                             })
                         } else {
@@ -96,6 +96,7 @@ function DanhGia({ maPhim }) {
                                 type: LIKE_BINH_LUAN_THANH_CONG,
                                 payload: {
                                     binhLuan: { ...user,userLikeThisComment: newUser},
+                                    isPending:true,
                                 }
                             })
                             dispatch(likeCommentAction(user.id, {
@@ -143,7 +144,7 @@ function DanhGia({ maPhim }) {
                     onClosePopup={handleClosePopUp} />}
             <div onClick={() => {
                 if (LOGIN_FAIL) {
-                    showModal();
+                    showModalUnknowUserComment();
                 }
                 else {
                     handleShowPopUp();
@@ -168,6 +169,7 @@ function DanhGia({ maPhim }) {
                     <Rate allowHalf defaultValue={5} />
                 </div>
             </div>
+            {isPendingLike? <div className="mb-5 text-center"><LoadingOutlined spin style={{color:'#fff'}} /></div>:''}
             {renderBinhLuan()}
         </div>
     )

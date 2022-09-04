@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { memo } from 'react'
 import moment from 'moment'
+import PropTypes from 'prop-types';
 import { Rate } from 'antd';
  function FilmContent({filmDetail}) {
   return (
@@ -18,7 +19,8 @@ import { Rate } from 'antd';
             <img
               style={{ height: '240px', width: '40%' }}
               src={filmDetail.hinhAnh}
-              alt="Hình ảnh chi tiết phim" />
+              alt="Hình ảnh chi tiết phim" 
+            />
             <div className="text-white ml-3 w-2/3 flex flex-col justify-center">
               <p className=" text-2xl font-bold mb-2">
                 <span className="inline-block px-2 mr-2 rounded bg-red-500 text-white ">C18</span>{filmDetail.tenPhim}
@@ -57,4 +59,8 @@ import { Rate } from 'antd';
     </>
   )
 }
-export default FilmContent
+FilmContent.propTypes = {
+  filmDetail: PropTypes.object,
+}
+export default memo(FilmContent)
+

@@ -34,24 +34,27 @@ const MAXIMUM_LENGTH_CONTENT = 200;
 
 function Detail_mobile(props) {
   const filmDetail = useSelector(state => state.QuanLyPhimReducer.filmDetail)
-  const [rap, setRap] = useState('')
   const dispatch = useDispatch()
+
+  const [rap, setRap] = useState('')
   const [showTrailer, setShowTrailer] = useState(false)
   const [trailer, setTrailer] = useState('')
+
   useEffect(() => {
     // Lấy thông tin param từ url
     window.scrollTo({ top: 0 });
     let { id } = props.match.params;
     dispatch(layThongTinChiTietPhim(id))
   }, [props.match.params, dispatch])
+
   let RAP_DANG_CHIEU = filmDetail?.heThongRapChieu?.length>0
-  const onChange = (value) => {
+
+  const onChangeRap = (value) => {
     setRap(value)
   };
   const handleShowTrailer = () => {
     setShowTrailer(true);
   }
-
   const handleCloseTrailer = () => {
     setShowTrailer(false)
   }
@@ -140,7 +143,7 @@ function Detail_mobile(props) {
                       placeholder="CHỌN RẠP CHIẾU"
                       bordered={false}
                       style={{ color: 'white', fontWeight: '700' }}
-                      onSelect={onChange}
+                      onSelect={onChangeRap}
                     >
                       {heThongRap.cumRapChieu?.map((cumRap, index) => {
                         return <Option
